@@ -68,8 +68,8 @@ input, textarea, select { font-family: inherit; }
 /* ---------- Utilities ---------- */
 .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-padding); }
 .text-gold {
-  color: var(--dourado);
-  text-shadow: 0 0 10px rgba(201,168,76,0.4), 0 0 30px rgba(201,168,76,0.2), 0 0 50px rgba(201,168,76,0.1);
+  color: #dbd2c0;
+  text-shadow: 0 0 10px rgba(219,210,192,0.4), 0 0 30px rgba(219,210,192,0.2), 0 0 50px rgba(219,210,192,0.1);
 }
 .section-padding { padding: var(--section-padding); }
 .section-dark { background: var(--bg-dark); color: var(--branco-perola); }
@@ -157,7 +157,7 @@ input, textarea, select { font-family: inherit; }
   background: linear-gradient(135deg, var(--dourado), var(--dourado-brilho));
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-weight: 800; font-size: 1rem;
-  color: var(--azul-profundo);
+  color: var(--azul-profundo); overflow: hidden;
 }
 .nav-logo-text {
   font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
@@ -250,9 +250,10 @@ input, textarea, select { font-family: inherit; }
 
 .nav-mobile {
   display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(10,22,40,0.98); backdrop-filter: blur(20px);
+  background: var(--azul-profundo);
   flex-direction: column; align-items: center; justify-content: center;
   gap: 1.5rem; z-index: 5;
+  overflow-y: auto;
 }
 .nav-mobile.active { display: flex; }
 .nav-mobile .nav-link { font-size: 1.1rem; }
@@ -352,6 +353,11 @@ input, textarea, select { font-family: inherit; }
   background: linear-gradient(135deg, var(--dourado), var(--dourado-brilho), var(--dourado));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: highlightGlow 3s ease-in-out infinite alternate;
+}
+@keyframes highlightGlow {
+  from { filter: drop-shadow(0 0 8px rgba(201,168,76,0.3)); }
+  to { filter: drop-shadow(0 0 20px rgba(201,168,76,0.6)); }
 }
 .hero-subtitle {
   font-family: var(--font-accent); font-style: italic;
@@ -548,6 +554,7 @@ input, textarea, select { font-family: inherit; }
   background: var(--dourado);
   box-shadow: 0 0 0 4px rgba(201,168,76,0.2);
   z-index: 1;
+  justify-self: center;
 }
 .timeline-spacer { min-height: 1px; }
 
@@ -1080,13 +1087,20 @@ input, textarea, select { font-family: inherit; }
   .page-hero-mini { padding-top: 6rem; }
 
   /* Mobile text overflow fixes */
-  .performance-card { overflow: hidden; }
+  .performance-card { overflow: hidden; flex-direction: column; }
+  .performance-info { width: 100%; }
   .performance-info h4 { word-break: break-word; font-size: 0.95rem; }
   .performance-info p { word-break: break-word; font-size: 0.8rem; }
+  .performance-location { width: 100%; margin-top: 0.5rem; white-space: normal; }
   .recruit-card p { word-break: break-word; }
   .contrata-features { grid-template-columns: 1fr; }
   .news-tabs { gap: 0.25rem; padding: 0.4rem; }
   .news-tab { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
+
+  /* Mobile hamburger improvements */
+  .nav-mobile { padding: 5rem 2rem 2rem; }
+  .nav-mobile .nav-link { font-size: 1.2rem; font-weight: 600; padding: 0.5rem 0; }
+  .nav-mobile .nav-cta { margin-top: 1rem; }
 }
 
 @media (max-width: 480px) {
