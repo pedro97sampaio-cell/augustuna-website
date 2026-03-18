@@ -935,14 +935,14 @@ input, textarea, select { font-family: inherit; }
    HERO LOGO IMAGE
    ============================================ */
 .hero-logo-img {
-  max-width: 200px; height: auto;
-  filter: drop-shadow(0 0 30px rgba(197,168,101,0.3));
+  max-width: 220px; height: auto;
+  filter: drop-shadow(0 0 30px rgba(197,168,101,0.3)) brightness(1.1);
   animation: logoGlow 3s ease-in-out infinite alternate;
-  /* Remove any background from the PNG */
   background: transparent !important;
-  mix-blend-mode: screen;
+  mix-blend-mode: lighten;
+  border-radius: 12px;
 }
-@keyframes logoGlow { from { filter: drop-shadow(0 0 20px rgba(197,168,101,0.2)); } to { filter: drop-shadow(0 0 40px rgba(197,168,101,0.5)); } }
+@keyframes logoGlow { from { filter: drop-shadow(0 0 20px rgba(197,168,101,0.2)) brightness(1.1); } to { filter: drop-shadow(0 0 40px rgba(197,168,101,0.5)) brightness(1.15); } }
 
 /* ============================================
    MEMBERS PAGE — FILTER & SORT
