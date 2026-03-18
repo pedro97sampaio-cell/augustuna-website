@@ -38,7 +38,7 @@ function initRouter() {
       const overlay = document.getElementById('navMobileOverlay');
       if (mobile && mobile.classList.contains('active')) {
         mobile.classList.remove('active');
-        hamburger.classList.remove('active');
+        if (hamburger) hamburger.classList.remove('active');
         if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
       }
@@ -123,7 +123,7 @@ function updateActiveNav(page) {
   // Try to highlight the matching link
   document.querySelectorAll('[data-page]').forEach(link => {
     if (link.getAttribute('data-page') === page) {
-      if (link.classList.contains('nav-link')) {
+      if (link.classList.contains('nav-link') || link.classList.contains('nav-bottom-link')) {
         link.classList.add('active');
       }
     }
@@ -161,7 +161,7 @@ function initNavigation() {
     }
   });
 
-  // Hamburger toggle
+  // Hamburger toggle (Kept safe if it ever returns)
   if (hamburger && mobile) {
     const overlay = document.getElementById('navMobileOverlay');
 
