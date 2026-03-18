@@ -54,7 +54,7 @@ html { scroll-behavior: smooth; font-size: 16px; }
 body {
   font-family: var(--font-body);
   color: var(--azul-profundo);
-  background: var(--bg-dark);
+  background: var(--bg-dark) url('Untitled_design17.png') center/cover fixed no-repeat;
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -72,8 +72,8 @@ input, textarea, select { font-family: inherit; }
   text-shadow: 0 0 10px rgba(219,210,192,0.4), 0 0 30px rgba(219,210,192,0.2), 0 0 50px rgba(219,210,192,0.1);
 }
 .section-padding { padding: var(--section-padding); }
-.section-dark { background: var(--bg-dark); color: var(--branco-perola); }
-.section-dark-alt { background: var(--bg-dark-alt); color: var(--branco-perola); }
+.section-dark { background: rgba(10, 22, 40, 0.85); color: var(--branco-perola); }
+.section-dark-alt { background: rgba(15, 31, 58, 0.85); color: var(--branco-perola); }
 
 /* ---------- SPA Page Sections ---------- */
 .page-section {
