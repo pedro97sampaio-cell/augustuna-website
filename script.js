@@ -112,7 +112,7 @@ function showPage(page, pushState = true) {
 
 function updateActiveNav(page) {
   // Remove all active states
-  document.querySelectorAll('.nav-link').forEach(link => {
+  document.querySelectorAll('.nav-link, .nav-bottom-link').forEach(link => {
     link.classList.remove('active');
   });
 
