@@ -1143,6 +1143,7 @@ input, textarea, select { font-family: inherit; }
   
   :root { --nav-height: 4rem; }
   .nav-links { display: none; }
+  .nav .nav-cta { display: none; }
   .nav-mobile-right { display: flex; }
   .nav-bottom-mobile { display: flex; }
 }
