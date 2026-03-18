@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Augustuna – Tuna Académica Masculina da Universidade do Minho. 30 anos de tradição, música e boémia desde 1996.">
+  <meta name="keywords"
+    content="Augustuna, Tuna Académica, Universidade do Minho, Braga, música académica, tuna masculina">
+  <title>Augustuna — Tuna Académica da Universidade do Minho</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" data-page="home">
+        <div class="nav-logo-icon">A</div>
+        <div class="nav-logo-text">August<span>una</span></div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#" class="nav-link" data-page="noticias">Notícias</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">
+            Sobre Nós <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="#" data-page="formacao">Formação</a>
+            <a href="#" data-page="traje">Traje</a>
+            <a href="#" data-page="membros">Membros</a>
+            <a href="#" data-page="musica">Música</a>
+            <a href="#" data-page="magna-augusta">Magna Augusta</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">
+            Atuações <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="#" data-page="festivais">Festivais de Tunas</a>
+            <a href="#" data-page="outras-atuacoes">Outras Atuações</a>
+          </div>
+        </div>
+
+        <a href="#" class="nav-link" data-page="marketplace">Marketplace</a>
+        <a href="#" class="nav-link" data-page="contactos">Contactos</a>
+
+        <a href="#" class="nav-cart" id="navCart" data-page="cart">
+          <i data-lucide="shopping-cart" style="width:20px;height:20px;"></i>
+          <span class="nav-cart-badge" id="cartBadge">0</span>
+        </a>
+
+        <a href="#" class="btn btn-gold btn-sm nav-cta" data-page="contrata-nos">Contrata-nos</a>
+      </div>
+
+      <div class="nav-mobile-right">
+        <a href="#" class="nav-cart nav-cart-mobile" id="navCartMobile" data-page="cart">
+          <i data-lucide="shopping-cart" style="width:20px;height:20px;"></i>
+          <span class="nav-cart-badge" id="cartBadgeMobile">0</span>
+        </a>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menu de navegação">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile" id="navMobile">
+      <a href="#" class="nav-link" data-page="noticias">Notícias</a>
+
+      <div class="nav-mobile-dropdown">
+        <a href="#" class="nav-link nav-mobile-dropdown-trigger">
+          Sobre Nós <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
+        </a>
+        <div class="nav-mobile-dropdown-menu">
+          <a href="#" data-page="formacao">Formação</a>
+          <a href="#" data-page="traje">Traje</a>
+          <a href="#" data-page="membros">Membros</a>
+          <a href="#" data-page="musica">Música</a>
+          <a href="#" data-page="magna-augusta">Magna Augusta</a>
+        </div>
+      </div>
+
+      <div class="nav-mobile-dropdown">
+        <a href="#" class="nav-link nav-mobile-dropdown-trigger">
+          Atuações <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
+        </a>
+        <div class="nav-mobile-dropdown-menu">
+          <a href="#" data-page="festivais">Festivais de Tunas</a>
+          <a href="#" data-page="outras-atuacoes">Outras Atuações</a>
+        </div>
+      </div>
+
+      <a href="#" class="nav-link" data-page="marketplace">Marketplace</a>
+      <a href="#" class="nav-link" data-page="contactos">Contactos</a>
+      <a href="#" class="btn btn-gold" style="margin-top: 1rem;" data-page="contrata-nos">Contrata-nos</a>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       PAGE: HOME (HERO)
+       ============================================ -->
+  <section class="page-section active" id="page-home">
+    <div class="hero">
+      <div class="hero-bg">
+        <div class="hero-texture"></div>
+      </div>
+      <div class="hero-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-logo-main">
+          <img src="Logo oficial.png" alt="Augustuna - 30 Anos" class="hero-logo-img">
+          <div class="hero-logo-sub">Tuna Académica da Universidade do Minho</div>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="highlight">30 Anos</span><br>
+          de Tradição e Boémia
+        </h1>
+
+        <p class="hero-subtitle">
+          A alma musical que ecoa pelos corredores da academia bracarense
+        </p>
+
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary" data-page="contrata-nos">
+            <i data-lucide="music" style="width:18px;height:18px;"></i>
+            Junta-te a Nós
+          </a>
+          <a href="#" class="btn btn-secondary" data-page="formacao">
+            <i data-lucide="compass" style="width:18px;height:18px;"></i>
+            Descobre a Augustuna
+          </a>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: NOTÍCIAS
+       ============================================ -->
+  <section class="page-section" id="page-noticias">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Atualidade</span>
+      <h2 class="section-title">Notícias & <span class="text-gold">Agenda</span></h2>
+      <p class="section-subtitle">Acompanha as últimas novidades e os próximos eventos da Augustuna</p>
+    </div>
+
+    <div class="section-padding" style="background: var(--bg-light);">
+      <div class="container">
+        <!-- News Theme Tabs -->
+        <div class="news-tabs reveal">
+          <button class="news-tab active" data-filter="all">Todos</button>
+          <button class="news-tab" data-filter="destaque">Destaque</button>
+          <button class="news-tab" data-filter="recrutamento">Recrutamento</button>
+          <button class="news-tab" data-filter="festival">Festival</button>
+          <button class="news-tab" data-filter="cultura">Cultura</button>
+          <button class="news-tab" data-filter="premio">Prémio</button>
+        </div>
+
+        <div class="news-grid-v2 stagger-children">
+          <div class="news-card-v2" data-category="destaque">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag">Destaque</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #1B3A5C, #0A1628);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="party-popper" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">15 Mar 2026</div>
+              <h4>Concerto 30 Anos</h4>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="recrutamento">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag tag-green">Recrutamento</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #8B1A1A, #5a1010);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="users" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">01 Mar 2026</div>
+              <h4>Recrutamento 2026</h4>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="festival">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag tag-blue">Festival</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #2A5080, #1B3A5C);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="globe" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">20 Fev 2026</div>
+              <h4>Festival Europeu</h4>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="festival">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag tag-purple">Magna Augusta</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #4A2A6A, #2A1A4A);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="trophy" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">10 Jan 2026</div>
+              <h4>XXXV FITU</h4>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="cultura">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag">Cultura</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #1a3a2a, #0a1a0a);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="mic-2" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">15 Dez 2025</div>
+              <h4>Serenata de Natal</h4>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="premio">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag tag-blue">Prémio</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #3A5A2A, #1A3A1A);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="award" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">01 Nov 2025</div>
+              <h4>Melhor Tuna 2025</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: FORMAÇÃO (sub Sobre Nós)
+       ============================================ -->
+  <section class="page-section" id="page-formacao">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Sobre Nós</span>
+      <h2 class="section-title">A <span class="text-gold">Formação</span></h2>
+      <p class="section-subtitle">A história da fundação e evolução da Augustuna</p>
+    </div>
+
+    <div class="section-dark section-padding">
+      <div class="container">
+        <!-- Stats Row -->
+        <div class="about-stats reveal">
+          <div class="hero-stat">
+            <div class="hero-stat-number" data-count="30">0</div>
+            <div class="hero-stat-label">Anos de História</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number" data-count="150">0</div>
+            <div class="hero-stat-label">Membros</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number" data-count="500">0</div>
+            <div class="hero-stat-label">Atuações</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number" data-count="12">0</div>
+            <div class="hero-stat-label">Países</div>
+          </div>
+        </div>
+
+        <div class="about-intro">
+          <div class="about-text reveal-left">
+            <h3>A Tradição que <span class="text-gold">Desafia</span></h3>
+            <p>
+              Fundada em 1996, a Augustuna nasceu do espírito boémio e musical que pulsa no coração da Universidade do
+              Minho. O que começou como uma tuna mista rapidamente evoluiu para uma tuna masculina, honrando a tradição
+              académica de Braga enquanto reinventava o conceito de musicalidade tunante.
+            </p>
+            <p>
+              Batizada em homenagem ao Mestre Augusto, a nossa identidade é um equilíbrio perfeito entre o respeito pela
+              herança académica e a ousadia de quem não tem medo de ser diferente — tal como António Variações, que nos
+              inspira a fundir o tradicional com o contemporâneo.
+            </p>
+          </div>
+          <div class="about-image reveal-right">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg, var(--azul-real), var(--azul-profundo));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;">
+              <div style="font-size:5rem;opacity:0.3;">🎵</div>
+              <div
+                style="font-family:var(--font-display);color:var(--dourado);font-size:1.2rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;">
+                Augustuna</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="section-header reveal" style="margin-top:5rem;">
+          <span class="section-label">Desde 1996</span>
+          <h2 class="section-title"><span class="text-gold">30 Anos</span> de História</h2>
+          <p class="section-subtitle">Uma cronologia dos momentos que definiram a Augustuna</p>
+        </div>
+
+        <div class="timeline-track">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">1996</div>
+              <h4>A Fundação</h4>
+              <p>Nasce a Augustuna como Tuna Mista da Universidade do Minho, unindo estudantes apaixonados pela música e
+                pela tradição académica de Braga.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">1999</div>
+              <h4>Evolução para Tuna Masculina</h4>
+              <p>A tuna assume a sua identidade definitiva como Tuna Académica Masculina, consolidando os seus valores e
+                tradições.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2003</div>
+              <h4>Primeiro Álbum</h4>
+              <p>Lançamento da primeira discografia oficial, imortalizando o repertório que se tornou a banda sonora de
+                várias gerações académicas.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2008</div>
+              <h4>Conquistas Internacionais</h4>
+              <p>A Augustuna atravessa fronteiras, representando a Universidade do Minho em festivais internacionais de
+                tunas por toda a Europa.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2016</div>
+              <h4>20 Anos de Boémia</h4>
+              <p>Celebração do vigésimo aniversário com um concerto especial que reuniu ex-tunos de todas as gerações
+                num espetáculo memorável.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2024</div>
+              <h4>Nova Era</h4>
+              <p>Renovação da identidade visual e digital, mantendo a essência boémia e musical que nos define há quase
+                três décadas.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2026</div>
+              <h4>30 Anos — O Futuro é Tradicional</h4>
+              <p>Celebramos três décadas de tradição e irreverência. O passado guia-nos, mas o palco é o futuro. A
+                história continua a ser escrita.</p>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-spacer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: TRAJE (sub Sobre Nós)
+       ============================================ -->
+  <section class="page-section" id="page-traje">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Sobre Nós</span>
+      <h2 class="section-title">O <span class="text-gold">Traje</span> Académico</h2>
+      <p class="section-subtitle">Cada peça do traje é um símbolo de tradição, orgulho e pertença à academia</p>
+    </div>
+
+    <div class="section-padding" style="background: var(--bg-light);">
+      <div class="container">
+        <div class="traje-grid stagger-children">
+          <div class="traje-card">
+            <div class="traje-card-image">
+              <div style="z-index:1;color:var(--dourado);text-align:center;">
+                <i data-lucide="footprints" style="width:64px;height:64px;opacity:0.6;"></i>
+              </div>
+            </div>
+            <div class="traje-card-body">
+              <h4>A Caminhada</h4>
+              <p>A primeira grande tradição — o percurso que marca o início da jornada de cada tuno, simbolizando a
+                passagem do caloiro a membro pleno da tuna.</p>
+            </div>
+          </div>
+
+          <div class="traje-card">
+            <div class="traje-card-image">
+              <div style="z-index:1;color:var(--dourado);text-align:center;">
+                <i data-lucide="shirt" style="width:64px;height:64px;opacity:0.6;"></i>
+              </div>
+            </div>
+            <div class="traje-card-body">
+              <h4>O Sobretudo</h4>
+              <p>Peça distinta do traje da Augustuna, o sobretudo confere elegância e presença, diferenciando-nos das
+                demais tunas académicas.</p>
+            </div>
+          </div>
+
+          <div class="traje-card">
+            <div class="traje-card-image">
+              <div style="z-index:1;color:var(--dourado);text-align:center;">
+                <i data-lucide="wind" style="width:64px;height:64px;opacity:0.6;"></i>
+              </div>
+            </div>
+            <div class="traje-card-body">
+              <h4>A Capa</h4>
+              <p>Símbolo máximo da tradição académica. A capa da Augustuna carrega as fitas e os emblemas que contam a
+                história de cada tuno.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: MEMBROS (sub Sobre Nós)
+       ============================================ -->
+  <section class="page-section" id="page-membros">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Sobre Nós</span>
+      <h2 class="section-title">Os <span class="text-gold">Membros</span></h2>
+      <p class="section-subtitle">O arquivo dos tunos — quem faz e fez a Augustuna</p>
+    </div>
+
+    <div class="section-dark section-padding">
+      <div class="container">
+        <!-- Sort Bar -->
+        <div class="members-sort-bar reveal">
+          <span class="sort-label">Ordenar por:</span>
+          <button class="sort-btn active" data-sort="generation">Geração</button>
+          <button class="sort-btn" data-sort="alpha-asc">A → Z</button>
+          <button class="sort-btn" data-sort="alpha-desc">Z → A</button>
+          <button class="sort-btn" data-sort="date-asc">Data ↑</button>
+          <button class="sort-btn" data-sort="date-desc">Data ↓</button>
+        </div>
+
+        <div class="members-layout">
+          <!-- Filter Sidebar -->
+          <aside class="members-filter-sidebar" id="memberFilters">
+            <h4><i data-lucide="filter" style="width:16px;height:16px;"></i> Filtros</h4>
+            <div class="filter-group">
+              <h5>Geração</h5>
+              <div class="filter-options" id="filterGeneration"></div>
+            </div>
+            <div class="filter-group">
+              <h5>Instrumento</h5>
+              <div class="filter-options" id="filterInstrument"></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="clearFilters" style="width:100%;margin-top:1rem;">Limpar
+              Filtros</button>
+          </aside>
+
+          <!-- Members Grid -->
+          <div class="members-content" id="membersContent">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================
+       PAGE: MÚSICA (sub Sobre Nós)
+       ============================================ -->
+  <section class="page-section" id="page-musica">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Sobre Nós</span>
+      <h2 class="section-title">A Nossa <span class="text-gold">Música</span></h2>
+      <p class="section-subtitle">Cancioneiro, álbuns e playlists da Augustuna</p>
+    </div>
+
+    <div class="section-dark section-padding">
+      <div class="container">
+        <!-- Cancioneiro -->
+        <div class="music-block reveal">
+          <div class="music-block-header">
+            <i data-lucide="book-open" style="width:28px;height:28px;color:var(--dourado);"></i>
+            <h3>Cancioneiro</h3>
+          </div>
+          <p>O cancioneiro da Augustuna reúne décadas de tradição musical académica — das serenatas clássicas às
+            composições originais. Com mais de 50 temas no repertório, inclui fados, marchas, baladas e canções de tuna
+            que contam a história da boémia bracarense.</p>
+          <div class="cancioneiro-highlights">
+            <div class="cancioneiro-item">
+              <i data-lucide="music" style="width:20px;height:20px;color:var(--dourado);"></i>
+              <span>50+ temas no repertório</span>
+            </div>
+            <div class="cancioneiro-item">
+              <i data-lucide="pen-tool" style="width:20px;height:20px;color:var(--dourado);"></i>
+              <span>Composições originais</span>
+            </div>
+            <div class="cancioneiro-item">
+              <i data-lucide="heart" style="width:20px;height:20px;color:var(--dourado);"></i>
+              <span>Serenatas & fados tradicionais</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Álbuns -->
+        <div class="music-block reveal">
+          <div class="music-block-header">
+            <i data-lucide="disc" style="width:28px;height:28px;color:var(--dourado);"></i>
+            <h3>Álbuns no Spotify</h3>
+          </div>
+          <div class="albums-grid">
+            <div class="album-card">
+              <div class="album-embed">
+                <iframe style="border-radius:12px"
+                  src="https://open.spotify.com/embed/album/3cfAIahOFEmkALfRGGejnc?utm_source=generator&theme=0"
+                  width="100%" height="352" frameBorder="0" allowfullscreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"></iframe>
+              </div>
+              <div class="album-info">
+                <h4>Augustuna I</h4>
+                <p>O primeiro álbum oficial da Tuna, com os temas mais emblemáticos do repertório.</p>
+              </div>
+            </div>
+            <div class="album-card">
+              <div class="album-embed">
+                <iframe style="border-radius:12px"
+                  src="https://open.spotify.com/embed/album/6PUZqBJANIPr99S3bfnkAE?utm_source=generator&theme=0"
+                  width="100%" height="352" frameBorder="0" allowfullscreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"></iframe>
+              </div>
+              <div class="album-info">
+                <h4>Augustuna II</h4>
+                <p>O segundo álbum, continuando a tradição musical com novas composições e arranjos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Playlists -->
+        <div class="music-block reveal">
+          <div class="music-block-header">
+            <i data-lucide="list-music" style="width:28px;height:28px;color:var(--dourado);"></i>
+            <h3>Playlists</h3>
+          </div>
+          <div class="playlist-grid">
+            <div class="playlist-embed">
+              <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4JAvHpjipBk?utm_source=generator&theme=0"
+                width="100%" height="352" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: MAGNA AUGUSTA (sub Sobre Nós)
+       ============================================ -->
+  <section class="page-section" id="page-magna-augusta">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Sobre Nós</span>
+      <h2 class="section-title"><span class="text-gold">Magna Augusta</span></h2>
+      <p class="section-subtitle">O Festival Internacional de Tunas organizado pela Augustuna</p>
+    </div>
+
+    <div class="section-dark section-padding">
+      <div class="container">
+        <div class="about-intro">
+          <div class="about-text reveal-left">
+            <h3>FITU <span class="text-gold">Bracara Avgvsta</span></h3>
+            <p>
+              O Festival Internacional de Tunas Universitárias — Bracara Avgvsta (FITU) é o maior evento da Augustuna,
+              reunindo tunas de todo o mundo numa celebração da música académica.
+            </p>
+            <p>
+              Com mais de 35 edições, o FITU tornou-se uma referência no panorama tunante internacional, atraindo
+              milhares de espetadores e promovendo o intercâmbio cultural entre tunas de diferentes países.
+            </p>
+            <p>
+              A próxima edição — XXXV FITU Bracara Avgvsta — promete ser a maior de sempre, com a participação de tunas
+              de Portugal, Espanha, Itália e América Latina.
+            </p>
+          </div>
+          <div class="about-image reveal-right">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg, #4A2A6A, #1B1A3A);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;">
+              <div style="font-size:5rem;opacity:0.3;">🏆</div>
+              <div
+                style="font-family:var(--font-display);color:var(--dourado);font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;">
+                FITU Bracara Avgvsta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: FESTIVAIS (sub Atuações)
+       ============================================ -->
+  <section class="page-section" id="page-festivais">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Atuações</span>
+      <h2 class="section-title">Festivais de <span class="text-gold">Tunas</span></h2>
+      <p class="section-subtitle">As nossas participações em festivais de tunas nacionais e internacionais</p>
+    </div>
+
+    <div class="section-dark-alt section-padding">
+      <div class="container">
+        <div class="performances-list stagger-children">
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">22</div>
+              <div class="performance-month">Mar</div>
+            </div>
+            <div class="performance-info">
+              <h4>XXXV FITU Bracara Avgvsta</h4>
+              <p>O nosso festival — a edição dos 30 anos com tunas convidadas de 5 países</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Theatro Circo, Braga
+            </div>
+          </div>
+
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">05</div>
+              <div class="performance-month">Abr</div>
+            </div>
+            <div class="performance-info">
+              <h4>Festival Internacional de Tunas de Barcelona</h4>
+              <p>Participação no maior festival de tunas da Península Ibérica</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Barcelona, Espanha
+            </div>
+          </div>
+
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">20</div>
+              <div class="performance-month">Mai</div>
+            </div>
+            <div class="performance-info">
+              <h4>Festival de Tunas do Porto</h4>
+              <p>Encontro anual das tunas do norte de Portugal</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Coliseu do Porto
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: OUTRAS ATUAÇÕES (sub Atuações)
+       ============================================ -->
+  <section class="page-section" id="page-outras-atuacoes">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Atuações</span>
+      <h2 class="section-title">Outras <span class="text-gold">Atuações</span></h2>
+      <p class="section-subtitle">Serenatas, concertos e eventos especiais</p>
+    </div>
+
+    <div class="section-dark-alt section-padding">
+      <div class="container">
+        <div class="performances-list stagger-children">
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">18</div>
+              <div class="performance-month">Abr</div>
+            </div>
+            <div class="performance-info">
+              <h4>Serenata ao Luar</h4>
+              <p>Serenata tradicional pelo centro histórico de Braga</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Centro Histórico, Braga
+            </div>
+          </div>
+
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">10</div>
+              <div class="performance-month">Mai</div>
+            </div>
+            <div class="performance-info">
+              <h4>Queima das Fitas — UMinho</h4>
+              <p>Atuação no palco principal da Queima das Fitas da Universidade do Minho</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Campus de Gualtar, Braga
+            </div>
+          </div>
+
+          <div class="performance-item">
+            <div class="performance-date">
+              <div class="performance-day">15</div>
+              <div class="performance-month">Jun</div>
+            </div>
+            <div class="performance-info">
+              <h4>Concerto 30 Anos</h4>
+              <p>Grande espetáculo comemorativo com convidados especiais e reunião de gerações</p>
+            </div>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+              Theatro Circo, Braga
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: MARKETPLACE
+       ============================================ -->
+  <section class="page-section" id="page-marketplace">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Merch</span>
+      <h2 class="section-title"><span class="text-gold">Marketplace</span></h2>
+      <p class="section-subtitle">Merchandising oficial da Augustuna — leva contigo um pedaço da nossa história</p>
+    </div>
+
+    <div class="section-padding" style="background: var(--bg-light);">
+      <div class="container">
+        <div class="shop-grid stagger-children">
+          <div class="shop-card" data-product-id="1" data-product-name="T-Shirt 30 Anos" data-product-price="19.90">
+            <div class="shop-card-image">
+              <div
+                style="width:100%;height:100%;background:#F0EDE5;display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                👕</div>
+            </div>
+            <div class="shop-card-body">
+              <h4>T-Shirt 30 Anos</h4>
+              <p class="shop-card-desc">Edição limitada comemorativa dos 30 anos da Augustuna. 100% algodão, disponível
+                em preto e azul navy.</p>
+              <div class="shop-card-price">€19,90</div>
+              <button class="btn btn-primary btn-add-cart" onclick="addToCart(this)">
+                <i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>
+                Comprar
+              </button>
+            </div>
+          </div>
+
+          <div class="shop-card" data-product-id="2" data-product-name="Boné Augustuna" data-product-price="14.90">
+            <div class="shop-card-image">
+              <div
+                style="width:100%;height:100%;background:#F0EDE5;display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                🧢</div>
+            </div>
+            <div class="shop-card-body">
+              <h4>Boné Augustuna</h4>
+              <p class="shop-card-desc">Boné oficial com logo bordado. Tamanho ajustável, design clássico em azul navy
+                com detalhes dourados.</p>
+              <div class="shop-card-price">€14,90</div>
+              <button class="btn btn-primary btn-add-cart" onclick="addToCart(this)">
+                <i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>
+                Comprar
+              </button>
+            </div>
+          </div>
+
+          <div class="shop-card" data-product-id="3" data-product-name="Hoodie Augustuna" data-product-price="34.90">
+            <div class="shop-card-image">
+              <div
+                style="width:100%;height:100%;background:#F0EDE5;display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                🧥</div>
+            </div>
+            <div class="shop-card-body">
+              <h4>Hoodie Augustuna</h4>
+              <p class="shop-card-desc">Hoodie premium com capuz e bolso canguru. Logo estampado no peito, disponível em
+                azul navy.</p>
+              <div class="shop-card-price">€34,90</div>
+              <button class="btn btn-primary btn-add-cart" onclick="addToCart(this)">
+                <i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>
+                Comprar
+              </button>
+            </div>
+          </div>
+
+          <div class="shop-card" data-product-id="4" data-product-name="Caneca 30 Anos" data-product-price="9.90">
+            <div class="shop-card-image">
+              <div
+                style="width:100%;height:100%;background:#F0EDE5;display:flex;align-items:center;justify-content:center;font-size:3rem;">
+                ☕</div>
+            </div>
+            <div class="shop-card-body">
+              <h4>Caneca 30 Anos</h4>
+              <p class="shop-card-desc">Caneca de cerâmica com design exclusivo dos 30 anos. Capacidade de 350ml, ideal
+                para café e chá.</p>
+              <div class="shop-card-price">€9,90</div>
+              <button class="btn btn-primary btn-add-cart" onclick="addToCart(this)">
+                <i data-lucide="shopping-cart" style="width:16px;height:16px;"></i>
+                Comprar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: CART
+       ============================================ -->
+  <section class="page-section" id="page-cart">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Checkout</span>
+      <h2 class="section-title">Carrinho de <span class="text-gold">Compras</span></h2>
+    </div>
+
+    <div class="section-padding" style="background: var(--bg-light);">
+      <div class="container">
+        <div class="cart-content" id="cartContent">
+          <div class="cart-empty" id="cartEmpty">
+            <i data-lucide="shopping-bag" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+            <h3>O teu carrinho está vazio</h3>
+            <p>Visita o nosso <a href="#" data-page="marketplace" style="color:var(--dourado);">Marketplace</a> para
+              encontrar o teu merch favorito!</p>
+          </div>
+          <div class="cart-items" id="cartItems"></div>
+          <div class="cart-total" id="cartTotal" style="display:none;">
+            <div class="cart-total-row">
+              <span>Total:</span>
+              <span class="cart-total-price" id="cartTotalPrice">€0,00</span>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:1rem;">Finalizar Compra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: CONTACTOS
+       ============================================ -->
+  <section class="page-section" id="page-contactos">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Fala Connosco</span>
+      <h2 class="section-title"><span class="text-gold">Contactos</span></h2>
+      <p class="section-subtitle">Entra em contacto connosco — estamos sempre disponíveis para ti</p>
+    </div>
+
+    <div class="section-padding" style="background: var(--bg-light);">
+      <div class="container">
+        <!-- Social Media -->
+        <div class="social-links-section reveal">
+          <h3>Segue-nos nas <span class="text-gold">Redes Sociais</span></h3>
+          <div class="social-links-grid">
+            <a href="https://youtube.com" target="_blank" class="social-link-card">
+              <div class="social-icon-box youtube">
+                <i data-lucide="youtube" style="width:32px;height:32px;"></i>
+              </div>
+              <span>YouTube</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="social-link-card">
+              <div class="social-icon-box instagram">
+                <i data-lucide="instagram" style="width:32px;height:32px;"></i>
+              </div>
+              <span>Instagram</span>
+            </a>
+            <a href="https://facebook.com" target="_blank" class="social-link-card">
+              <div class="social-icon-box facebook">
+                <i data-lucide="facebook" style="width:32px;height:32px;"></i>
+              </div>
+              <span>Facebook</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="social-link-card">
+              <div class="social-icon-box linkedin">
+                <i data-lucide="linkedin" style="width:32px;height:32px;"></i>
+              </div>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-layout">
+          <div class="contact-form-section reveal-left">
+            <h3>Envia-nos uma <span class="text-gold">mensagem</span></h3>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');">
+              <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" id="name" placeholder="O teu nome" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="tunos@augustuna.pt" required>
+              </div>
+              <div class="form-group">
+                <label for="message">Mensagem</label>
+                <textarea id="message" rows="5" placeholder="Escreve a tua mensagem..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%;">
+                <i data-lucide="send" style="width:16px;height:16px;"></i>
+                Enviar Mensagem
+              </button>
+            </form>
+
+            <!-- Contact Cards (ct1.png Reference) -->
+            <div class="personal-contacts">
+              <h3>Contacte-nos <span class="text-gold">pessoalmente</span></h3>
+              <div class="personal-contacts-grid">
+                <div class="personal-contact-card">
+                  <div class="personal-contact-icon email-icon">
+                    <i data-lucide="mail" style="width:24px;height:24px;"></i>
+                  </div>
+                  <h4>Email Geral</h4>
+                  <p class="personal-contact-desc">Para questões gerais e informações</p>
+                  <a href="mailto:tum@arcum.pt" class="personal-contact-action">tum@arcum.pt</a>
+                </div>
+
+                <div class="personal-contact-card">
+                  <div class="personal-contact-icon person-icon">
+                    <i data-lucide="user" style="width:24px;height:24px;"></i>
+                  </div>
+                  <h4>Magister</h4>
+                  <p class="personal-contact-name">Pedro Pinto</p>
+                  <a href="tel:+351915410003" class="personal-contact-action">
+                    <i data-lucide="phone" style="width:14px;height:14px;"></i>
+                    +351 915 410 003
+                  </a>
+                </div>
+
+                <div class="personal-contact-card">
+                  <div class="personal-contact-icon person-icon">
+                    <i data-lucide="user" style="width:24px;height:24px;"></i>
+                  </div>
+                  <h4>Diretor</h4>
+                  <p class="personal-contact-name">Francisco Costa</p>
+                  <a href="tel:+351938939467" class="personal-contact-action">
+                    <i data-lucide="phone" style="width:14px;height:14px;"></i>
+                    +351 938 939 467
+                  </a>
+                </div>
+
+                <div class="personal-contact-card">
+                  <div class="personal-contact-icon person-icon">
+                    <i data-lucide="user" style="width:24px;height:24px;"></i>
+                  </div>
+                  <h4>Organização XXXV FITU Bracara Avgvsta</h4>
+                  <p class="personal-contact-name">José Medeiros</p>
+                  <a href="tel:+351912976858" class="personal-contact-action">
+                    <i data-lucide="phone" style="width:14px;height:14px;"></i>
+                    +351 912 976 858
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info-section reveal-right">
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <h4>Morada</h4>
+                <p>Universidade do Minho<br>Campus de Gualtar, Braga</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i data-lucide="mail" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <h4>Email</h4>
+                <p>tum@arcum.pt</p>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i data-lucide="phone" style="width:20px;height:20px;"></i>
+              </div>
+              <div>
+                <h4>Telefone</h4>
+                <p>+351 915 410 003</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="contact-map-section reveal">
+          <h3>A Nossa <span class="text-gold">Localização</span></h3>
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2983.7!2d-8.3969!3d41.5608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd24fee57cb424d3%3A0x884eb8e2b42b2!2sUniversidade%20do%20Minho%20-%20Campus%20de%20Gualtar!5e0!3m2!1spt-PT!2spt!4v1710000000000"
+              width="100%" height="400" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PAGE: CONTRATA-NOS
+       ============================================ -->
+  <section class="page-section" id="page-contrata-nos">
+    <div class="page-hero-mini section-dark">
+      <span class="section-label">Book Now</span>
+      <h2 class="section-title">Contrata a <span class="text-gold">Augustuna</span></h2>
+      <p class="section-subtitle">Leva a magia da música académica ao teu evento</p>
+    </div>
+
+    <div class="section-dark section-padding">
+      <div class="container">
+        <div class="recruit-section">
+          <div class="recruit-content reveal">
+            <h2>Queres Fazer Parte<br><span class="text-gold">da História?</span></h2>
+            <p>Junta-te à família Augustuna e vive experiências únicas. Não precisas de saber tocar — precisas de ter
+              vontade de aprender e espírito de boémia!</p>
+            <a href="#" class="btn btn-primary" data-page="contactos">
+              <i data-lucide="music" style="width:18px;height:18px;"></i>
+              Contacta-nos
+            </a>
+          </div>
+          <div class="recruit-info reveal-right">
+            <div class="recruit-card">
+              <div class="recruit-card-icon"><i data-lucide="music"
+                  style="width:32px;height:32px;color:var(--dourado);"></i></div>
+              <h4>Casamentos & Festas</h4>
+              <p>Animação musical para tornar o teu evento inesquecível</p>
+            </div>
+            <div class="recruit-card">
+              <div class="recruit-card-icon"><i data-lucide="building"
+                  style="width:32px;height:32px;color:var(--dourado);"></i></div>
+              <h4>Eventos Corporativos</h4>
+              <p>Entretenimento cultural para empresas e organizações</p>
+            </div>
+            <div class="recruit-card">
+              <div class="recruit-card-icon"><i data-lucide="party-popper"
+                  style="width:32px;height:32px;color:var(--dourado);"></i></div>
+              <h4>Festivais & Concertos</h4>
+              <p>Participação em festivais de tunas e eventos musicais</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER (always visible)
+       ============================================ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="nav-logo-icon">A</div>
+            <span>AUGUSTUNA</span>
+          </div>
+          <p>Tuna Académica Masculina<br>da Universidade do Minho</p>
+          <div class="footer-socials">
+            <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i data-lucide="youtube"
+                style="width:18px;height:18px;"></i></a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i data-lucide="instagram"
+                style="width:18px;height:18px;"></i></a>
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i data-lucide="facebook"
+                style="width:18px;height:18px;"></i></a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"
+                style="width:18px;height:18px;"></i></a>
+          </div>
+        </div>
+        <div class="footer-links-group">
+          <h4>Navegação</h4>
+          <a href="#" data-page="noticias">Notícias</a>
+          <a href="#" data-page="formacao">Sobre Nós</a>
+          <a href="#" data-page="festivais">Atuações</a>
+          <a href="#" data-page="marketplace">Marketplace</a>
+          <a href="#" data-page="contactos">Contactos</a>
+        </div>
+        <div class="footer-links-group">
+          <h4>Sobre Nós</h4>
+          <a href="#" data-page="formacao">Formação</a>
+          <a href="#" data-page="traje">Traje</a>
+          <a href="#" data-page="membros">Membros</a>
+          <a href="#" data-page="magna-augusta">Magna Augusta</a>
+        </div>
+        <div class="footer-links-group">
+          <h4>Contacto</h4>
+          <p>tum@arcum.pt</p>
+          <p>+351 915 410 003</p>
+          <p>Campus de Gualtar, Braga</p>
+        </div>
+      </div>
+
+      <!-- Apoios e Parcerias -->
+      <div class="footer-sponsors">
+        <h4>Apoios & Parcerias</h4>
+        <div class="footer-sponsors-grid">
+          <div class="sponsor-item">
+            <div class="sponsor-logo">
+              <i data-lucide="landmark" style="width:28px;height:28px;color:var(--dourado);opacity:0.6;"></i>
+            </div>
+            <span>Universidade do Minho</span>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-logo">
+              <i data-lucide="building-2" style="width:28px;height:28px;color:var(--dourado);opacity:0.6;"></i>
+            </div>
+            <span>AAUM</span>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-logo">
+              <i data-lucide="building" style="width:28px;height:28px;color:var(--dourado);opacity:0.6;"></i>
+            </div>
+            <span>Câmara Municipal de Braga</span>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-logo">
+              <i data-lucide="music" style="width:28px;height:28px;color:var(--dourado);opacity:0.6;"></i>
+            </div>
+            <span>ARCUM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p>© 2026 Augustuna — Tuna Académica da Universidade do Minho. Todos os direitos reservados.</p>
+        <p>Feito com ❤️ pelos tunos</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
