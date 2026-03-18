@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initMembers();
   initNewsTabs();
+  initGenericTabs();
 
   console.log('🎵 Augustuna — Website carregado com sucesso!');
 });
@@ -619,9 +620,9 @@ function renderMemberCard(m) {
    NEWS TABS
    ============================================ */
 function initNewsTabs() {
-  document.querySelectorAll('.news-tab').forEach(tab => {
+  document.querySelectorAll('.news-tab:not(.generic-tab)').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.news-tab:not(.generic-tab)').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const filter = tab.dataset.filter;
       document.querySelectorAll('.news-card-v2').forEach(card => {
@@ -630,6 +631,38 @@ function initNewsTabs() {
         } else {
           card.classList.add('hidden');
         }
+      });
+    });
+  });
+}
+
+/* ============================================
+   GENERIC TABS
+   ============================================ */
+function initGenericTabs() {
+  const tabGroups = document.querySelectorAll('.tab-group');
+  tabGroups.forEach(group => {
+    const tabs = group.querySelectorAll('.generic-tab');
+    const contents = group.querySelectorAll('.generic-tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        const targetId = tab.dataset.target;
+        contents.forEach(content => {
+          if (content.id === targetId) {
+            content.classList.remove('hidden');
+            // small delay to trigger reflow and css transition if any
+            setTimeout(() => {
+              content.style.opacity = '1';
+            }, 50);
+          } else {
+            content.classList.add('hidden');
+            content.style.opacity = '0';
+          }
+        });
       });
     });
   });

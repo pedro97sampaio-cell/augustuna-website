@@ -1040,6 +1040,26 @@ input, textarea, select { font-family: inherit; }
   mix-blend-mode: lighten;
   border-radius: 12px;
 }
+
+/* ============================================
+   ABOUT TABS & LAYOUT
+   ============================================ */
+.about-intro {
+  display: flex; gap: 4rem; align-items: flex-start; margin-bottom: 2rem;
+}
+.about-text { flex: 1; }
+.about-text h3 { margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 2rem; }
+.about-text p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; font-size: 1.05rem; }
+.about-image { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+
+@media (max-width: 992px) {
+  .about-intro { flex-direction: column; gap: 2rem; }
+  .about-image { width: 100%; display: flex; justify-content: center; margin-top: 1rem; }
+}
+
+.generic-tab-content { transition: opacity 0.3s ease; opacity: 1; }
+.generic-tab-content.hidden { display: none; opacity: 0; }
+
 @keyframes logoGlow { from { filter: drop-shadow(0 0 20px rgba(197,168,101,0.2)) brightness(1.1); } to { filter: drop-shadow(0 0 40px rgba(197,168,101,0.5)) brightness(1.15); } }
 
 /* ============================================
@@ -1091,8 +1111,8 @@ input, textarea, select { font-family: inherit; }
    NEWS TABS
    ============================================ */
 .news-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 0.5rem; background: rgba(27,58,92,0.3); border-radius: 12px; border: 1px solid rgba(197,168,101,0.1); }
-.news-tab { background: transparent; border: none; color: var(--text-muted); padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: var(--transition-base); }
-.news-tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+.news-tab { background: transparent; border: none; color: var(--branco-perola); padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: var(--transition-base); }
+.news-tab:hover { color: var(--dourado); background: rgba(255,255,255,0.05); }
 .news-tab.active { background: var(--dourado); color: var(--azul-escuro); font-weight: 600; }
 .news-card-v2.hidden { display: none; }
 
