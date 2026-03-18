@@ -247,7 +247,7 @@ input, textarea, select { font-family: inherit; }
 .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-hamburger.active span:nth-child(2) { opacity: 0; }
 .nav-mobile {
-  display: none; position: fixed; top: 0; right: 0; bottom: 0;
+  display: none; position: fixed; top: 0; left: 0; bottom: 0;
   width: 100vw; max-width: 100vw;
   background: var(--azul-profundo);
   flex-direction: column; align-items: stretch;
@@ -255,7 +255,7 @@ input, textarea, select { font-family: inherit; }
   overflow-y: auto;
   padding: 5rem 1.5rem 2rem;
   box-shadow: none;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
 .nav-mobile.active { display: flex; transform: translateX(0); }
@@ -579,6 +579,19 @@ input, textarea, select { font-family: inherit; }
 /* ============================================
    NEWS V2 — More Image, Less Text
    ============================================ */
+.news-tabs {
+  display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem;
+}
+.news-tab {
+  background: rgba(10,22,40,0.08); border: 2px solid transparent; padding: 0.6rem 1.25rem;
+  border-radius: 2rem; font-family: var(--font-display); font-size: 0.9rem;
+  font-weight: 700; color: var(--azul-profundo); cursor: pointer;
+  transition: var(--transition);
+}
+.news-tab.active, .news-tab:hover {
+  background: var(--dourado); color: var(--branco-perola); border-color: var(--dourado);
+}
+
 .news-grid-v2 {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
 }
