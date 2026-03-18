@@ -154,7 +154,7 @@ input, textarea, select { font-family: inherit; }
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; z-index: 10; cursor: pointer; }
 .nav-logo-icon {
   width: 2.55rem; height: 2.55rem;
-  background: #000000;
+  background: transparent;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-weight: 800; font-size: 1rem;
   color: var(--azul-profundo); overflow: hidden;
