@@ -75,7 +75,10 @@
       </div>
     </div>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Overlay -->
+    <div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+
+    <!-- Mobile Sidebar Menu -->
     <div class="nav-mobile" id="navMobile">
       <a href="#" class="nav-link" data-page="noticias">Notícias</a>
 
@@ -104,7 +107,10 @@
 
       <a href="#" class="nav-link" data-page="marketplace">Marketplace</a>
       <a href="#" class="nav-link" data-page="contactos">Contactos</a>
-      <a href="#" class="btn btn-gold" style="margin-top: 1rem;" data-page="contrata-nos">Contrata-nos</a>
+      <a href="#" class="nav-link" data-page="cart">
+        <i data-lucide="shopping-cart" style="width:16px;height:16px;margin-right:0.5rem;"></i> Carrinho
+      </a>
+      <a href="#" class="btn btn-gold nav-cta" data-page="contrata-nos">Contrata-nos</a>
     </div>
   </nav>
 
@@ -183,12 +189,13 @@
               <span class="news-card-tag">Destaque</span>
               <div
                 style="width:100%;height:100%;background:linear-gradient(135deg, #1B3A5C, #0A1628);display:flex;align-items:center;justify-content:center;">
-                <i data-lucide="party-popper" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+                <img src="Logo oficial 2.png" alt="30 Anos" style="max-width:60%;height:auto;opacity:0.8;">
               </div>
             </div>
             <div class="news-card-v2-body">
               <div class="news-card-date">15 Mar 2026</div>
-              <h4>Concerto 30 Anos</h4>
+              <h4>IX Magna Augusta — 30 Anos de Augustuna</h4>
+              <p>A Augustuna celebra três décadas de tradição e boémia com o IX Magna Augusta, o seu festival internacional de tunas académicas nos dias 14 e 15 de Março no Theatro Circo, em Braga.</p>
             </div>
           </div>
 
@@ -201,22 +208,9 @@
               </div>
             </div>
             <div class="news-card-v2-body">
-              <div class="news-card-date">01 Mar 2026</div>
-              <h4>Recrutamento 2026</h4>
-            </div>
-          </div>
-
-          <div class="news-card-v2" data-category="festival">
-            <div class="news-card-v2-image">
-              <span class="news-card-tag tag-blue">Festival</span>
-              <div
-                style="width:100%;height:100%;background:linear-gradient(135deg, #2A5080, #1B3A5C);display:flex;align-items:center;justify-content:center;">
-                <i data-lucide="globe" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
-              </div>
-            </div>
-            <div class="news-card-v2-body">
-              <div class="news-card-date">20 Fev 2026</div>
-              <h4>Festival Europeu</h4>
+              <div class="news-card-date">Set 2025</div>
+              <h4>Recrutamento 2025/2026 — Junta-te à Família</h4>
+              <p>Novo ano letivo, nova oportunidade! A Augustuna abre portas a todos os estudantes da UMinho que queiram viver a tradição tunante. Não precisas de saber tocar — basta vontade!</p>
             </div>
           </div>
 
@@ -225,26 +219,13 @@
               <span class="news-card-tag tag-purple">Magna Augusta</span>
               <div
                 style="width:100%;height:100%;background:linear-gradient(135deg, #4A2A6A, #2A1A4A);display:flex;align-items:center;justify-content:center;">
-                <i data-lucide="trophy" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+                <img src="logo magna.jpeg" alt="Magna Augusta" style="max-width:55%;height:auto;border-radius:8px;opacity:0.85;">
               </div>
             </div>
             <div class="news-card-v2-body">
-              <div class="news-card-date">10 Jan 2026</div>
-              <h4>XXXV FITU</h4>
-            </div>
-          </div>
-
-          <div class="news-card-v2" data-category="cultura">
-            <div class="news-card-v2-image">
-              <span class="news-card-tag">Cultura</span>
-              <div
-                style="width:100%;height:100%;background:linear-gradient(135deg, #1a3a2a, #0a1a0a);display:flex;align-items:center;justify-content:center;">
-                <i data-lucide="mic-2" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
-              </div>
-            </div>
-            <div class="news-card-v2-body">
-              <div class="news-card-date">15 Dez 2025</div>
-              <h4>Serenata de Natal</h4>
+              <div class="news-card-date">Mai 2025</div>
+              <h4>XXXIV FITU Bracara Avgvsta — Theatro Circo</h4>
+              <p>O festival de tunas universitárias mais antigo de Braga regressa ao Theatro Circo nos dias 23 e 24 de Maio de 2025, reunindo tunas de Portugal e Espanha.</p>
             </div>
           </div>
 
@@ -257,8 +238,39 @@
               </div>
             </div>
             <div class="news-card-v2-body">
-              <div class="news-card-date">01 Nov 2025</div>
-              <h4>Melhor Tuna 2025</h4>
+              <div class="news-card-date">Mai 2024</div>
+              <h4>XXVII Galardões "A Nossa Terra"</h4>
+              <p>A Augustuna atuou nos XXVII Galardões "A Nossa Terra", um evento de referência na região minhota que homenageia personalidades e projetos de destaque.</p>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="cultura">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag">Cultura</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #1a3a2a, #0a1a0a);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="mic-2" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">Dez 2025</div>
+              <h4>Serenata de Natal — Braga</h4>
+              <p>Tradição anual da Augustuna: uma noite de serenatas pelas ruas do centro histórico de Braga, levando a música académica aos bracarenses na época natalícia.</p>
+            </div>
+          </div>
+
+          <div class="news-card-v2" data-category="festival">
+            <div class="news-card-v2-image">
+              <span class="news-card-tag tag-blue">Festival</span>
+              <div
+                style="width:100%;height:100%;background:linear-gradient(135deg, #2A5080, #1B3A5C);display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="globe" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
+              </div>
+            </div>
+            <div class="news-card-v2-body">
+              <div class="news-card-date">Out 2024</div>
+              <h4>Festival Internacional — Barcelona</h4>
+              <p>A Augustuna representou Portugal no festival internacional de tunas em Barcelona, levando a tradição musical bracarense além-fronteiras.</p>
             </div>
           </div>
         </div>

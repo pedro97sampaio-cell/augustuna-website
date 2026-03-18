@@ -35,9 +35,11 @@ function initRouter() {
       // Close mobile menu if open
       const mobile = document.getElementById('navMobile');
       const hamburger = document.getElementById('navHamburger');
+      const overlay = document.getElementById('navMobileOverlay');
       if (mobile && mobile.classList.contains('active')) {
         mobile.classList.remove('active');
         hamburger.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
       }
     }
@@ -161,11 +163,34 @@ function initNavigation() {
 
   // Hamburger toggle
   if (hamburger && mobile) {
+    const overlay = document.getElementById('navMobileOverlay');
+
+    const closeMobile = () => {
+      hamburger.classList.remove('active');
+      mobile.classList.remove('active');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    const openMobile = () => {
+      hamburger.classList.add('active');
+      mobile.classList.add('active');
+      if (overlay) overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobile.classList.toggle('active');
-      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+      if (mobile.classList.contains('active')) {
+        closeMobile();
+      } else {
+        openMobile();
+      }
     });
+
+    // Close on overlay click
+    if (overlay) {
+      overlay.addEventListener('click', closeMobile);
+    }
   }
 }
 
