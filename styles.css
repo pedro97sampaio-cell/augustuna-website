@@ -153,8 +153,8 @@ input, textarea, select { font-family: inherit; }
 /* Logo */
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; z-index: 10; cursor: pointer; }
 .nav-logo-icon {
-  width: 2.5rem; height: 2.5rem;
-  background: linear-gradient(135deg, var(--dourado), var(--dourado-brilho));
+  width: 3rem; height: 3rem;
+  background: #000000;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-weight: 800; font-size: 1rem;
   color: var(--azul-profundo); overflow: hidden;
@@ -252,11 +252,12 @@ input, textarea, select { font-family: inherit; }
   display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: var(--azul-profundo);
   flex-direction: column; align-items: center; justify-content: center;
-  gap: 1.5rem; z-index: 5;
-  overflow-y: auto;
+  gap: 0.75rem; z-index: 5;
+  overflow: hidden;
+  padding: 4rem 2rem;
 }
 .nav-mobile.active { display: flex; }
-.nav-mobile .nav-link { font-size: 1.1rem; }
+.nav-mobile .nav-link { font-size: 1.1rem; padding: 0.4rem 0; }
 
 /* Mobile Dropdown */
 .nav-mobile-dropdown { text-align: center; }
@@ -903,7 +904,8 @@ input, textarea, select { font-family: inherit; }
   color: var(--dourado); letter-spacing: 0.1em;
 }
 .footer-sponsors-grid {
-  display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  display: flex; justify-content: space-evenly; gap: 2rem; flex-wrap: wrap;
+  align-items: flex-start;
 }
 .sponsor-item {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -924,6 +926,33 @@ input, textarea, select { font-family: inherit; }
 .footer-bottom {
   display: flex; justify-content: space-between;
   font-size: 0.75rem; opacity: 0.4;
+}
+
+/* ============================================
+   MUSIC PAGE
+   ============================================ */
+.music-block { margin-bottom: 3rem; }
+.music-block-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+.music-block-header h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--branco-perola); }
+.cancioneiro-highlights { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.cancioneiro-item { display: flex; align-items: center; gap: 0.5rem; color: var(--dourado-claro); font-size: 0.9rem; }
+.albums-grid { display: flex; flex-direction: column; gap: 2rem; }
+.album-card {
+  display: flex; gap: 2rem; align-items: flex-start;
+  background: rgba(27,58,92,0.2); border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 1rem; padding: 1.5rem; transition: var(--transition);
+}
+.album-card:hover { border-color: rgba(201,168,76,0.3); }
+.album-info { flex: 1; min-width: 200px; }
+.album-info h4 { font-family: var(--font-display); font-size: 1.2rem; color: var(--branco-perola); margin-bottom: 0.5rem; }
+.album-info p { font-size: 0.9rem; color: var(--dourado-claro); opacity: 0.7; line-height: 1.6; }
+.album-embed { flex: 2; min-width: 300px; }
+.playlist-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+.playlist-embed { width: 100%; }
+
+@media (max-width: 768px) {
+  .album-card { flex-direction: column; }
+  .album-info, .album-embed { min-width: unset; flex: unset; width: 100%; }
 }
 
 /* ============================================
