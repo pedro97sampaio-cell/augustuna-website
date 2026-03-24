@@ -43,7 +43,7 @@ function initRouter() {
         if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
       }
-      
+
       // Close bottom nav submenus
       const menuSobreNos = document.getElementById('menuSobreNos');
       const menuAtuacoes = document.getElementById('menuAtuacoes');
@@ -428,81 +428,81 @@ function animateCounter(element) {
    MEMBERS DATA & RENDERING
    ============================================ */
 const MEMBERS_DATA = [
-  {name:"Carlos Manuel Fernandes da Silva",alcunha:"Pamelo",instrumento:"Braguesa",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Maria João Barbosa da Silva Martins",alcunha:"General",instrumento:"Estandarte",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Fernando Miguel Brito Faria",alcunha:"Aranha",instrumento:"Bandolim",evento:"Fundação",data:"1996-02-28",curso:"Engenharia de Materiais",geracao:"Fundadores"},
-  {name:"Filipe Alexandre Hipólito Proença Caiado Márcia",alcunha:"Piçalho",instrumento:"Guitarra",evento:"Fundação",data:"1996-02-28",curso:"Engenharia de Materiais",geracao:"Fundadores"},
-  {name:"João Manuel Araújo Cruz",alcunha:"Krika",instrumento:"Guitarra",evento:"Fundação",data:"1996-02-28",curso:"Sociologia",geracao:"Fundadores"},
-  {name:"José Carlos Ferreira da Silva",alcunha:"Balastro",instrumento:"Voz",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Carlos Alberto Moreira de Araújo",alcunha:"Jumbo",instrumento:"Guitarra",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Maria de Fátima Duarte Ferreira",alcunha:"Pinypon",instrumento:"Guitarra",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Jorge Manuel Campos Pinto",alcunha:"60 Litros",instrumento:"Bandola",evento:"Fundação",data:"1996-02-28",curso:"Economia",geracao:"Fundadores"},
-  {name:"Maria Vitória Sampaio de Carvalho Antunes",alcunha:"Corvo",instrumento:"Contrabaixo",evento:"Fundação",data:"1996-10-01",curso:"Economia",geracao:"Fundadores"},
-  {name:"Regina Isabel da Mota Carneiro",alcunha:"Mémé",instrumento:"Guitarra",evento:"Fundação",data:"1996-02-28",curso:"Ensino Português - Inglês",geracao:"Fundadores"},
-  {name:"Alexandra Maria Costa Duarte",alcunha:"Bocas",instrumento:"Pandeireta",evento:"Récita",data:"1998-12-01",curso:"Ensino Português - Inglês",geracao:"2ª Geração"},
-  {name:"Catarina Adelaide Fernandes Fonseca",alcunha:"Rancha",instrumento:"Acordeão",evento:"Récita",data:"1998-12-01",curso:"Comunicação Social",geracao:"2ª Geração"},
-  {name:"Mara Helena Ferreira da Silva Dória",alcunha:"Chicla",instrumento:"Cavaquinho",evento:"Récita",data:"1998-12-01",curso:"Engenharia de Materiais/Geologia",geracao:"2ª Geração"},
-  {name:"Pedro Henrique Rodrigues Vale",alcunha:"Laurindo",instrumento:"Guitarra",evento:"Récita",data:"1998-12-01",curso:"Direito",geracao:"2ª Geração"},
-  {name:"João Paulo Paupério",alcunha:"Tarrafal",instrumento:"Pandeireta",evento:"Sala da Tuna",data:"1999-01-01",curso:"Relações Internacionais",geracao:"2ª Geração"},
-  {name:"Sónia Raquel da Costa Marques",alcunha:"XIU",instrumento:"Acordeão",evento:"",data:"2000-01-01",curso:"Comunicação Social",geracao:"3ª Geração"},
-  {name:"Ana Maria Fernandes dos Santos Oliveira",alcunha:"Pissup",instrumento:"Braguesa",evento:"Velório da Gata",data:"2000-01-01",curso:"Direito",geracao:"3ª Geração"},
-  {name:"Miguel Ângelo Martins da Silva Rêgo",alcunha:"Cisterna",instrumento:"Voz",evento:"Tuno Convidado",data:"2003-01-01",curso:"Engenharia Agrícola/Biologia Aplicada",geracao:"4ª Geração"},
-  {name:"Rui Nuno Calisto Araujo de Melo",alcunha:"Mijeira",instrumento:"Pandeireta",evento:"Tuno Convidado",data:"2003-01-01",curso:"Engenharia Mecânica",geracao:"4ª Geração"},
-  {name:"Pedro Miguel Azevedo Paredes",alcunha:"Dromedário",instrumento:"Guitarra",evento:"Tuno Convidado",data:"2003-01-01",curso:"Ensino de Biologia e Geologia",geracao:"4ª Geração"},
-  {name:"Hélder Daniel Ribeiro de Carvalho",alcunha:"Jagunço",instrumento:"Estandarte",evento:"VII Festival do ISMAI",data:"2003-11-20",curso:"Gestão",geracao:"4ª Geração"},
-  {name:"António Castro",alcunha:"Falo",instrumento:"Acordeão",evento:"",data:"2004-01-01",curso:"Física",geracao:"5ª Geração"},
-  {name:"André Costa Cardoso",alcunha:"Bexiga",instrumento:"Contrabaixo",evento:"",data:"2004-12-09",curso:"Relações Internacionais",geracao:"5ª Geração"},
-  {name:"Vasco Martins",alcunha:"Sacas",instrumento:"Bandolim",evento:"",data:"2004-12-09",curso:"Relações Internacionais",geracao:"5ª Geração"},
-  {name:"Luís Filipe Pinto Pereira",alcunha:"Múmia",instrumento:"Guitarra",evento:"Récita",data:"2005-12-01",curso:"Arqueologia",geracao:"6ª Geração"},
-  {name:"Afonso João Esteves Pizarro Dias",alcunha:"Rabeca",instrumento:"Violino",evento:"Jantar do Caloiro",data:"2006-10-11",curso:"Relações Internacionais",geracao:"7ª Geração"},
-  {name:"Emanuel de Oliveira",alcunha:"Bush",instrumento:"Percussão",evento:"XI Aniversário da Tuna",data:"2007-03-02",curso:"Gestão",geracao:"8ª Geração"},
-  {name:"Fernando Almeida Martins",alcunha:"Tachas",instrumento:"Trompete",evento:"I CIRTAV",data:"2007-06-10",curso:"Relações Internacionais",geracao:"8ª Geração"},
-  {name:"Ricardo Emanuel Agostinho Coelho",alcunha:"George Michael",instrumento:"Contrabaixo",evento:"Récita",data:"2013-12-01",curso:"Línguas e Culturas Orientais",geracao:"10ª Geração"},
-  {name:"José Rafael Azevedo Teixeira Gonçalves",alcunha:"Profeta",instrumento:"Guitarra",evento:"Récita",data:"2013-12-01",curso:"Ciência Política",geracao:"10ª Geração"},
-  {name:"Carlos Filipe Mesquita Teixeira",alcunha:"Passos Recluso",instrumento:"Guitarra",evento:"Récita",data:"2013-12-01",curso:"Psicologia",geracao:"10ª Geração"},
-  {name:"Diogo Alberto Ferreira Lima",alcunha:"Pito",instrumento:"Bandolim",evento:"Receção ao Caloiro",data:"2014-10-04",curso:"Psicologia",geracao:"11ª Geração"},
-  {name:"Nuno Miguel Mota Pereira",alcunha:"Phineas",instrumento:"Bandolim",evento:"Receção ao Caloiro",data:"2014-10-04",curso:"Relações Internacionais",geracao:"11ª Geração"},
-  {name:"Vitor Hugo Simões da Silva",alcunha:"Assandes",instrumento:"Guitarra",evento:"Récita",data:"2014-12-01",curso:"Línguas e Culturas Orientais",geracao:"11ª Geração"},
-  {name:"Flávio António Silva Ferreira",alcunha:"Kirk",instrumento:"Braguesa",evento:"Récita",data:"2014-12-01",curso:"Engenharia Civil",geracao:"11ª Geração"},
-  {name:"Eduardo Luís Carvalho Ferreira",alcunha:"Marco Paulo",instrumento:"Cavaquinho",evento:"Receção ao Caloiro",data:"2014-10-04",curso:"Direito",geracao:"11ª Geração"},
-  {name:"Miguel Duarte Gonçalves Fontoura",alcunha:"Centoura",instrumento:"Acordeão",evento:"Récita",data:"2016-12-01",curso:"Administração Pública",geracao:"12ª Geração"},
-  {name:"Paulo Virgílio Gonçalves Fernandes Diz",alcunha:"Silvas",instrumento:"Voz",evento:"Récita",data:"2016-12-01",curso:"Línguas e Culturas Orientais",geracao:"12ª Geração"},
-  {name:"Dário Castro Dias",alcunha:"Borbogoucha",instrumento:"Percussão",evento:"Festa do Semina",data:"2017-02-14",curso:"Administração Pública",geracao:"13ª Geração"},
-  {name:"Pedro Moreira Ferraz",alcunha:"Zé Miguel",instrumento:"Bandolim",evento:"Enterro da Gata",data:"2017-05-16",curso:"Direito",geracao:"13ª Geração"},
-  {name:"Gonçalo Martins de Matos",alcunha:"Badjoraz",instrumento:"Voz/Cavaquinho",evento:"Enterro da Gata",data:"2017-05-16",curso:"Direito",geracao:"13ª Geração"},
-  {name:"Daniel Diaz Costa",alcunha:"Cont'Aquela",instrumento:"Braguesa",evento:"III Magna Augusta",data:"2018-03-17",curso:"Engenharia Mecânica",geracao:"14ª Geração"},
-  {name:"João Filipe da Silva Barros",alcunha:"Envergonhado",instrumento:"Guitarra",evento:"III Magna Augusta",data:"2018-03-17",curso:"Filosofia",geracao:"14ª Geração"},
-  {name:"Afonso Miguel Capela Reis Oliveira Arantes",alcunha:"Esquivas",instrumento:"Bandolim",evento:"III Magna Augusta",data:"2018-03-17",curso:"Engenharia Mecânica",geracao:"14ª Geração"},
-  {name:"António Pedro Carvalho Moreira",alcunha:"Beijo Negro",instrumento:"Guitarra",evento:"Receção ao Caloiro",data:"2018-10-04",curso:"Negócios Internacionais",geracao:"14ª Geração"},
-  {name:"Diogo Miguel Rodrigues de Almeida",alcunha:"Rolhão",instrumento:"Percussão",evento:"Receção ao Caloiro",data:"2018-10-04",curso:"Marketing",geracao:"14ª Geração"},
-  {name:"David Pires Barbosa",alcunha:"Dona Teresa",instrumento:"Estandarte",evento:"Récita",data:"2018-12-01",curso:"Engenharia de Sistemas & Informática",geracao:"14ª Geração"},
-  {name:"Pedro Afonso Dordio Pedras",alcunha:"Mito",instrumento:"Bandolim",evento:"IV Magna Augusta",data:"2019-03-22",curso:"Negócios Internacionais",geracao:"15ª Geração"},
-  {name:"João Francisco Vieira Marques Charréu",alcunha:"Caguei",instrumento:"Pandeireta",evento:"IV Magna Augusta",data:"2019-03-22",curso:"Filosofia",geracao:"15ª Geração"},
-  {name:"João Carlos do Ouro Peixoto Alves Pereira",alcunha:"Paraquedista",instrumento:"Estandarte",evento:"IV Magna Augusta",data:"2019-03-22",curso:"Ciências do Ambiente",geracao:"15ª Geração"},
-  {name:"Daniel Filipe Almeida Couto Correia Dias",alcunha:"Esporras",instrumento:"Bandolim",evento:"XI Collipo",data:"2020-03-06",curso:"Engenharia Biológica",geracao:"16ª Geração"},
-  {name:"António Pedro Gonçalves Pereira",alcunha:"Baby Jesus",instrumento:"Acordeão",evento:"Retiro",data:"2021-07-17",curso:"Engenharia Física",geracao:"17ª Geração"},
-  {name:"Elízio Maria Oliveira Verdial",alcunha:"Finch",instrumento:"Guitarra",evento:"Retiro",data:"2021-07-17",curso:"Direito",geracao:"17ª Geração"},
-  {name:"Igor José Ramalho Rodrigues",alcunha:"Finoco",instrumento:"Pandeireta",evento:"Retiro",data:"2021-07-17",curso:"História",geracao:"17ª Geração"},
-  {name:"Diogo Filipe Braga Baptista",alcunha:"Postas",instrumento:"Contrabaixo",evento:"Retiro",data:"2021-07-17",curso:"Gestão",geracao:"17ª Geração"},
-  {name:"José João Cardoso Simões Araújo",alcunha:"Yoda",instrumento:"Braguesa",evento:"Retiro",data:"2021-07-17",curso:"Ciências do Ambiente",geracao:"17ª Geração"},
-  {name:"Adão Fernandes Rocha",alcunha:"À Porta",instrumento:"Pandeireta",evento:"Receção ao Caloiro",data:"2021-11-04",curso:"Química",geracao:"17ª Geração"},
-  {name:"Afonso Quintas Costeira",alcunha:"Tou",instrumento:"Percussão",evento:"Receção ao Caloiro",data:"2021-11-04",curso:"Física",geracao:"17ª Geração"},
-  {name:"José Pedro Sampaio Cunha",alcunha:"Eco-Escroto",instrumento:"Contrabaixo",evento:"V Magna Augusta",data:"2022-03-25",curso:"Física",geracao:"18ª Geração"},
-  {name:"Dionísio Emanuel Piairo Pereira",alcunha:"Lam'Cona",instrumento:"Bandolim",evento:"Enterro da Gata",data:"2022-05-08",curso:"História",geracao:"18ª Geração"},
-  {name:"Rui Pedro Magalhães Torres",alcunha:"Avenger",instrumento:"Bandolim",evento:"Receção ao Caloiro",data:"2022-10-13",curso:"Ciências da Computação",geracao:"18ª Geração"},
-  {name:"Fábio Martins Branquinho",alcunha:"Erudito",instrumento:"Estandarte",evento:"Récita",data:"2022-11-30",curso:"Arqueologia",geracao:"18ª Geração"},
-  {name:"David Gonçalo Lemos Oliveira",alcunha:"Sheik",instrumento:"Cajón",evento:"Récita",data:"2022-11-30",curso:"História",geracao:"18ª Geração"},
-  {name:"André Lopes Domingues",alcunha:"Timão",instrumento:"Bandolim",evento:"Récita",data:"2022-11-30",curso:"Arqueologia",geracao:"18ª Geração"},
-  {name:"Bruno Francisco Carneiro de Vilhena Dias",alcunha:"Escondidinhas",instrumento:"Pandeireta",evento:"VI Magna Augusta",data:"2023-03-10",curso:"História",geracao:"19ª Geração"},
-  {name:"José Filipe da Costa Ribeiro",alcunha:"Popeye",instrumento:"Guitarra",evento:"VI Magna Augusta",data:"2023-03-10",curso:"Administração Pública",geracao:"19ª Geração"},
-  {name:"António Miguel Ribeiro de Freitas Mendes",alcunha:"SARS",instrumento:"Guitarra",evento:"VI Magna Augusta",data:"2023-03-10",curso:"História",geracao:"19ª Geração"},
-  {name:"Guilherme Oliveira de Lourdes Coutinho",alcunha:"Alijó",instrumento:"Pandeireta",evento:"Enterro da Gata",data:"2023-05-07",curso:"Química",geracao:"19ª Geração"},
-  {name:"Gonçalo Guimarães de Sequeira Braga",alcunha:"Jolinhas",instrumento:"Cavaquinho",evento:"Receção ao Caloiro",data:"2023-09-28",curso:"Engenharia Biológica",geracao:"19ª Geração"},
-  {name:"Pedro Ilídio Lemos Freitas",alcunha:"Grego",instrumento:"Pandeireta",evento:"Receção ao Caloiro",data:"2023-09-28",curso:"História",geracao:"19ª Geração"},
-  {name:"Diogo João Santos Brito",alcunha:"Placona",instrumento:"Estandarte",evento:"Récita",data:"2023-11-30",curso:"Arqueologia",geracao:"20ª Geração"}
+  { name: "Carlos Manuel Fernandes da Silva", alcunha: "Pamelo", instrumento: "Braguesa", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Maria João Barbosa da Silva Martins", alcunha: "General", instrumento: "Estandarte", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Fernando Miguel Brito Faria", alcunha: "Aranha", instrumento: "Bandolim", evento: "Fundação", data: "1996-02-28", curso: "Engenharia de Materiais", geracao: "Fundadores" },
+  { name: "Filipe Alexandre Hipólito Proença Caiado Márcia", alcunha: "Piçalho", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Engenharia de Materiais", geracao: "Fundadores" },
+  { name: "João Manuel Araújo Cruz", alcunha: "Krika", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Sociologia", geracao: "Fundadores" },
+  { name: "José Carlos Ferreira da Silva", alcunha: "Balastro", instrumento: "Voz", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Carlos Alberto Moreira de Araújo", alcunha: "Jumbo", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Maria de Fátima Duarte Ferreira", alcunha: "Pinypon", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Jorge Manuel Campos Pinto", alcunha: "60 Litros", instrumento: "Bandola", evento: "Fundação", data: "1996-02-28", curso: "Economia", geracao: "Fundadores" },
+  { name: "Maria Vitória Sampaio de Carvalho Antunes", alcunha: "Corvo", instrumento: "Contrabaixo", evento: "Fundação", data: "1996-10-01", curso: "Economia", geracao: "Fundadores" },
+  { name: "Regina Isabel da Mota Carneiro", alcunha: "Mémé", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
+  { name: "Alexandra Maria Costa Duarte", alcunha: "Bocas", instrumento: "Pandeireta", evento: "Récita", data: "1998-12-01", curso: "Ensino Português - Inglês", geracao: "2ª Geração" },
+  { name: "Catarina Adelaide Fernandes Fonseca", alcunha: "Rancha", instrumento: "Acordeão", evento: "Récita", data: "1998-12-01", curso: "Comunicação Social", geracao: "2ª Geração" },
+  { name: "Mara Helena Ferreira da Silva Dória", alcunha: "Chicla", instrumento: "Cavaquinho", evento: "Récita", data: "1998-12-01", curso: "Engenharia de Materiais/Geologia", geracao: "2ª Geração" },
+  { name: "Pedro Henrique Rodrigues Vale", alcunha: "Laurindo", instrumento: "Guitarra", evento: "Récita", data: "1998-12-01", curso: "Direito", geracao: "2ª Geração" },
+  { name: "João Paulo Paupério", alcunha: "Tarrafal", instrumento: "Pandeireta", evento: "Sala da Tuna", data: "1999-01-01", curso: "Relações Internacionais", geracao: "2ª Geração" },
+  { name: "Sónia Raquel da Costa Marques", alcunha: "XIU", instrumento: "Acordeão", evento: "", data: "2000-01-01", curso: "Comunicação Social", geracao: "3ª Geração" },
+  { name: "Ana Maria Fernandes dos Santos Oliveira", alcunha: "Pissup", instrumento: "Braguesa", evento: "Velório da Gata", data: "2000-01-01", curso: "Direito", geracao: "3ª Geração" },
+  { name: "Miguel Ângelo Martins da Silva Rêgo", alcunha: "Cisterna", instrumento: "Voz", evento: "Tuno Convidado", data: "2003-01-01", curso: "Engenharia Agrícola/Biologia Aplicada", geracao: "4ª Geração" },
+  { name: "Rui Nuno Calisto Araujo de Melo", alcunha: "Mijeira", instrumento: "Pandeireta", evento: "Tuno Convidado", data: "2003-01-01", curso: "Engenharia Mecânica", geracao: "4ª Geração" },
+  { name: "Pedro Miguel Azevedo Paredes", alcunha: "Dromedário", instrumento: "Guitarra", evento: "Tuno Convidado", data: "2003-01-01", curso: "Ensino de Biologia e Geologia", geracao: "4ª Geração" },
+  { name: "Hélder Daniel Ribeiro de Carvalho", alcunha: "Jagunço", instrumento: "Estandarte", evento: "VII Festival do ISMAI", data: "2003-11-20", curso: "Gestão", geracao: "4ª Geração" },
+  { name: "António Castro", alcunha: "Falo", instrumento: "Acordeão", evento: "", data: "2004-01-01", curso: "Física", geracao: "5ª Geração" },
+  { name: "André Costa Cardoso", alcunha: "Bexiga", instrumento: "Contrabaixo", evento: "", data: "2004-12-09", curso: "Relações Internacionais", geracao: "5ª Geração" },
+  { name: "Vasco Martins", alcunha: "Sacas", instrumento: "Bandolim", evento: "", data: "2004-12-09", curso: "Relações Internacionais", geracao: "5ª Geração" },
+  { name: "Luís Filipe Pinto Pereira", alcunha: "Múmia", instrumento: "Guitarra", evento: "Récita", data: "2005-12-01", curso: "Arqueologia", geracao: "6ª Geração" },
+  { name: "Afonso João Esteves Pizarro Dias", alcunha: "Rabeca", instrumento: "Violino", evento: "Jantar do Caloiro", data: "2006-10-11", curso: "Relações Internacionais", geracao: "7ª Geração" },
+  { name: "Emanuel de Oliveira", alcunha: "Bush", instrumento: "Percussão", evento: "XI Aniversário da Tuna", data: "2007-03-02", curso: "Gestão", geracao: "8ª Geração" },
+  { name: "Fernando Almeida Martins", alcunha: "Tachas", instrumento: "Trompete", evento: "I CIRTAV", data: "2007-06-10", curso: "Relações Internacionais", geracao: "8ª Geração" },
+  { name: "Ricardo Emanuel Agostinho Coelho", alcunha: "George Michael", instrumento: "Contrabaixo", evento: "Récita", data: "2013-12-01", curso: "Línguas e Culturas Orientais", geracao: "10ª Geração" },
+  { name: "José Rafael Azevedo Teixeira Gonçalves", alcunha: "Profeta", instrumento: "Guitarra", evento: "Récita", data: "2013-12-01", curso: "Ciência Política", geracao: "10ª Geração" },
+  { name: "Carlos Filipe Mesquita Teixeira", alcunha: "Passos Recluso", instrumento: "Guitarra", evento: "Récita", data: "2013-12-01", curso: "Psicologia", geracao: "10ª Geração" },
+  { name: "Diogo Alberto Ferreira Lima", alcunha: "Pito", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Psicologia", geracao: "11ª Geração" },
+  { name: "Nuno Miguel Mota Pereira", alcunha: "Phineas", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Relações Internacionais", geracao: "11ª Geração" },
+  { name: "Vitor Hugo Simões da Silva", alcunha: "Assandes", instrumento: "Guitarra", evento: "Récita", data: "2014-12-01", curso: "Línguas e Culturas Orientais", geracao: "11ª Geração" },
+  { name: "Flávio António Silva Ferreira", alcunha: "Kirk", instrumento: "Braguesa", evento: "Récita", data: "2014-12-01", curso: "Engenharia Civil", geracao: "11ª Geração" },
+  { name: "Eduardo Luís Carvalho Ferreira", alcunha: "Marco Paulo", instrumento: "Cavaquinho", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Direito", geracao: "11ª Geração" },
+  { name: "Miguel Duarte Gonçalves Fontoura", alcunha: "Centoura", instrumento: "Acordeão", evento: "Récita", data: "2016-12-01", curso: "Administração Pública", geracao: "12ª Geração" },
+  { name: "Paulo Virgílio Gonçalves Fernandes Diz", alcunha: "Silvas", instrumento: "Voz", evento: "Récita", data: "2016-12-01", curso: "Línguas e Culturas Orientais", geracao: "12ª Geração" },
+  { name: "Dário Castro Dias", alcunha: "Borbogoucha", instrumento: "Percussão", evento: "Festa do Semina", data: "2017-02-14", curso: "Administração Pública", geracao: "13ª Geração" },
+  { name: "Pedro Moreira Ferraz", alcunha: "Zé Miguel", instrumento: "Bandolim", evento: "Enterro da Gata", data: "2017-05-16", curso: "Direito", geracao: "13ª Geração" },
+  { name: "Gonçalo Martins de Matos", alcunha: "Badjoraz", instrumento: "Voz/Cavaquinho", evento: "Enterro da Gata", data: "2017-05-16", curso: "Direito", geracao: "13ª Geração" },
+  { name: "Daniel Diaz Costa", alcunha: "Cont'Aquela", instrumento: "Braguesa", evento: "III Magna Augusta", data: "2018-03-17", curso: "Engenharia Mecânica", geracao: "14ª Geração" },
+  { name: "João Filipe da Silva Barros", alcunha: "Envergonhado", instrumento: "Guitarra", evento: "III Magna Augusta", data: "2018-03-17", curso: "Filosofia", geracao: "14ª Geração" },
+  { name: "Afonso Miguel Capela Reis Oliveira Arantes", alcunha: "Esquivas", instrumento: "Bandolim", evento: "III Magna Augusta", data: "2018-03-17", curso: "Engenharia Mecânica", geracao: "14ª Geração" },
+  { name: "António Pedro Carvalho Moreira", alcunha: "Beijo Negro", instrumento: "Guitarra", evento: "Receção ao Caloiro", data: "2018-10-04", curso: "Negócios Internacionais", geracao: "14ª Geração" },
+  { name: "Diogo Miguel Rodrigues de Almeida", alcunha: "Rolhão", instrumento: "Percussão", evento: "Receção ao Caloiro", data: "2018-10-04", curso: "Marketing", geracao: "14ª Geração" },
+  { name: "David Pires Barbosa", alcunha: "Dona Teresa", instrumento: "Estandarte", evento: "Récita", data: "2018-12-01", curso: "Engenharia de Sistemas & Informática", geracao: "14ª Geração" },
+  { name: "Pedro Afonso Dordio Pedras", alcunha: "Mito", instrumento: "Bandolim", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Negócios Internacionais", geracao: "15ª Geração" },
+  { name: "João Francisco Vieira Marques Charréu", alcunha: "Caguei", instrumento: "Pandeireta", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Filosofia", geracao: "15ª Geração" },
+  { name: "João Carlos do Ouro Peixoto Alves Pereira", alcunha: "Paraquedista", instrumento: "Estandarte", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Ciências do Ambiente", geracao: "15ª Geração" },
+  { name: "Daniel Filipe Almeida Couto Correia Dias", alcunha: "Esporras", instrumento: "Bandolim", evento: "XI Collipo", data: "2020-03-06", curso: "Engenharia Biológica", geracao: "16ª Geração" },
+  { name: "António Pedro Gonçalves Pereira", alcunha: "Baby Jesus", instrumento: "Acordeão", evento: "Retiro", data: "2021-07-17", curso: "Engenharia Física", geracao: "17ª Geração" },
+  { name: "Elízio Maria Oliveira Verdial", alcunha: "Finch", instrumento: "Guitarra", evento: "Retiro", data: "2021-07-17", curso: "Direito", geracao: "17ª Geração" },
+  { name: "Igor José Ramalho Rodrigues", alcunha: "Finoco", instrumento: "Pandeireta", evento: "Retiro", data: "2021-07-17", curso: "História", geracao: "17ª Geração" },
+  { name: "Diogo Filipe Braga Baptista", alcunha: "Postas", instrumento: "Contrabaixo", evento: "Retiro", data: "2021-07-17", curso: "Gestão", geracao: "17ª Geração" },
+  { name: "José João Cardoso Simões Araújo", alcunha: "Yoda", instrumento: "Braguesa", evento: "Retiro", data: "2021-07-17", curso: "Ciências do Ambiente", geracao: "17ª Geração" },
+  { name: "Adão Fernandes Rocha", alcunha: "À Porta", instrumento: "Pandeireta", evento: "Receção ao Caloiro", data: "2021-11-04", curso: "Química", geracao: "17ª Geração" },
+  { name: "Afonso Quintas Costeira", alcunha: "Tou", instrumento: "Percussão", evento: "Receção ao Caloiro", data: "2021-11-04", curso: "Física", geracao: "17ª Geração" },
+  { name: "José Pedro Sampaio Cunha", alcunha: "Eco-Escroto", instrumento: "Contrabaixo", evento: "V Magna Augusta", data: "2022-03-25", curso: "Física", geracao: "18ª Geração" },
+  { name: "Dionísio Emanuel Piairo Pereira", alcunha: "Lam'Cona", instrumento: "Bandolim", evento: "Enterro da Gata", data: "2022-05-08", curso: "História", geracao: "18ª Geração" },
+  { name: "Rui Pedro Magalhães Torres", alcunha: "Avenger", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2022-10-13", curso: "Ciências da Computação", geracao: "18ª Geração" },
+  { name: "Fábio Martins Branquinho", alcunha: "Erudito", instrumento: "Estandarte", evento: "Récita", data: "2022-11-30", curso: "Arqueologia", geracao: "18ª Geração" },
+  { name: "David Gonçalo Lemos Oliveira", alcunha: "Sheik", instrumento: "Cajón", evento: "Récita", data: "2022-11-30", curso: "História", geracao: "18ª Geração" },
+  { name: "André Lopes Domingues", alcunha: "Timão", instrumento: "Bandolim", evento: "Récita", data: "2022-11-30", curso: "Arqueologia", geracao: "18ª Geração" },
+  { name: "Bruno Francisco Carneiro de Vilhena Dias", alcunha: "Escondidinhas", instrumento: "Pandeireta", evento: "VI Magna Augusta", data: "2023-03-10", curso: "História", geracao: "19ª Geração" },
+  { name: "José Filipe da Costa Ribeiro", alcunha: "Popeye", instrumento: "Guitarra", evento: "VI Magna Augusta", data: "2023-03-10", curso: "Administração Pública", geracao: "19ª Geração" },
+  { name: "António Miguel Ribeiro de Freitas Mendes", alcunha: "SARS", instrumento: "Guitarra", evento: "VI Magna Augusta", data: "2023-03-10", curso: "História", geracao: "19ª Geração" },
+  { name: "Guilherme Oliveira de Lourdes Coutinho", alcunha: "Alijó", instrumento: "Pandeireta", evento: "Enterro da Gata", data: "2023-05-07", curso: "Química", geracao: "19ª Geração" },
+  { name: "Gonçalo Guimarães de Sequeira Braga", alcunha: "Jolinhas", instrumento: "Cavaquinho", evento: "Receção ao Caloiro", data: "2023-09-28", curso: "Engenharia Biológica", geracao: "19ª Geração" },
+  { name: "Pedro Ilídio Lemos Freitas", alcunha: "Grego", instrumento: "Pandeireta", evento: "Receção ao Caloiro", data: "2023-09-28", curso: "História", geracao: "19ª Geração" },
+  { name: "Diogo João Santos Brito", alcunha: "Placona", instrumento: "Estandarte", evento: "Récita", data: "2023-11-30", curso: "Arqueologia", geracao: "20ª Geração" }
 ];
 
-const GENERATION_ORDER = ['Fundadores','2ª Geração','3ª Geração','4ª Geração','5ª Geração','6ª Geração','7ª Geração','8ª Geração','9ª Geração','10ª Geração','11ª Geração','12ª Geração','13ª Geração','14ª Geração','15ª Geração','16ª Geração','17ª Geração','18ª Geração','19ª Geração','20ª Geração','21ª Geração'];
+const GENERATION_ORDER = ['Fundadores', '2ª Geração', '3ª Geração', '4ª Geração', '5ª Geração', '6ª Geração', '7ª Geração', '8ª Geração', '9ª Geração', '10ª Geração', '11ª Geração', '12ª Geração', '13ª Geração', '14ª Geração', '15ª Geração', '16ª Geração', '17ª Geração', '18ª Geração', '19ª Geração', '20ª Geração', '21ª Geração'];
 
 let activeGenFilters = [];
 let activeInstFilters = [];
@@ -645,12 +645,12 @@ function initGenericTabs() {
   tabGroups.forEach(group => {
     const tabs = group.querySelectorAll('.generic-tab');
     const contents = group.querySelectorAll('.generic-tab-content');
-    
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        
+
         const targetId = tab.dataset.target;
         contents.forEach(content => {
           if (content.id === targetId) {
