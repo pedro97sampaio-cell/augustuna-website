@@ -263,7 +263,7 @@ select {
 .nav-logo-icon {
   width: 2.55rem;
   height: 2.55rem;
-  background: #000000;
+  background: transparent;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -815,6 +815,10 @@ select {
   flex-wrap: wrap;
 }
 
+.hero-actions .btn {
+  width: 280px;
+}
+
 .hero-scroll {
   position: absolute;
   bottom: 2rem;
@@ -907,8 +911,6 @@ select {
   margin-bottom: 4rem;
   padding: 2.5rem;
   border-radius: 1rem;
-  background: rgba(27, 58, 92, 0.2);
-  border: 1px solid rgba(201, 168, 76, 0.1);
 }
 
 .hero-stat {
@@ -1667,6 +1669,11 @@ select {
   font-size: 0.9rem;
   transition: var(--transition);
   color: var(--azul-profundo);
+}
+
+.form-group textarea {
+  border-radius: 12px;
+  resize: vertical;
 }
 
 .form-group input:focus,
