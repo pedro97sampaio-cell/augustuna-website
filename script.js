@@ -6,7 +6,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Lucide icons
   if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+    try {
+      lucide.createIcons();
+    } catch(err) {
+      console.warn('Alguns ícones Lucide não foram carregados:', err);
+    }
   }
 
   initRouter();
@@ -123,7 +127,8 @@ function updateActiveNav(page) {
     'membros': 'sobre-nos',
     'musica': 'sobre-nos',
     'magna-augusta': 'sobre-nos',
-    'festivais': 'atuacoes',
+    'festivais-concurso': 'atuacoes',
+    'festivais-convite': 'atuacoes',
     'outras-atuacoes': 'atuacoes'
   };
 
