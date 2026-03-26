@@ -14,62 +14,26 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: #F5F0E8; /* Fundo base bege caso a imagem demore */
+      background-color: #F5F0E8; /* Ajuste para o fundo dar continuidade à imagem */
       overflow: hidden;
-      font-family: 'Inter', sans-serif;
     }
 
     .error-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: block;
       width: 100%;
       height: 100%;
       background-image: url('error 404.png');
       background-size: cover;
-      background-position: center bottom;
+      background-position: center;
       background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      padding-bottom: 35vh; /* Levanta o botão bastante para fugir aos olhos do cone */
-    }
-
-    .btn-goback {
-      padding: 15px 40px;
-      background-color: #C9A84C;
-      color: #0A1628;
-      text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 50px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      z-index: 10;
-    }
-
-    .btn-goback:hover {
-      transform: translateY(-5px) scale(1.05);
-      background-color: #F0C54D;
-      box-shadow: 0 8px 25px rgba(201, 168, 76, 0.5);
-    }
-    
-    @media (max-width: 768px) {
-      .error-bg {
-        padding-bottom: 40vh; /* No telemóvel ainda um pouco mais acima */
-      }
-      .btn-goback {
-        padding: 12px 30px;
-        font-size: 1rem;
-      }
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div class="error-bg">
-    <a href="index.html" class="btn-goback">Voltar à Página Inicial</a>
-  </div>
+  <!-- A imagem preenche a tela inteira. Clicar em qualquer lado leva ao ecrã inicial. -->
+  <a href="index.html" class="error-bg" title="Voltar à Página Inicial"></a>
 
 </body>
 </html>
