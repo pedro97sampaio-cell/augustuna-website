@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erro 404 - Farricoco Runner | Augustuna</title>
-    <link rel="icon" type="image/x-icon" href="Logo oficial 2.png">
+    <title>Farricoco Runner - Estilo Chrome</title>
     <style>
         body {
             margin: 0;
@@ -12,36 +11,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             height: 100vh;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
             color: #535353;
         }
 
-        .btn-back {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            text-decoration: none;
-            color: #535353;
-            border: 2px solid #535353;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.2s;
-            z-index: 1000;
-        }
-        .btn-back:hover {
-            background-color: #535353;
-            color: #f7f7f7;
-        }
-
         #game-container {
             position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 250px;
+            width: 800px;
+            height: 200px; /* Mais baixo como o original */
             background-color: #f7f7f7;
             overflow: hidden;
             user-select: none;
@@ -80,7 +59,7 @@
         #player {
             position: absolute;
             bottom: 22px;
-            left: 50px;
+            left: 100px;
             width: 36px;
             height: 55px;
             z-index: 10;
@@ -138,13 +117,6 @@
             font-weight: bold;
         }
 
-        .instructions {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-        }
-
         #game-over {
             display: none;
             position: absolute;
@@ -158,30 +130,13 @@
             background: none;
             border: 2px solid #535353;
             color: #535353;
-            padding: 8px 15px;
+            padding: 5px 15px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 10px;
-        }
-        button:hover {
-            background: #535353;
-            color: #f7f7f7;
-        }
-        
-        @media (max-width: 600px) {
-            #game-container {
-                height: 300px;
-            }
-            .instructions {
-                font-size: 12px;
-                padding: 0 20px;
-            }
         }
     </style>
 </head>
 <body>
-
-    <a href="index.html" class="btn-back">&larr; Voltar ao Ritmo</a>
 
     <div id="game-container">
         <div id="score">00000</div>
@@ -194,14 +149,9 @@
             </div>
         </div>
         <div id="game-over">
-            <h1 style="letter-spacing: 5px; margin-bottom: 5px;">G A M E  O V E R</h1>
-            <button onclick="restart()">REINICIAR ENSAIO</button>
+            <h1 style="letter-spacing: 5px;">G A M E  O V E R</h1>
+            <button onclick="restart()">RESTART</button>
         </div>
-    </div>
-    
-    <div class="instructions">
-        Pressiona <strong>ESPAÇO</strong> ou <strong>TOCA NO ECRÃ</strong> para saltar.<br>
-        Ajuda o Farricoco a saltar os finos!
     </div>
 
 <script>
@@ -228,7 +178,7 @@
         for(let i=0; i<15; i++) {
             let d = document.createElement('div');
             d.className = 'ground-detail';
-            d.style.left = Math.random() * container.offsetWidth + 'px';
+            d.style.left = Math.random() * 800 + 'px';
             d.style.bottom = (10 + Math.random() * 10) + 'px';
             container.appendChild(d);
         }
@@ -250,12 +200,14 @@
         for(let i=0; i<group; i++) {
             const b = document.createElement('div');
             b.className = 'bottle';
-            b.style.left = (container.offsetWidth + 50 + (i * 15)) + 'px';
+            b.style.left = (850 + (i * 15)) + 'px';
             b.innerHTML = '<div class="b-neck"></div><div class="b-body"></div>';
             container.appendChild(b);
             state.obstacles.push(b);
         }
 
+        // Aleatoriedade da distância: Base fixa + um valor random grande
+        // O intervalo diminui conforme a velocidade aumenta para manter o desafio
         let baseInterval = 80 / (state.speed / 6);
         state.spawnTimer = baseInterval + Math.random() * 100;
     }
@@ -289,7 +241,7 @@
             let pRect = player.getBoundingClientRect();
             let bRect = b.getBoundingClientRect();
 
-            // Colisão Generosa
+            // Colisão (ajustada para ser generosa como no Chrome)
             if (pRect.right - 10 > bRect.left && 
                 pRect.left + 10 < bRect.right && 
                 pRect.bottom > bRect.top + 5) {
@@ -330,19 +282,8 @@
         }
     }
 
-    window.addEventListener('keydown', (e) => { 
-        if(e.code === 'Space' || e.code === 'ArrowUp') {
-            e.preventDefault();
-            jump(); 
-        }
-    });
-    
-    document.addEventListener('touchstart', (e) => { 
-        if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
-            e.preventDefault(); 
-            jump(); 
-        }
-    }, {passive: false});
+    window.addEventListener('keydown', (e) => { if(e.code === 'Space') jump(); });
+    container.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); });
     
     initDecoration();
     update();
