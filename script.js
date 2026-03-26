@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMembers();
   initNewsTabs();
   initGenericTabs();
+  initCart();
 
   console.log('🎵 Augustuna — Website carregado com sucesso!');
 });
@@ -277,6 +278,76 @@ function initDropdowns() {
    ============================================ */
 let cart = [];
 
+function initCart() {
+  const checkoutForm = document.getElementById('checkoutForm');
+  if (checkoutForm) {
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (cart.length === 0) {
+        alert("O teu carrinho está vazio!");
+        return;
+      }
+      
+      const submitBtn = document.getElementById('submitOrderBtn');
+      submitBtn.innerHTML = '<i data-lucide="loader" class="spin"></i> A Processar...';
+      submitBtn.disabled = true;
+
+      const nomeCliente = document.getElementById('checkoutName').value;
+      const email = document.getElementById('checkoutEmail').value;
+      const phone = document.getElementById('checkoutPhone').value;
+      const notes = document.getElementById('checkoutNotes').value;
+      
+      const detalhesCarrinho = cart.map(item => {
+        const sizeStr = item.size ? ` - Tam: ${item.size}` : '';
+        return `${item.qty}x ${item.name}${sizeStr} (€${(item.price * item.qty).toFixed(2).replace('.', ',')})`;
+      }).join('\n');
+      
+      const valorTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2).replace('.', ',') + '€';
+
+      // Mapping variables according to task requirements
+      const emailParams = {
+        nome_cliente: nomeCliente,
+        name: nomeCliente, // fallback for safety
+        email: email,
+        telefone: phone,
+        detalhes_carrinho: detalhesCarrinho,
+        valor_total: valorTotal,
+        message: notes || 'Sem notas adicionais'
+      };
+
+      if (typeof emailjs === 'undefined') {
+        alert('Serviço de email indisponível. Por favor, tenta mais tarde.');
+        submitBtn.innerHTML = 'Confirmar Encomenda';
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // Initialize EmailJS with the Public Key
+      emailjs.init("4GmdocNDaZch7KCV");
+
+      emailjs.send('service_4cidzzm', 'template_wemhxna', emailParams)
+        .then(() => {
+          // Success Callback
+          cart = [];
+          updateCartUI();
+          checkoutForm.reset();
+          submitBtn.innerHTML = 'Confirmar Encomenda';
+          submitBtn.disabled = false;
+          
+          triggerSuccessAnimation();
+          navigateTo('obrigado');
+        })
+        .catch((error) => {
+          console.error("Erro ao enviar email:", error);
+          alert("Ocorreu um erro ao processar a tua encomenda. Por favor tenta novamente ou contacta-nos diretamente.");
+          submitBtn.innerHTML = 'Confirmar Encomenda';
+          submitBtn.disabled = false;
+        });
+    });
+  }
+}
+
 function addToCart(buttonElement) {
   const card = buttonElement.closest('.shop-card');
   if (!card) return;
@@ -285,12 +356,22 @@ function addToCart(buttonElement) {
   const name = card.dataset.productName;
   const price = parseFloat(card.dataset.productPrice);
 
-  // Check if already in cart
-  const existing = cart.find(item => item.id === id);
+  let size = null;
+  const sizeSelect = card.querySelector('.size-select');
+  if (sizeSelect) {
+    size = sizeSelect.value;
+    if (!size) {
+      alert('Por favor, seleciona um tamanho antes de adicionar ao carrinho.');
+      return;
+    }
+  }
+
+  // Check if already in cart tracking ID + Size
+  const existing = cart.find(item => item.id === id && item.size === size);
   if (existing) {
     existing.qty++;
   } else {
-    cart.push({ id, name, price, qty: 1 });
+    cart.push({ id, name, price, qty: 1, size });
   }
 
   updateCartUI();
@@ -299,18 +380,20 @@ function addToCart(buttonElement) {
   const originalText = buttonElement.innerHTML;
   buttonElement.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> Adicionado!';
   buttonElement.style.background = '#27AE60';
+  buttonElement.style.color = 'white';
   buttonElement.disabled = true;
 
   setTimeout(() => {
     buttonElement.innerHTML = originalText;
     buttonElement.style.background = '';
+    buttonElement.style.color = '';
     buttonElement.disabled = false;
     if (typeof lucide !== 'undefined') lucide.createIcons();
   }, 1500);
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
+function removeFromCart(id, size = null) {
+  cart = cart.filter(item => !(item.id === id && item.size === size));
   updateCartUI();
 }
 
@@ -345,10 +428,10 @@ function updateCartUI() {
     cartItems.innerHTML = cart.map(item => `
       <div class="cart-item">
         <div class="cart-item-info">
-          <h4>${item.name}</h4>
+          <h4>${item.name}${item.size ? ` (Tamanho: ${item.size})` : ''}</h4>
           <p>€${item.price.toFixed(2).replace('.', ',')} × ${item.qty}</p>
         </div>
-        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">
+        <button class="cart-item-remove" onclick="removeFromCart('${item.id}', ${item.size ? `'${item.size}'` : null})">
           <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
         </button>
       </div>
@@ -356,6 +439,47 @@ function updateCartUI() {
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
   }
+}
+
+function triggerSuccessAnimation() {
+  const overlay = document.createElement('div');
+  overlay.className = 'success-overlay';
+  overlay.innerHTML = `
+    <div class="tuno-venia-container">
+      <div class="tricornio">🎓</div>
+      <div class="tuno-figure">🤵</div>
+    </div>
+    <div class="success-text">Vénia Académica!</div>
+    <div style="font-size: 1.2rem; margin-top: 1rem; color: var(--branco-perola); font-family: var(--font-body);">A tua encomenda foi recebida com sucesso.</div>
+  `;
+  document.body.appendChild(overlay);
+
+  const colors = ['#D4AF37', '#1B3A5C', '#ffffff', '#e74c3c'];
+
+  for(let i = 0; i < 150; i++) {
+    const conf = document.createElement('div');
+    conf.style.position = 'absolute';
+    conf.style.width = (Math.random() * 8 + 4) + 'px';
+    conf.style.height = (Math.random() * 8 + 4) + 'px';
+    conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    conf.style.left = Math.random() * 100 + 'vw';
+    conf.style.top = '-20px';
+    conf.style.opacity = Math.random() + 0.5;
+    conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    conf.style.zIndex = '10001';
+    
+    // Animate falling
+    const duration = Math.random() * 3 + 2;
+    conf.style.animation = `fallDown ${duration}s linear forwards`;
+    overlay.appendChild(conf);
+  }
+
+  setTimeout(() => {
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => overlay.remove(), 500);
+  }, 4000);
 }
 
 // Make functions globally available
