@@ -1668,7 +1668,7 @@ select {
 .form-group label {
   font-size: 0.825rem;
   font-weight: 500;
-  color: var(--azul-profundo);
+  color: var(--branco-perola);
 }
 
 .form-group input,
