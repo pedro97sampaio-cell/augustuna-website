@@ -1668,6 +1668,10 @@ select {
 .form-group label {
   font-size: 0.825rem;
   font-weight: 500;
+  color: var(--azul-profundo);
+}
+
+.contact-form .form-group label {
   color: var(--branco-perola);
 }
 
