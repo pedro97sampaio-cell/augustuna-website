@@ -8,68 +8,67 @@
   <meta name="description" content="Página não encontrada.">
   <link rel="icon" type="image/x-icon" href="Logo oficial 2.png">
 
-  <!-- Core Styles -->
-  <link rel="stylesheet" href="styles.css">
-
   <style>
-    body {
+    body, html {
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at 100% 100%, #1B3A5C 0%, #060E1A 100%);
-      color: var(--branco-perola);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      font-family: var(--font-body);
-    }
-
-    .error-container {
-      max-width: 600px;
-      padding: 2rem;
-      animation: fadeIn 1s ease-out forwards;
-    }
-
-    .error-image {
       width: 100%;
-      max-width: 250px;
-      height: auto;
-      margin: 0 auto 2rem auto;
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+      height: 100%;
+      background-color: #F5F0E8; /* Fundo base bege caso a imagem demore */
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
     }
 
-    .error-title {
-      font-family: var(--font-display);
-      font-size: 5rem;
-      color: var(--dourado);
-      text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
-      margin-bottom: 0.5rem;
-      margin-top: 0;
+    .error-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('error 404.png');
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 35vh; /* Levanta o botão bastante para fugir aos olhos do cone */
     }
 
-    .error-subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      color: var(--branco-perola);
+    .btn-goback {
+      padding: 15px 40px;
+      background-color: #C9A84C;
+      color: #0A1628;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .btn-goback:hover {
+      transform: translateY(-5px) scale(1.05);
+      background-color: #F0C54D;
+      box-shadow: 0 8px 25px rgba(201, 168, 76, 0.5);
+    }
+    
+    @media (max-width: 768px) {
+      .error-bg {
+        padding-bottom: 40vh; /* No telemóvel ainda um pouco mais acima */
+      }
+      .btn-goback {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="error-container">
-    <h1 class="error-title">404</h1>
-    <h2 class="error-subtitle">Parece que te perdeste no ensaio...</h2>
-
-    <div style="margin: 2rem 0;">
-      <a href="index.html" class="btn btn-primary" style="display: inline-flex; justify-content: center; padding: 1rem 2.5rem; font-size: 1.1rem;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="m15 18-6-6 6-6"/></svg>
-        Voltar à Página Inicial
-      </a>
-    </div>
-
-    <img src="seminoide.png" alt="Erro 404" class="error-image" id="imagem-404" style="margin-top: 2rem;">
+  <div class="error-bg">
+    <a href="index.html" class="btn-goback">Voltar à Página Inicial</a>
   </div>
 
 </body>
