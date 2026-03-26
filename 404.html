@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Não Encontrada | Augustuna</title>
+  
+  <!-- SEO & Favicon -->
+  <meta name="description" content="A página que procuras na Augustuna não foi encontrada.">
+  <link rel="icon" type="image/x-icon" href="logotipos/logotipo dourado cortado sem fundo.png">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Styling específico para a página 404 manter-se centralizada no grande ecrã */
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 100% 100%, #1B3A5C 0%, #060E1A 100%);
+      color: var(--branco-perola);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      font-family: var(--font-body);
+    }
+
+    .error-container {
+      max-width: 600px;
+      padding: 2rem;
+    }
+
+    /* ESTÁ AQUI A IMAGEM 404 PERSONALIZADA */
+    .error-image {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      margin: 0 auto 2rem auto;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .error-title {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--dourado);
+      margin-bottom: 0.5rem;
+    }
+
+    .error-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: var(--branco-perola);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-container">
+    <!-- IMAGEM DE ERRO PERSONALIZADA -->
+    <img src="error 404.png" alt="Erro 404" class="error-image" id="imagem-404">
+    
+    <h1 class="error-title">404</h1>
+    <h2 class="error-subtitle">Parece que te perdeste no ensaio...</h2>
+    <p style="margin-bottom: 2.5rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+      A página que procuras não existe, foi movida ou a afinação falhou.
+      Clica no botão abaixo para voltares ao ritmo certo.
+    </p>
+
+    <a href="index.html" class="btn btn-primary" style="display: inline-flex; justify-content: center; padding: 1rem 2rem;">
+      Voltar à Página Inicial
+    </a>
+  </div>
+
+</body>
+</html>

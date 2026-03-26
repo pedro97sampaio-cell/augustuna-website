@@ -4,6 +4,24 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Pre-loader Animation ---
+  const loaderWrapper = document.getElementById('loader-wrapper');
+  const progressBar = document.getElementById('loaderProgressBar');
+  if (loaderWrapper && progressBar) {
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 15 + 5; 
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          document.body.classList.add('loaded');
+        }, 400); 
+      }
+      progressBar.style.width = progress + '%';
+    }, 150);
+  }
+
   // Initialize Lucide icons
   if (typeof lucide !== 'undefined') {
     try {
