@@ -441,45 +441,54 @@ function updateCartUI() {
   }
 }
 
-function triggerSuccessAnimation() {
-  const overlay = document.createElement('div');
-  overlay.className = 'success-overlay';
-  overlay.innerHTML = `
-    <div class="tuno-venia-container">
-      <div class="tricornio">🎓</div>
-      <div class="tuno-figure">🤵</div>
-    </div>
-    <div class="success-text">Vénia Académica!</div>
-    <div style="font-size: 1.2rem; margin-top: 1rem; color: var(--branco-perola); font-family: var(--font-body);">A tua encomenda foi recebida com sucesso.</div>
-  `;
-  document.body.appendChild(overlay);
+// Checkout Success Animation
+function triggerSuccessAnimation(callback) {
+  // Fire confetti from edges
+  const duration = 2000;
+  const end = Date.now() + duration;
 
-  const colors = ['#D4AF37', '#1B3A5C', '#ffffff', '#e74c3c'];
+  (function frame() {
+      // Check if confetti library exists, if not fallback to nothing or DOM confetti
+      if (typeof confetti === 'function') {
+          confetti({
+              particleCount: 5,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 },
+              colors: ['#c9a84c', '#1b3a5c', '#ffffff']
+          });
+          confetti({
+              particleCount: 5,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 },
+              colors: ['#c9a84c', '#1b3a5c', '#ffffff']
+          });
+      } else {
+          // Fallback DOM based confetti just in case
+          const conf = document.createElement('div');
+          conf.className = 'dom-confetti';
+          conf.style.position = 'fixed';
+          const colors = ['#c9a84c', '#1b3a5c', '#ffffff'];
+          conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          conf.style.left = Math.random() * 100 + 'vw';
+          conf.style.top = '-20px';
+          conf.style.width = '10px';
+          conf.style.height = '10px';
+          conf.style.zIndex = '9999';
+          document.body.appendChild(conf);
+          setTimeout(() => conf.remove(), 2000);
+      }
 
-  for(let i = 0; i < 150; i++) {
-    const conf = document.createElement('div');
-    conf.style.position = 'absolute';
-    conf.style.width = (Math.random() * 8 + 4) + 'px';
-    conf.style.height = (Math.random() * 8 + 4) + 'px';
-    conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    conf.style.left = Math.random() * 100 + 'vw';
-    conf.style.top = '-20px';
-    conf.style.opacity = Math.random() + 0.5;
-    conf.style.transform = `rotate(${Math.random() * 360}deg)`;
-    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-    conf.style.zIndex = '10001';
-    
-    // Animate falling
-    const duration = Math.random() * 3 + 2;
-    conf.style.animation = `fallDown ${duration}s linear forwards`;
-    overlay.appendChild(conf);
-  }
+      if (Date.now() < end) {
+          requestAnimationFrame(frame);
+      }
+  }());
 
+  // Finish and invoke callback
   setTimeout(() => {
-    overlay.style.opacity = '0';
-    overlay.style.transition = 'opacity 0.5s ease';
-    setTimeout(() => overlay.remove(), 500);
-  }, 4000);
+      if (callback) callback();
+  }, 2000);
 }
 
 // Make functions globally available
