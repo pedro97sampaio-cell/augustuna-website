@@ -30,6 +30,7 @@ body.loaded #loader-wrapper {
   font-family: var(--font-display, 'Playfair Display', serif);
   font-size: 4rem;
   color: var(--dourado, #C9A84C);
+  text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 4px;
