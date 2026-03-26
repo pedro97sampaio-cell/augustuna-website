@@ -324,7 +324,7 @@ function initCart() {
       }
 
       // Initialize EmailJS with the Public Key
-      emailjs.init("4GmdocNDaZch7KCV");
+      emailjs.init("4GmdocNDaZch7KCVE");
 
       emailjs.send('service_4cidzzm', 'template_wemhxna', emailParams)
         .then(() => {
