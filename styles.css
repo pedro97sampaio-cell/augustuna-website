@@ -26,6 +26,19 @@ body.loaded #loader-wrapper {
   align-items: center;
   gap: 20px;
 }
+.loader-brand-name {
+  font-family: var(--font-display, 'Playfair Display', serif);
+  font-size: 4rem;
+  color: var(--dourado, #C9A84C);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  animation: fadeInDown 1s ease-out forwards;
+}
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 .loader-logo {
   width: 150px;
   height: auto;
