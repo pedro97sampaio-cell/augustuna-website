@@ -443,6 +443,11 @@ function updateCartUI() {
 
 // Checkout Success Animation
 function triggerSuccessAnimation(callback) {
+  // Play 'Tcharaaam' sound effect
+  const audio = new Audio('https://actions.google.com/sounds/v1/cartoon/trumpet_fanfare.ogg');
+  audio.volume = 0.6;
+  audio.play().catch(e => console.log('Audio auto-play prevented:', e));
+
   // Fire confetti from edges
   const duration = 2000;
   const end = Date.now() + duration;
