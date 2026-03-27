@@ -13,7 +13,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
-    (function() {
+    (function () {
       emailjs.init("4GmdocNDaZch7KCV");
     })();
   </script>
@@ -118,7 +118,7 @@
         <a href="#" data-page="outras-atuacoes">Outras Atuações</a>
       </div>
     </div>
-    
+
     <!-- New Loja & Carrinho items for Mobile -->
     <a href="#" class="nav-bottom-link" data-page="marketplace">
       <i data-lucide="shopping-bag" style="width:20px;height:20px;"></i>
@@ -2194,7 +2194,8 @@
                 em preto e azul navy.</p>
               <div class="shop-card-price">€19,90</div>
               <div class="shop-item-size" style="margin-bottom: 1rem;">
-                <select class="size-select" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-body); background: #fff; color: #111;">
+                <select class="size-select"
+                  style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-body); background: #fff; color: #111;">
                   <option value="">Tamanho...</option>
                   <option value="S">S</option>
                   <option value="M">M</option>
@@ -2239,7 +2240,8 @@
                 azul navy.</p>
               <div class="shop-card-price">€34,90</div>
               <div class="shop-item-size" style="margin-bottom: 1rem;">
-                <select class="size-select" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-body); background: #fff; color: #111;">
+                <select class="size-select"
+                  style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-body); background: #fff; color: #111;">
                   <option value="">Tamanho...</option>
                   <option value="S">S</option>
                   <option value="M">M</option>
@@ -2291,39 +2293,50 @@
           <div class="cart-empty" id="cartEmpty">
             <i data-lucide="shopping-bag" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>
             <h3 style="color: var(--branco-perola);">O teu carrinho está vazio</h3>
-            <p style="color: var(--dourado-claro);">Visita o nosso <a href="#" data-page="marketplace" style="color:var(--dourado);">Marketplace</a> para
+            <p style="color: var(--dourado-claro);">Visita o nosso <a href="#" data-page="marketplace"
+                style="color:var(--dourado);">Marketplace</a> para
               encontrar o teu merch favorito!</p>
           </div>
           <div class="cart-items" id="cartItems"></div>
           <div class="cart-total" id="cartTotal" style="display:none;">
             <div class="cart-total-row">
               <span style="font-weight:700; font-size:1.2rem; color:var(--azul-profundo);">Total:</span>
-              <span class="cart-total-price" id="cartTotalPrice" style="font-weight:700; font-size:1.2rem; color:var(--dourado);">€0,00</span>
+              <span class="cart-total-price" id="cartTotalPrice"
+                style="font-weight:700; font-size:1.2rem; color:var(--dourado);">€0,00</span>
             </div>
-            
-            <div class="cart-checkout-form" id="checkoutFormContainer" style="margin-top: 2rem; padding: 2rem; background: var(--bg-main); border-radius: 12px; border: 1px solid #ddd; text-align: left;">
+
+            <div class="cart-checkout-form" id="checkoutFormContainer"
+              style="margin-top: 2rem; padding: 2rem; background: var(--bg-main); border-radius: 12px; border: 1px solid #ddd; text-align: left;">
               <h3 style="margin-bottom: 1.5rem; color: var(--azul-profundo);">Dados de Envio</h3>
               <form id="checkoutForm">
                 <div class="form-group" style="margin-bottom: 1rem;">
                   <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Nome Completo</label>
-                  <input type="text" id="checkoutName" required style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
+                  <input type="text" id="checkoutName" required
+                    style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                   <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Email</label>
-                  <input type="email" id="checkoutEmail" required style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
+                  <input type="email" id="checkoutEmail" required
+                    style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                   <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Telemóvel</label>
-                  <input type="tel" id="checkoutPhone" required style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
+                  <input type="tel" id="checkoutPhone" required
+                    style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);">
                 </div>
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                  <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Notas da Encomenda (Opcional)</label>
-                  <textarea id="checkoutNotes" rows="3" style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);" placeholder="Ex: Instruções de entrega..."></textarea>
+                  <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Notas da Encomenda
+                    (Opcional)</label>
+                  <textarea id="checkoutNotes" rows="3"
+                    style="width:100%; padding:0.75rem; border:1px solid #ccc; border-radius:8px; font-family: var(--font-body);"
+                    placeholder="Ex: Instruções de entrega..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" id="submitOrderBtn" style="width:100%; font-size: 1.1rem; padding: 1rem; justify-content: center;">Confirmar Encomenda</button>
+                <button type="submit" class="btn btn-primary" id="submitOrderBtn"
+                  style="width:100%; font-size: 1.1rem; padding: 1rem; justify-content: center;">Confirmar
+                  Encomenda</button>
               </form>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -2337,11 +2350,13 @@
     <div class="page-hero-mini section-dark">
       <h2 class="section-title">Obrigado pela tua <span class="text-gold">Compra</span>!</h2>
     </div>
-    <div class="section-dark section-padding" style="text-align: center; min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <div class="section-dark section-padding"
+      style="text-align: center; min-height: 60vh; display: flex; align-items: center; justify-content: center;">
       <div class="container" style="max-width: 600px;">
         <i data-lucide="check-circle" style="width:80px;height:80px;color:#27AE60;margin-bottom:1.5rem;"></i>
         <h3 style="margin-bottom:1rem;">A tua encomenda foi submetida com sucesso!</h3>
-        <p style="margin-bottom:2rem;color:var(--text-muted);">Em breve entraremos em contacto contigo via email com os detalhes de pagamento e envio da tua merch Augustuna.</p>
+        <p style="margin-bottom:2rem;color:var(--text-muted);">Em breve entraremos em contacto contigo via email com os
+          detalhes de pagamento e envio da tua merch Augustuna.</p>
         <div style="display:flex;gap:1rem;justify-content:center; flex-wrap: wrap;">
           <a href="#" class="btn btn-primary" data-page="marketplace">Voltar à Loja</a>
           <a href="#" class="btn btn-secondary" data-page="home">Página Inicial</a>
@@ -2402,7 +2417,8 @@
             <a href="https://www.linkedin.com/company/augustunataum" target="_blank" class="social-link-card">
               <div class="social-icon-box linkedin">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </div>
               <span>LinkedIn</span>
@@ -2423,8 +2439,8 @@
         <!-- Contact Form -->
         <div class="contact-layout">
           <div class="contact-form-section reveal-left">
-            <h3 style="color: var(--branco-perola);">Envia-nos uma <span
-                style="color: var(--dourado);">mensagem</span></h3>
+            <h3 style="color: var(--branco-perola);">Envia-nos uma <span style="color: var(--dourado);">mensagem</span>
+            </h3>
             <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');">
               <div class="form-group">
                 <label for="name">Nome</label>
@@ -2554,7 +2570,8 @@
 
         <!-- Map Section -->
         <div class="contact-map-section reveal" style="text-align: left;">
-          <h3 style="color: var(--branco-perola); text-align: left;">A Nossa <span style="color: var(--dourado);">Localização</span>
+          <h3 style="color: var(--branco-perola); text-align: left;">A Nossa <span
+              style="color: var(--dourado);">Localização</span>
           </h3>
           <div class="map-container">
             <iframe
@@ -2700,8 +2717,8 @@
                 style="width:100px; height:auto; object-fit:contain; filter:brightness(0) invert(1) opacity(0.8);"></a>
           </div>
           <div class="sponsor-item" style="border:none;background:transparent;padding:0;">
-            <a href="https://www.aauminho.pt/" target="_blank" rel="noopener noreferrer"><img src="logotipos/AAUM LOGO.png"
-                alt="AAUM"
+            <a href="https://www.aauminho.pt/" target="_blank" rel="noopener noreferrer"><img
+                src="logotipos/AAUM LOGO.png" alt="AAUM"
                 style="width:100px; height:auto; object-fit:contain; filter:brightness(0) invert(1) opacity(0.8);"></a>
           </div>
           <div class="sponsor-item" style="border:none;background:transparent;padding:0;">

@@ -195,7 +195,22 @@
         </div>
         <div id="game-over">
             <h1 style="letter-spacing: 5px; margin-bottom: 5px;">G A M E  O V E R</h1>
-            <button onclick="restart()">REINICIAR ENSAIO</button>
+            
+            <div id="highscore-input" style="display: none; margin: 15px 0;">
+                <p style="margin: 0 0 5px 0; color: #C9A84C; font-weight: bold;">NOVO RECORDE!</p>
+                <input type="text" id="playerName" placeholder="O teu nome..." maxlength="10" style="padding: 5px; text-align: center; border: 2px solid #535353; font-family: inherit; width: 150px;">
+                <br>
+                <button onclick="saveHighscore()">GUARDAR</button>
+            </div>
+
+            <div id="highscore-table" style="margin: 15px 0; text-align: left; font-size: 14px; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 5px;">
+                <h3 style="margin: 0 0 10px 0; text-align: center;">TOP 5 FARRICOCOS</h3>
+                <ol id="highscore-list" style="margin: 0; padding-left: 20px;">
+                    <!-- Preenchido via JS -->
+                </ol>
+            </div>
+
+            <button id="btn-restart" onclick="restart()">REINICIAR ENSAIO</button>
         </div>
     </div>
     
@@ -222,6 +237,60 @@
         obstacles: [],
         spawnTimer: 0
     };
+
+    let highscores = JSON.parse(localStorage.getItem('farricoco_highscores')) || [];
+
+    function checkHighscore(finalScore) {
+        let scoreInt = Math.floor(finalScore);
+        if (scoreInt <= 0) return false;
+        if (highscores.length < 5) return true;
+        return scoreInt > highscores[highscores.length - 1].score;
+    }
+
+    function showGameOver() {
+        gameOverScreen.style.display = 'block';
+        let scoreInt = Math.floor(state.score);
+        
+        if (checkHighscore(scoreInt)) {
+            document.getElementById('highscore-input').style.display = 'block';
+            document.getElementById('highscore-table').style.display = 'none';
+            document.getElementById('btn-restart').style.display = 'none';
+        } else {
+            document.getElementById('highscore-input').style.display = 'none';
+            renderHighscores();
+            document.getElementById('highscore-table').style.display = 'block';
+            document.getElementById('btn-restart').style.display = 'inline-block';
+        }
+    }
+
+    function saveHighscore() {
+        let name = document.getElementById('playerName').value.trim();
+        if(!name) name = 'Anónimo';
+        let scoreInt = Math.floor(state.score);
+        
+        highscores.push({ name: name, score: scoreInt });
+        highscores.sort((a, b) => b.score - a.score);
+        if (highscores.length > 5) highscores = highscores.slice(0, 5);
+        
+        localStorage.setItem('farricoco_highscores', JSON.stringify(highscores));
+        
+        document.getElementById('highscore-input').style.display = 'none';
+        renderHighscores();
+        document.getElementById('highscore-table').style.display = 'block';
+        document.getElementById('btn-restart').style.display = 'inline-block';
+    }
+
+    function renderHighscores() {
+        let list = document.getElementById('highscore-list');
+        list.innerHTML = '';
+        if (highscores.length === 0) {
+            list.innerHTML = '<li>Ainda sem recordes.</li>';
+            return;
+        }
+        highscores.forEach(entry => {
+            list.innerHTML += `<li><strong>${entry.name}</strong>: ${entry.score.toString().padStart(5, '0')}</li>`;
+        });
+    }
 
     // Criar detalhes do chão (textura) e nuvens
     function initDecoration() {
@@ -294,7 +363,7 @@
                 pRect.left + 10 < bRect.right && 
                 pRect.bottom > bRect.top + 5) {
                 state.gameOver = true;
-                gameOverScreen.style.display = 'block';
+                showGameOver();
             }
 
             if (x < -50) {
