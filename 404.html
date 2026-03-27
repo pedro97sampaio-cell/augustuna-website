@@ -76,24 +76,60 @@
             opacity: 0.6;
         }
 
-        /* FARRICOCO (DESIGN ARREDONDADO) */
+        /* FARRICOCO GHOST (SNAPCHAT STYLE + ROPE) */
         #player {
             position: absolute;
             bottom: 22px;
             left: 50px;
             width: 36px;
-            height: 55px;
+            height: 50px;
             z-index: 10;
         }
         .hood {
             width: 100%;
             height: 100%;
-            background: #535353;
-            clip-path: ellipse(45% 90% at 50% 100%);
+            background: #111; /* Preto */
+            border-radius: 18px 18px 0 0; /* Cabeça redonda tipo Snapchat */
+            position: relative;
+            /* Recorte ondulado na base (fantasma) */
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 85%, 
+                87.5% 100%, 75% 85%, 62.5% 100%, 50% 85%, 
+                37.5% 100%, 25% 85%, 12.5% 100%, 0% 85%
+            );
+        }
+        .rope {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #A0522D; /* Castanho corda */
+            z-index: 12;
+        }
+        .rope-knot {
+            position: absolute;
+            top: 13px;
+            right: -2px;
+            width: 7px;
+            height: 7px;
+            background: #8B4513;
+            border-radius: 50%;
+            z-index: 12;
+        }
+        .rope-tail {
+            position: absolute;
+            top: 18px;
+            right: -4px;
+            width: 3px;
+            height: 10px;
+            background: #A0522D;
+            transform: rotate(20deg);
+            z-index: 11;
         }
         .face {
             position: absolute;
-            top: 25px;
+            top: 22px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -177,17 +213,59 @@
                 padding: 0 20px;
             }
         }
+
+        /* LOADING SCREEN */
+        #game-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+        .loader-ghost {
+            width: 36px;
+            height: 50px;
+            background: #111;
+            border-radius: 18px 18px 0 0;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 87.5% 100%, 75% 85%, 62.5% 100%, 50% 85%, 37.5% 100%, 25% 85%, 12.5% 100%, 0% 85%);
+            animation: float 1s infinite alternate ease-in-out;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Loader ghost face */
+        .loader-ghost::before {
+            content: ''; position: absolute; top: 22px; left: 13px; width: 4px; height: 6px; background: white; border-radius: 50%; box-shadow: 6px 0 0 white;
+        }
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body>
 
     <a href="index.html" class="btn-back">&larr; Voltar ao Ritmo</a>
 
+    <div id="game-loader">
+        <div class="loader-ghost"></div>
+        <h2 style="margin:0; letter-spacing: 2px;">A AFINAR INSTRUMENTOS...</h2>
+    </div>
+
     <div id="game-container">
         <div id="score">00000</div>
         <div id="ground"></div>
         <div id="player">
             <div class="hood"></div>
+            <div class="rope"></div>
+            <div class="rope-knot"></div>
+            <div class="rope-tail"></div>
             <div class="face">
                 <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
                 <div class="blush"><div class="dot"></div><div class="dot"></div></div>
@@ -241,18 +319,31 @@
     let highscores = [];
     const BIN_URL = "https://jsonblob.com/api/jsonBlob/019d2cc6-daf7-7df0-9801-03e71948ba95";
 
-    async function loadHighscores() {
-        try {
-            const res = await fetch(BIN_URL);
+    async function initGame() {
+        // Carregar recordes
+        // Min order of 1.5s for the loading screen animation
+        const [res] = await Promise.all([
+            fetch(BIN_URL).catch(()=>null),
+            new Promise(r => setTimeout(r, 1500))
+        ]);
+
+        if(res && res.ok) {
             const data = await res.json();
             highscores = Array.isArray(data) ? data : [];
-        } catch (e) {
-            console.error("Erro ao carregar recordes globais:", e);
         }
+
+        // Esconder loader
+        const loader = document.getElementById('game-loader');
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+            // Iniciar o jogo
+            requestAnimationFrame(update);
+        }, 500);
     }
 
-    // Carregar assim que a página abre
-    loadHighscores();
+    // Arrancar a inicialização
+    initGame();
 
     function checkHighscore(finalScore) {
         let scoreInt = Math.floor(finalScore);
@@ -267,7 +358,12 @@
         
         // Antes de mostrar os resultados, tentamos recarregar para garantir os mais recentes
         document.getElementById('highscore-list').innerHTML = '<li>A carregar recordes...</li>';
-        await loadHighscores();
+        
+        try {
+            const res = await fetch(BIN_URL);
+            const data = await res.json();
+            highscores = Array.isArray(data) ? data : [];
+        } catch(e) {}
 
         if (checkHighscore(scoreInt)) {
             document.getElementById('highscore-input').style.display = 'block';
@@ -293,7 +389,11 @@
         btn.innerText = "A GUARDAR...";
 
         // Recarregar antes de salvar para evitar reescrever progresso de outros
-        await loadHighscores();
+        try {
+            const res = await fetch(BIN_URL);
+            const data = await res.json();
+            highscores = Array.isArray(data) ? data : [];
+        } catch(e) {}
         
         highscores.push({ name: name, score: scoreInt });
         highscores.sort((a, b) => b.score - a.score);
@@ -450,7 +550,7 @@
     }, {passive: false});
     
     initDecoration();
-    update();
+    // O jogo apenas arranca no final do initGame()
 </script>
 </body>
 </html>
