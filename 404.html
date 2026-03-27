@@ -229,7 +229,7 @@
     let state = {
         gameOver: false,
         score: 0,
-        speed: 6,
+        speed: 4.5, /* Começa mais lento (antes era 6) */
         gravity: 0.6,
         jumpPower: -12,
         velocityY: 0,
@@ -238,7 +238,21 @@
         spawnTimer: 0
     };
 
-    let highscores = JSON.parse(localStorage.getItem('farricoco_highscores')) || [];
+    let highscores = [];
+    const BIN_URL = "https://jsonblob.com/api/jsonBlob/019d2cc6-daf7-7df0-9801-03e71948ba95";
+
+    async function loadHighscores() {
+        try {
+            const res = await fetch(BIN_URL);
+            const data = await res.json();
+            highscores = Array.isArray(data) ? data : [];
+        } catch (e) {
+            console.error("Erro ao carregar recordes globais:", e);
+        }
+    }
+
+    // Carregar assim que a página abre
+    loadHighscores();
 
     function checkHighscore(finalScore) {
         let scoreInt = Math.floor(finalScore);
@@ -247,14 +261,19 @@
         return scoreInt > highscores[highscores.length - 1].score;
     }
 
-    function showGameOver() {
+    async function showGameOver() {
         gameOverScreen.style.display = 'block';
         let scoreInt = Math.floor(state.score);
         
+        // Antes de mostrar os resultados, tentamos recarregar para garantir os mais recentes
+        document.getElementById('highscore-list').innerHTML = '<li>A carregar recordes...</li>';
+        await loadHighscores();
+
         if (checkHighscore(scoreInt)) {
             document.getElementById('highscore-input').style.display = 'block';
             document.getElementById('highscore-table').style.display = 'none';
             document.getElementById('btn-restart').style.display = 'none';
+            document.getElementById('playerName').focus();
         } else {
             document.getElementById('highscore-input').style.display = 'none';
             renderHighscores();
@@ -263,17 +282,34 @@
         }
     }
 
-    function saveHighscore() {
+    async function saveHighscore() {
         let name = document.getElementById('playerName').value.trim();
         if(!name) name = 'Anónimo';
         let scoreInt = Math.floor(state.score);
+        
+        // Bloquear botão para evitar múltiplos cliques
+        const btn = document.querySelector('#highscore-input button');
+        btn.disabled = true;
+        btn.innerText = "A GUARDAR...";
+
+        // Recarregar antes de salvar para evitar reescrever progresso de outros
+        await loadHighscores();
         
         highscores.push({ name: name, score: scoreInt });
         highscores.sort((a, b) => b.score - a.score);
         if (highscores.length > 5) highscores = highscores.slice(0, 5);
         
-        localStorage.setItem('farricoco_highscores', JSON.stringify(highscores));
+        try {
+            await fetch(BIN_URL, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify(highscores)
+            });
+        } catch(e) { console.error("Erro a salvar:", e); }
         
+        btn.disabled = false;
+        btn.innerText = "GUARDAR";
+
         document.getElementById('highscore-input').style.display = 'none';
         renderHighscores();
         document.getElementById('highscore-table').style.display = 'block';
@@ -372,9 +408,9 @@
             }
         }
 
-        // Pontuação e Dificuldade
+        // Pontuação e Dificuldade (aumenta gradualmente a velocidade)
         state.score += 0.15;
-        state.speed += 0.001;
+        state.speed += 0.0015; /* Aumenta mais rapidamente para compensar início lento */
         scoreElement.innerText = Math.floor(state.score).toString().padStart(5, '0');
 
         requestAnimationFrame(update);
@@ -383,7 +419,7 @@
     function restart() {
         state.gameOver = false;
         state.score = 0;
-        state.speed = 6;
+        state.speed = 4.5;
         state.velocityY = 0;
         state.spawnTimer = 50;
         gameOverScreen.style.display = 'none';
