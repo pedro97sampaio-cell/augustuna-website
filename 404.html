@@ -30,262 +30,213 @@
             font-weight: bold;
             font-size: 14px;
             transition: all 0.2s;
-            z-index: 1000;
+            z-index: 3000;
         }
         .btn-back:hover {
             background-color: #535353;
             color: #f7f7f7;
         }
 
+        /* LOADING SCREEN (Minimalista) */
+        #game-loader {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f7f7f7;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 2000; transition: opacity 0.5s ease;
+        }
+        .loader-title {
+            border: 4px solid #535353; padding: 10px 30px;
+            font-size: 40px; font-weight: bold; color: #535353;
+            letter-spacing: 2px; margin-bottom: 30px;
+        }
+        .loader-subtitle {
+            font-size: 14px; color: #888; margin-bottom: 20px;
+        }
+        .loader-bar {
+            width: 250px; height: 6px; border: 1px solid #535353; padding: 2px;
+        }
+        .loader-fill {
+            background: #535353; height: 100%; width: 0%;
+            animation: loadAnim 2s ease forwards;
+        }
+        @keyframes loadAnim { 0% {width: 0%;} 100% {width: 100%;} }
+
+        /* CHARACTER SELECTION */
+        #char-selection {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f0f0f0; display: none; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1500; text-align: center; padding: 20px;
+        }
+        .char-options {
+            display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; justify-content: center;
+        }
+        .char-card {
+            border: 2px solid #535353; background: #fff; padding: 20px; cursor: pointer;
+            width: 120px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .char-card:hover { transform: translateY(-5px); background: #e8e8e8; }
+        .char-preview {
+            width: 40px; height: 60px; margin: 0 auto 15px auto; position: relative;
+        }
+
+        /* GAME BORDERS */
         #game-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 250px;
-            background-color: #f7f7f7;
-            overflow: hidden;
-            user-select: none;
+            position: relative; width: 100%; max-width: 800px; height: 250px;
+            background-color: #f7f7f7; overflow: hidden; user-select: none;
         }
 
-        /* CHÃO COM TEXTURA PIXEL */
+        /* DECORATION */
         #ground {
-            position: absolute;
-            bottom: 20px;
-            width: 200%;
-            height: 2px;
-            background-color: #535353;
-            z-index: 3;
+            position: absolute; bottom: 20px; width: 200%; height: 2px; background-color: #535353; z-index: 3;
         }
-        .ground-detail {
-            position: absolute;
-            background-color: #535353;
-            height: 1px;
-            width: 4px;
-            bottom: 15px;
-            opacity: 0.5;
-        }
+        .ground-detail { position: absolute; background-color: #535353; height: 1px; width: 4px; bottom: 15px; opacity: 0.5; }
+        .cloud { position: absolute; background: #d3d3d3; height: 12px; width: 40px; border-radius: 6px; z-index: 1; opacity: 0.6; }
 
-        /* NUVENS MINIMALISTAS */
-        .cloud {
-            position: absolute;
-            background: #d3d3d3;
-            height: 12px;
-            width: 40px;
-            border-radius: 6px;
-            z-index: 1;
-            opacity: 0.6;
-        }
-
-        /* FARRICOCO GHOST (SNAPCHAT STYLE + ROPE) */
-        #player {
-            position: absolute;
-            bottom: 22px;
-            left: 50px;
-            width: 36px;
-            height: 50px;
-            z-index: 10;
+        /* PLAYER GHOST BASE */
+        .player-ghost {
+            position: absolute; bottom: 22px; width: 36px; height: 50px; z-index: 10;
         }
         .hood {
-            width: 100%;
-            height: 100%;
-            background: #111; /* Preto */
-            border-radius: 18px 18px 0 0; /* Cabeça redonda tipo Snapchat */
-            position: relative;
-            /* Recorte ondulado na base (fantasma) */
-            clip-path: polygon(
-                0% 0%, 100% 0%, 100% 85%, 
-                87.5% 100%, 75% 85%, 62.5% 100%, 50% 85%, 
-                37.5% 100%, 25% 85%, 12.5% 100%, 0% 85%
-            );
-        }
-        .rope {
-            position: absolute;
-            top: 15px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #A0522D; /* Castanho corda */
-            z-index: 12;
-        }
-        .rope-knot {
-            position: absolute;
-            top: 13px;
-            right: -2px;
-            width: 7px;
-            height: 7px;
-            background: #8B4513;
-            border-radius: 50%;
-            z-index: 12;
-        }
-        .rope-tail {
-            position: absolute;
-            top: 18px;
-            right: -4px;
-            width: 3px;
-            height: 10px;
-            background: #A0522D;
-            transform: rotate(20deg);
-            z-index: 11;
+            width: 100%; height: 100%; background: #111; border-radius: 18px 18px 0 0; position: relative;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 87.5% 100%, 75% 85%, 62.5% 100%, 50% 85%, 37.5% 100%, 25% 85%, 12.5% 100%, 0% 85%);
         }
         .face {
-            position: absolute;
-            top: 22px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: absolute; top: 22px; width: 100%; display: flex; flex-direction: column; align-items: center;
         }
         .eyes { display: flex; gap: 4px; }
         .eye { width: 6px; height: 8px; background: white; border-radius: 50%; }
         .blush { display: flex; gap: 14px; margin-top: -1px; }
         .dot { width: 5px; height: 3px; background: #999; border-radius: 50%; }
 
-        /* GARRAFA DE CERVEJA (OBSTÁCULO) */
-        .bottle {
-            position: absolute;
-            bottom: 22px;
-            width: 12px;
-            height: 35px;
-            z-index: 5;
+        /* TYPE: SEMINOIDE (Rope) */
+        .char-seminoide .rope { position: absolute; top: 15px; left: 0; width: 100%; height: 3px; background: #A0522D; z-index: 12; }
+        .char-seminoide .rope-knot { position: absolute; top: 13px; right: -2px; width: 7px; height: 7px; background: #8B4513; border-radius: 50%; z-index: 12; }
+        .char-seminoide .rope-tail { position: absolute; top: 18px; right: -4px; width: 3px; height: 10px; background: #A0522D; transform: rotate(20deg); z-index: 11; }
+
+        /* TYPE: SEMINA (Red Bow) */
+        .char-semina .hood { background: #1C1C1C; } /* Slightly softer black */
+        .char-semina .bow { position: absolute; top: 38px; left: 14px; width: 8px; height: 6px; background: #B22222; border-radius: 2px; z-index: 12; }
+        .char-semina .bow::before, .char-semina .bow::after { content: ''; position: absolute; width: 6px; height: 8px; background: #8B0000; top: -1px; border-radius: 50%; }
+        .char-semina .bow::before { left: -5px; } .char-semina .bow::after { right: -5px; }
+
+        /* TYPE: TUNO (Tricórnio) */
+        .char-tuno .tricorn { 
+            position: absolute; top: -6px; left: -8px; width: 52px; height: 16px; background: #000; 
+            border-radius: 50% 50% 0 0; z-index: 13; border-bottom: 2px solid #333;
         }
-        .b-body {
-            position: absolute;
-            bottom: 0;
-            width: 12px;
-            height: 22px;
-            background: #535353;
-            border-radius: 2px 2px 0 0;
+        .char-tuno .tricorn-top {
+            position: absolute; top: -14px; left: 8px; width: 34px; height: 14px; background: #000;
+            border-radius: 50% 50% 0 0; z-index: 12;
         }
-        .b-neck {
-            position: absolute;
-            bottom: 22px;
-            left: 4px;
-            width: 4px;
-            height: 13px;
-            background: #535353;
+
+        /* IMMUNITY EFFECT */
+        .immune-flash { animation: flash 0.3s infinite; }
+        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.3; filter: brightness(2); } 100% { opacity: 1; } }
+
+        /* BOTTLE OBSTACLE */
+        .bottle { position: absolute; bottom: 22px; width: 12px; height: 35px; z-index: 5; }
+        .b-body { position: absolute; bottom: 0; width: 12px; height: 22px; background: #535353; border-radius: 2px 2px 0 0; }
+        .b-neck { position: absolute; bottom: 22px; left: 4px; width: 4px; height: 13px; background: #535353; }
+
+        /* LAUREL (POWER-UP) */
+        .laurel {
+            position: absolute; bottom: 40px; width: 20px; height: 20px;
+            border: 3px solid #2e8b57; border-radius: 50%; z-index: 6;
+            box-shadow: 0 0 8px rgba(46,139,87,0.8); background: rgba(46,139,87,0.2);
+            animation: laurelBob 1s infinite alternate ease-in-out;
         }
+        @keyframes laurelBob { from { transform: translateY(0); } to { transform: translateY(-5px); } }
 
         /* UI */
-        #score {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .instructions {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-        }
-
-        #game-over {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 100;
-        }
-        button {
-            background: none;
-            border: 2px solid #535353;
-            color: #535353;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        button:hover {
-            background: #535353;
-            color: #f7f7f7;
-        }
+        #score { position: absolute; top: 10px; right: 20px; font-size: 20px; font-weight: bold; }
+        .instructions { margin-top: 30px; text-align: center; font-size: 14px; color: #888; }
         
-        @media (max-width: 600px) {
-            #game-container {
-                height: 300px;
-            }
-            .instructions {
-                font-size: 12px;
-                padding: 0 20px;
-            }
+        #game-over {
+            display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; z-index: 100;
         }
+        button { background: none; border: 2px solid #535353; color: #535353; padding: 8px 15px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #535353; color: #f7f7f7; }
 
-        /* LOADING SCREEN */
-        #game-loader {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #f7f7f7;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            transition: opacity 0.5s ease;
-        }
-        .loader-ghost {
-            width: 36px;
-            height: 50px;
-            background: #111;
-            border-radius: 18px 18px 0 0;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 87.5% 100%, 75% 85%, 62.5% 100%, 50% 85%, 37.5% 100%, 25% 85%, 12.5% 100%, 0% 85%);
-            animation: float 1s infinite alternate ease-in-out;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        /* Loader ghost face */
-        .loader-ghost::before {
-            content: ''; position: absolute; top: 22px; left: 13px; width: 4px; height: 6px; background: white; border-radius: 50%; box-shadow: 6px 0 0 white;
-        }
-        @keyframes float {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
+        /* Leaderboard table */
+        #highscore-input { display: none; margin: 15px 0; }
+        #highscore-table { margin: 15px 0; text-align: left; font-size: 14px; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 5px; }
+        #highscore-list { margin: 0; padding-left: 20px; }
     </style>
 </head>
 <body>
 
+    <!-- Audio Player via Tag (Hidden) -->
+    <audio id="bg-music" loop>
+        <!-- The user needs to add musica_8bit.mp3 to the repo for this to play -->
+        <source src="musica_8bit.mp3" type="audio/mpeg">
+    </audio>
+
     <a href="index.html" class="btn-back">&larr; Voltar ao Ritmo</a>
 
+    <!-- LOADING SCREEN -->
     <div id="game-loader">
-        <div class="loader-ghost"></div>
-        <h2 style="margin:0; letter-spacing: 2px;">A AFINAR INSTRUMENTOS...</h2>
+        <div class="loader-title">AUGUSTUNA</div>
+        <div class="loader-subtitle">rumo à Bracara augusta...</div>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+
+    <!-- CHARACTER SELECTION -->
+    <div id="char-selection">
+        <h2>ESCOLHE A TUA PERSONAGEM</h2>
+        <div class="char-options">
+            
+            <div class="char-card" onclick="startGame('char-seminoide')">
+                <div class="char-preview player-ghost char-seminoide" style="position:static;">
+                    <div class="hood"></div>
+                    <div class="rope"></div><div class="rope-knot"></div><div class="rope-tail"></div>
+                    <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>
+                </div>
+                <strong>Seminóide</strong>
+            </div>
+
+            <div class="char-card" onclick="startGame('char-semina')">
+                <div class="char-preview player-ghost char-semina" style="position:static;">
+                    <div class="hood"></div>
+                    <div class="bow"></div>
+                    <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>
+                </div>
+                <strong>Semina</strong>
+            </div>
+
+            <div class="char-card" onclick="startGame('char-tuno')">
+                <div class="char-preview player-ghost char-tuno" style="position:static;">
+                    <div class="tricorn"></div><div class="tricorn-top"></div>
+                    <div class="hood"></div>
+                    <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>
+                </div>
+                <strong>Tuno</strong>
+            </div>
+
+        </div>
     </div>
 
     <div id="game-container">
         <div id="score">00000</div>
         <div id="ground"></div>
-        <div id="player">
-            <div class="hood"></div>
-            <div class="rope"></div>
-            <div class="rope-knot"></div>
-            <div class="rope-tail"></div>
-            <div class="face">
-                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-                <div class="blush"><div class="dot"></div><div class="dot"></div></div>
-            </div>
+        <div id="player" class="player-ghost char-seminoide">
+            <!-- Dynamically injected based on selection -->
         </div>
         <div id="game-over">
             <h1 style="letter-spacing: 5px; margin-bottom: 5px;">G A M E  O V E R</h1>
             
-            <div id="highscore-input" style="display: none; margin: 15px 0;">
+            <div id="highscore-input">
                 <p style="margin: 0 0 5px 0; color: #C9A84C; font-weight: bold;">NOVO RECORDE!</p>
                 <input type="text" id="playerName" placeholder="O teu nome..." maxlength="10" style="padding: 5px; text-align: center; border: 2px solid #535353; font-family: inherit; width: 150px;">
                 <br>
                 <button onclick="saveHighscore()">GUARDAR</button>
             </div>
 
-            <div id="highscore-table" style="margin: 15px 0; text-align: left; font-size: 14px; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 5px;">
-                <h3 style="margin: 0 0 10px 0; text-align: center;">TOP 5 FARRICOCOS</h3>
-                <ol id="highscore-list" style="margin: 0; padding-left: 20px;">
-                    <!-- Preenchido via JS -->
-                </ol>
+            <div id="highscore-table">
+                <h3 style="margin: 0 0 10px 0; text-align: center;">TOP 5 ENSAIO</h3>
+                <ol id="highscore-list"></ol>
             </div>
 
             <button id="btn-restart" onclick="restart()">REINICIAR ENSAIO</button>
@@ -294,7 +245,7 @@
     
     <div class="instructions">
         Pressiona <strong>ESPAÇO</strong> ou <strong>TOCA NO ECRÃ</strong> para saltar.<br>
-        Ajuda o Farricoco a saltar os finos!
+        Apanha a <strong>Coroa de Louros</strong> para imunidade!
     </div>
 
 <script>
@@ -303,28 +254,32 @@
     const scoreElement = document.getElementById('score');
     const gameOverScreen = document.getElementById('game-over');
     const ground = document.getElementById('ground');
+    let bgMusic = document.getElementById('bg-music');
+
+    bgMusic.volume = 0.5;
 
     let state = {
-        gameOver: false,
+        gameOver: true,
         score: 0,
-        speed: 4.5, /* Começa mais lento (antes era 6) */
+        speed: 3.5, // Start very slow
         gravity: 0.6,
         jumpPower: -12,
         velocityY: 0,
         isJumping: false,
         obstacles: [],
-        spawnTimer: 0
+        laurels: [],
+        spawnTimer: 0,
+        immuneTime: 0
     };
 
     let highscores = [];
     const BIN_URL = "https://jsonblob.com/api/jsonBlob/019d2cc6-daf7-7df0-9801-03e71948ba95";
 
     async function initGame() {
-        // Carregar recordes
-        // Min order of 1.5s for the loading screen animation
+        // Load global highscores and wait for loading animation
         const [res] = await Promise.all([
             fetch(BIN_URL).catch(()=>null),
-            new Promise(r => setTimeout(r, 1500))
+            new Promise(r => setTimeout(r, 2200)) // 2 seconds minimum for the progress bar
         ]);
 
         if(res && res.ok) {
@@ -332,17 +287,36 @@
             highscores = Array.isArray(data) ? data : [];
         }
 
-        // Esconder loader
-        const loader = document.getElementById('game-loader');
-        loader.style.opacity = '0';
+        // Hide loader, show character selection
+        document.getElementById('game-loader').style.opacity = '0';
         setTimeout(() => {
-            loader.style.display = 'none';
-            // Iniciar o jogo
-            requestAnimationFrame(update);
+            document.getElementById('game-loader').style.display = 'none';
+            document.getElementById('char-selection').style.display = 'flex';
         }, 500);
     }
 
-    // Arrancar a inicialização
+    function startGame(charClass) {
+        document.getElementById('char-selection').style.display = 'none';
+        
+        // Setup player HTML based on selection
+        player.className = `player-ghost ${charClass}`;
+        let innerHTML = `<div class="hood"></div>`;
+        if (charClass === 'char-seminoide') {
+            innerHTML += `<div class="rope"></div><div class="rope-knot"></div><div class="rope-tail"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
+        } else if (charClass === 'char-semina') {
+            innerHTML += `<div class="bow"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>`;
+        } else if (charClass === 'char-tuno') {
+            innerHTML += `<div class="tricorn"></div><div class="tricorn-top"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
+        }
+        player.innerHTML = innerHTML;
+
+        // Try playing music (Requires user interaction, which just happened!)
+        bgMusic.play().catch(e => console.log("Áudio não encontrado ou bloqueado."));
+
+        state.gameOver = false;
+        requestAnimationFrame(update);
+    }
+
     initGame();
 
     function checkHighscore(finalScore) {
@@ -353,10 +327,10 @@
     }
 
     async function showGameOver() {
+        state.gameOver = true;
         gameOverScreen.style.display = 'block';
-        let scoreInt = Math.floor(state.score);
+        player.classList.remove('immune-flash'); // reset visual loop
         
-        // Antes de mostrar os resultados, tentamos recarregar para garantir os mais recentes
         document.getElementById('highscore-list').innerHTML = '<li>A carregar recordes...</li>';
         
         try {
@@ -365,6 +339,7 @@
             highscores = Array.isArray(data) ? data : [];
         } catch(e) {}
 
+        let scoreInt = Math.floor(state.score);
         if (checkHighscore(scoreInt)) {
             document.getElementById('highscore-input').style.display = 'block';
             document.getElementById('highscore-table').style.display = 'none';
@@ -383,12 +358,10 @@
         if(!name) name = 'Anónimo';
         let scoreInt = Math.floor(state.score);
         
-        // Bloquear botão para evitar múltiplos cliques
         const btn = document.querySelector('#highscore-input button');
         btn.disabled = true;
         btn.innerText = "A GUARDAR...";
 
-        // Recarregar antes de salvar para evitar reescrever progresso de outros
         try {
             const res = await fetch(BIN_URL);
             const data = await res.json();
@@ -428,12 +401,11 @@
         });
     }
 
-    // Criar detalhes do chão (textura) e nuvens
     function initDecoration() {
         for(let i=0; i<15; i++) {
             let d = document.createElement('div');
             d.className = 'ground-detail';
-            d.style.left = Math.random() * container.offsetWidth + 'px';
+            d.style.left = Math.random() * 2000 + 'px';
             d.style.bottom = (10 + Math.random() * 10) + 'px';
             container.appendChild(d);
         }
@@ -449,26 +421,43 @@
     function spawn() {
         if (state.gameOver) return;
 
-        // Decisão aleatória: 1 garrafa, 2 juntas ou 3 juntas
-        let group = Math.random() > 0.8 ? (Math.random() > 0.5 ? 3 : 2) : 1;
-        
-        for(let i=0; i<group; i++) {
-            const b = document.createElement('div');
-            b.className = 'bottle';
-            b.style.left = (container.offsetWidth + 50 + (i * 15)) + 'px';
-            b.innerHTML = '<div class="b-neck"></div><div class="b-body"></div>';
-            container.appendChild(b);
-            state.obstacles.push(b);
+        // Laurel wreath random chance (very rare, 10% when spawning)
+        if (Math.random() > 0.90) {
+            const laurel = document.createElement('div');
+            laurel.className = 'laurel';
+            // Spawn higher up so they have to jump for it
+            laurel.style.left = (container.offsetWidth + 50) + 'px';
+            laurel.style.bottom = (50 + Math.random() * 50) + 'px'; 
+            container.appendChild(laurel);
+            state.laurels.push(laurel);
+        } else {
+            // Normal Bottles
+            let group = Math.random() > 0.8 ? (Math.random() > 0.5 ? 3 : 2) : 1;
+            for(let i=0; i<group; i++) {
+                const b = document.createElement('div');
+                b.className = 'bottle';
+                b.style.left = (container.offsetWidth + 50 + (i * 15)) + 'px';
+                b.innerHTML = '<div class="b-neck"></div><div class="b-body"></div>';
+                container.appendChild(b);
+                state.obstacles.push(b);
+            }
         }
 
-        let baseInterval = 80 / (state.speed / 6);
+        let baseInterval = 80 / (state.speed / 5);
         state.spawnTimer = baseInterval + Math.random() * 100;
     }
 
     function update() {
         if (state.gameOver) return;
 
-        // Salto
+        // Timer de Imunidade
+        if (state.immuneTime > 0) {
+            state.immuneTime--;
+            player.classList.add('immune-flash');
+        } else {
+            player.classList.remove('immune-flash');
+        }
+
         state.velocityY += state.gravity;
         let bottom = parseFloat(player.style.bottom || 22);
         let nextBottom = bottom - state.velocityY;
@@ -480,51 +469,80 @@
         }
         player.style.bottom = nextBottom + 'px';
 
-        // Spawn Aleatório
         state.spawnTimer--;
         if (state.spawnTimer <= 0) spawn();
 
-        // Movimento e Colisão
+        let pRect = player.getBoundingClientRect();
+
+        // Move Laurels
+        for (let i = state.laurels.length - 1; i >= 0; i--) {
+            let L = state.laurels[i];
+            let x = parseFloat(L.style.left);
+            x -= state.speed;
+            L.style.left = x + 'px';
+            
+            let lRect = L.getBoundingClientRect();
+            if (pRect.right > lRect.left && pRect.left < lRect.right && pRect.bottom > lRect.top && pRect.top < lRect.bottom) {
+                // Collect Laurel! Immune for 5 seconds (~300 frames)
+                state.immuneTime = 300;
+                L.remove();
+                state.laurels.splice(i, 1);
+            } else if (x < -50) {
+                L.remove();
+                state.laurels.splice(i, 1);
+            }
+        }
+
+        // Move Obstacles
         for (let i = state.obstacles.length - 1; i >= 0; i--) {
             let b = state.obstacles[i];
             let x = parseFloat(b.style.left);
             x -= state.speed;
             b.style.left = x + 'px';
 
-            let pRect = player.getBoundingClientRect();
             let bRect = b.getBoundingClientRect();
 
-            // Colisão Generosa
             if (pRect.right - 10 > bRect.left && 
                 pRect.left + 10 < bRect.right && 
                 pRect.bottom > bRect.top + 5) {
-                state.gameOver = true;
-                showGameOver();
+                
+                if (state.immuneTime <= 0) {
+                    showGameOver();
+                } else {
+                    // Destroy bottle if immune
+                    b.remove();
+                    state.obstacles.splice(i, 1);
+                }
             }
 
             if (x < -50) {
-                b.remove();
-                state.obstacles.splice(i, 1);
+                if (document.body.contains(b)) b.remove();
+                if(state.obstacles[i]) state.obstacles.splice(i, 1);
             }
         }
 
-        // Pontuação e Dificuldade (aumenta gradualmente a velocidade)
-        state.score += 0.15;
-        state.speed += 0.0015; /* Aumenta mais rapidamente para compensar início lento */
-        scoreElement.innerText = Math.floor(state.score).toString().padStart(5, '0');
-
-        requestAnimationFrame(update);
+        if(!state.gameOver) {
+            state.score += 0.15;
+            state.speed += 0.002; // acceleration
+            scoreElement.innerText = Math.floor(state.score).toString().padStart(5, '0');
+            requestAnimationFrame(update);
+        }
     }
 
     function restart() {
         state.gameOver = false;
         state.score = 0;
-        state.speed = 4.5;
+        state.speed = 3.5; // Starts quite slow
         state.velocityY = 0;
         state.spawnTimer = 50;
+        state.immuneTime = 0;
+        player.classList.remove('immune-flash');
+        
         gameOverScreen.style.display = 'none';
         state.obstacles.forEach(b => b.remove());
+        state.laurels.forEach(L => L.remove());
         state.obstacles = [];
+        state.laurels = [];
         update();
     }
 
@@ -543,14 +561,13 @@
     });
     
     document.addEventListener('touchstart', (e) => { 
-        if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+        if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('.char-card')) {
             e.preventDefault(); 
             jump(); 
         }
     }, {passive: false});
     
     initDecoration();
-    // O jogo apenas arranca no final do initGame()
 </script>
 </body>
 </html>
