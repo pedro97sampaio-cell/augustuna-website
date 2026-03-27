@@ -115,21 +115,11 @@
         .char-seminoide .rope-knot { position: absolute; top: 13px; right: -2px; width: 7px; height: 7px; background: #8B4513; border-radius: 50%; z-index: 12; }
         .char-seminoide .rope-tail { position: absolute; top: 18px; right: -4px; width: 3px; height: 10px; background: #A0522D; transform: rotate(20deg); z-index: 11; }
 
-        /* TYPE: SEMINA (Red Bow) */
-        .char-semina .hood { background: #1C1C1C; } /* Slightly softer black */
-        .char-semina .bow { position: absolute; top: 38px; left: 14px; width: 8px; height: 6px; background: #B22222; border-radius: 2px; z-index: 12; }
-        .char-semina .bow::before, .char-semina .bow::after { content: ''; position: absolute; width: 6px; height: 8px; background: #8B0000; top: -1px; border-radius: 50%; }
-        .char-semina .bow::before { left: -5px; } .char-semina .bow::after { right: -5px; }
+        /* TYPE: SEMINA (Blue Ghost) */
+        .char-semina .hood { background: #007bff; } /* Azul */
 
-        /* TYPE: TUNO (Tricórnio) */
-        .char-tuno .tricorn { 
-            position: absolute; top: -6px; left: -8px; width: 52px; height: 16px; background: #000; 
-            border-radius: 50% 50% 0 0; z-index: 13; border-bottom: 2px solid #333;
-        }
-        .char-tuno .tricorn-top {
-            position: absolute; top: -14px; left: 8px; width: 34px; height: 14px; background: #000;
-            border-radius: 50% 50% 0 0; z-index: 12;
-        }
+        /* TYPE: TUNO (Plain Black Ghost) */
+        .char-tuno .hood { background: #111; }
 
         /* IMMUNITY EFFECT */
         .immune-flash { animation: flash 0.3s infinite; }
@@ -170,8 +160,7 @@
 
     <!-- Audio Player via Tag (Hidden) -->
     <audio id="bg-music" loop>
-        <!-- The user needs to add musica_8bit.mp3 to the repo for this to play -->
-        <source src="musica_8bit.mp3" type="audio/mpeg">
+        <source src="braga boemia 8bit.mp4" type="audio/mp4">
     </audio>
 
     <a href="index.html" class="btn-back">&larr; Voltar ao Ritmo</a>
@@ -200,7 +189,6 @@
             <div class="char-card" onclick="startGame('char-semina')">
                 <div class="char-preview player-ghost char-semina" style="position:static;">
                     <div class="hood"></div>
-                    <div class="bow"></div>
                     <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>
                 </div>
                 <strong>Semina</strong>
@@ -208,7 +196,6 @@
 
             <div class="char-card" onclick="startGame('char-tuno')">
                 <div class="char-preview player-ghost char-tuno" style="position:static;">
-                    <div class="tricorn"></div><div class="tricorn-top"></div>
                     <div class="hood"></div>
                     <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>
                 </div>
@@ -304,9 +291,9 @@
         if (charClass === 'char-seminoide') {
             innerHTML += `<div class="rope"></div><div class="rope-knot"></div><div class="rope-tail"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
         } else if (charClass === 'char-semina') {
-            innerHTML += `<div class="bow"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>`;
+            innerHTML += `<div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>`;
         } else if (charClass === 'char-tuno') {
-            innerHTML += `<div class="tricorn"></div><div class="tricorn-top"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
+            innerHTML += `<div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
         }
         player.innerHTML = innerHTML;
 
