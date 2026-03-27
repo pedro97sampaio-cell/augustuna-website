@@ -118,8 +118,12 @@
         /* TYPE: SEMINA (Blue Ghost) */
         .char-semina .hood { background: #007bff; } /* Azul */
 
-        /* TYPE: TUNO (Plain Black Ghost) */
+        /* TYPE: TUNO (Pirate Hat & Skin Face) */
         .char-tuno .hood { background: #111; }
+        .char-tuno .face-bg { position: absolute; top: 16px; left: 8px; width: 20px; height: 16px; background: #f1c27d; border-radius: 10px; z-index: 11; }
+        .char-tuno .pirate-hat { position: absolute; top: -4px; left: -10px; width: 56px; height: 16px; background: #222; border-radius: 50% 50% 0 0; z-index: 13; border-bottom: 2px solid #b8860b; }
+        .char-tuno .pirate-hat-top { position: absolute; top: -14px; left: 6px; width: 24px; height: 14px; background: #222; border-radius: 50% 50% 0 0; z-index: 12; }
+        .char-tuno .face { z-index: 12; }
 
         /* IMMUNITY EFFECT */
         .immune-flash { animation: flash 0.3s infinite; }
@@ -196,7 +200,9 @@
 
             <div class="char-card" onclick="startGame('char-tuno')">
                 <div class="char-preview player-ghost char-tuno" style="position:static;">
+                    <div class="pirate-hat"></div><div class="pirate-hat-top"></div>
                     <div class="hood"></div>
+                    <div class="face-bg"></div>
                     <div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>
                 </div>
                 <strong>Tuno</strong>
@@ -293,7 +299,7 @@
         } else if (charClass === 'char-semina') {
             innerHTML += `<div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div><div class="blush"><div class="dot"></div><div class="dot"></div></div></div>`;
         } else if (charClass === 'char-tuno') {
-            innerHTML += `<div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
+            innerHTML += `<div class="pirate-hat"></div><div class="pirate-hat-top"></div><div class="face-bg"></div><div class="face"><div class="eyes"><div class="eye"></div><div class="eye"></div></div></div>`;
         }
         player.innerHTML = innerHTML;
 
