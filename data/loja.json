@@ -1,13 +1,5 @@
 [
   {
-    "id": "dc863793",
-    "nome": "TESTE",
-    "preco": 22.0,
-    "descricao": "TESTE",
-    "imagem": "assets/img/augustuna logo.png",
-    "tamanhos": []
-  },
-  {
     "id": "1",
     "nome": "T-Shirt 30 Anos",
     "preco": 19.9,
