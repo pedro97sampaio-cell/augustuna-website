@@ -1,5 +1,13 @@
 [
   {
+    "id": "6bcf488e",
+    "nome": "TESTE",
+    "preco": 0.0,
+    "descricao": "TESTE",
+    "imagem": "assets/img/image 2 (1)_bfdd52.png",
+    "tamanhos": []
+  },
+  {
     "id": "1",
     "nome": "T-Shirt 30 Anos",
     "preco": 19.9,

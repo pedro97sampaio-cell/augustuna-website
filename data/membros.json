@@ -90,6 +90,13 @@
           "curso": "Ensino Português - Inglês",
           "data_passagem": "1996-02-28",
           "evento": "Fundação"
+        },
+        {
+          "nome": "TESTE",
+          "alcunha": "TESTE",
+          "curso": "TESTE",
+          "data_passagem": "TESTE",
+          "instrumento": "Guitarra Clássica"
         }
       ]
     },

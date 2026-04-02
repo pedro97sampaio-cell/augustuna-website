@@ -1,11 +1,11 @@
 [
   {
     "id": "n001",
+    "titulo": "TESTE",
     "data": "15 Mar 2026",
-    "titulo": "IX Magna Augusta — 30 Anos de Augustuna",
-    "corpo": "A Augustuna celebra três décadas de tradição e boémia com o IX Magna Augusta, o seu festival internacional de tunas académicas nos dias 14 e 15 de Março no Theatro Circo, em Braga.",
-    "imagem": "Logo oficial 2.png",
-    "categoria": "destaque"
+    "categoria": "destaque",
+    "corpo": "TESTE",
+    "imagem": "assets/img/image 2 (1).png"
   },
   {
     "id": "n002",
