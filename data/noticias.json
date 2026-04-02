@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "n001",
+    "data": "15 Mar 2026",
+    "titulo": "IX Magna Augusta — 30 Anos de Augustuna",
+    "corpo": "A Augustuna celebra três décadas de tradição e boémia com o IX Magna Augusta, o seu festival internacional de tunas académicas nos dias 14 e 15 de Março no Theatro Circo, em Braga.",
+    "imagem": "Logo oficial 2.png",
+    "categoria": "destaque"
+  },
+  {
+    "id": "n002",
+    "data": "Set 2025",
+    "titulo": "Recrutamento 2025/2026 — Junta-te à Família",
+    "corpo": "Novo ano letivo, nova oportunidade! A Augustuna abre portas a todos os estudantes da UMinho que queiram viver a tradição tunante. Não precisas de saber tocar — basta vontade!",
+    "imagem": "",
+    "categoria": "recrutamento"
+  },
+  {
+    "id": "n003",
+    "data": "Mai 2024",
+    "titulo": "XXVII Galardões \"A Nossa Terra\"",
+    "corpo": "A Augustuna atuou nos XXVII Galardões \"A Nossa Terra\", um evento de referência na região minhota que homenageia personalidades e projetos de destaque.",
+    "imagem": "",
+    "categoria": "premio"
+  },
+  {
+    "id": "n004",
+    "data": "Dez 2025",
+    "titulo": "Serenata de Natal — Braga",
+    "corpo": "Tradição anual da Augustuna: uma noite de serenatas pelas ruas do centro histórico de Braga, levando a música académica aos bracarenses na época natalícia.",
+    "imagem": "",
+    "categoria": "cultura"
+  }
+]

@@ -3,7 +3,7 @@
    SPA Routing, Cart, Dropdowns, Animations
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // --- Pre-loader Animation ---
   const loaderWrapper = document.getElementById('loader-wrapper');
   const progressBar = document.getElementById('loaderProgressBar');
@@ -14,12 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (progress >= 100) {
         progress = 100;
         clearInterval(interval);
-        setTimeout(() => {
-          document.body.classList.add('loaded');
-        }, 400); 
       }
       progressBar.style.width = progress + '%';
     }, 150);
+  }
+
+  await fetchWebsiteData();
+
+  if (loaderWrapper) {
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 400); 
   }
 
   // Initialize Lucide icons
@@ -43,6 +48,232 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log('🎵 Augustuna — Website carregado com sucesso!');
 });
+
+/* ============================================
+   GLOBAL DATA FETCHING
+   ============================================ */
+let MEMBERS_DATA = [];
+let ATUACOES_DATA = { festivais_concurso: [], festivais_convite: [], outras: [] };
+let NOTICIAS_DATA = [];
+let EVENTOS_DATA = { magna_augusta: [], festa_semina: [] };
+let LOJA_DATA = [];
+
+async function fetchWebsiteData() {
+  try {
+    const urls = [
+      'data/membros.json',
+      'data/atuacoes.json',
+      'data/noticias.json',
+      'data/eventos.json',
+      'data/loja.json'
+    ];
+    
+    // Add cache buster
+    const fetches = urls.map(url => fetch(url + '?t=' + new Date().getTime()).then(res => res.json()));
+    const [membros, atuacoes, noticias, eventos, loja] = await Promise.all(fetches);
+
+    // Flatten members for script.js structure
+    MEMBERS_DATA = membros.geracoes.reduce((acc, g) => {
+      const gMembers = g.elementos.map(m => ({
+        name: m.nome,
+        alcunha: m.alcunha,
+        instrumento: m.instrumento,
+        curso: m.curso,
+        data: m.data_passagem || '',
+        evento: m.evento || '',
+        geracao: g.nome
+      }));
+      return acc.concat(gMembers);
+    }, []);
+
+    ATUACOES_DATA = atuacoes;
+    NOTICIAS_DATA = noticias;
+    EVENTOS_DATA = eventos;
+    LOJA_DATA = loja;
+
+    renderNoticias();
+    renderEventos();
+    renderAtuacoes();
+    renderLoja();
+  } catch(e) {
+    console.error('Failed to load website data:', e);
+  }
+}
+
+/* ============================================
+   DYNAMIC RENDERERS
+   ============================================ */
+function renderNoticias() {
+  const container = document.getElementById('newsContent');
+  if (!container) return;
+  
+  container.innerHTML = NOTICIAS_DATA.map(n => {
+    let tagClass = 'tag-blue';
+    let icon = '<i data-lucide="award" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+    let bgColors = '#3A5A2A, #1A3A1A';
+    
+    if (n.categoria === 'destaque') {
+      tagClass = '';
+      icon = '<img src="Logo oficial 2.png" alt="30 Anos" style="max-width:60%;height:auto;opacity:0.8;">';
+      bgColors = '#1B3A5C, #0A1628';
+    } else if (n.categoria === 'recrutamento') {
+      tagClass = 'tag-green';
+      icon = '<i data-lucide="users" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      bgColors = '#8B1A1A, #5a1010';
+    } else if (n.categoria === 'cultura') {
+      tagClass = 'tag-blue';
+      icon = '<i data-lucide="calendar" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      bgColors = '#1B3A5C, #0A1628';
+    }
+    
+    const imageHTML = n.imagem ? 
+      `<img src="${n.imagem}" alt="${n.titulo}" style="width:100%;height:100%;object-fit:cover;">` : 
+      `<div style="width:100%;height:100%;background:linear-gradient(135deg, ${bgColors});display:flex;align-items:center;justify-content:center;">${icon}</div>`;
+
+    return `
+      <div class="news-card-v2" data-category="${n.categoria || 'all'}">
+        <div class="news-card-v2-image">
+          <span class="news-card-tag ${tagClass}">${n.categoria ? (n.categoria.charAt(0).toUpperCase() + n.categoria.slice(1)) : 'Notícia'}</span>
+          ${imageHTML}
+        </div>
+        <div class="news-card-v2-body">
+          <div class="news-card-date">${n.data}</div>
+          <h4>${n.titulo}</h4>
+          <p>${n.corpo}</p>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderEventos() {
+  const magnaContainer = document.getElementById('magnaAugustaContent');
+  if (magnaContainer) {
+    magnaContainer.innerHTML = EVENTOS_DATA.magna_augusta.map((m, i) => `
+      <div class="event-card-v2">
+        <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover;">
+          <div class="event-card-v2-overlay"></div>
+          <div class="event-badge">${m.edicao} ${m.ano ? '— ' + m.ano : ''}</div>
+        </div>
+        <div class="event-card-v2-body">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
+            Magna Augusta
+          </div>
+          <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
+            ${m.edicao} Magna Augusta
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${m.descricao}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const seminaContainer = document.getElementById('festaSeminaContent');
+  if (seminaContainer) {
+    seminaContainer.innerHTML = EVENTOS_DATA.festa_semina.map((m) => `
+      <div class="event-card-v2">
+        <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover; background-size: contain;">
+          <div class="event-card-v2-overlay"></div>
+          <div class="event-badge">${m.edicao} ${m.ano && m.ano !== 0 ? '— ' + m.ano : ''}</div>
+        </div>
+        <div class="event-card-v2-body">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
+            Festa do Semina
+          </div>
+          <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
+            Edição ${m.edicao}
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${m.descricao}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderAtuacoes() {
+  function renderList(containerId, dataArray) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    let currentYear = '';
+    let html = '';
+    
+    dataArray.forEach(item => {
+      // Determine year from data string. e.g "15 Mar 2026"
+      const parts = item.data.split(' ');
+      const yr = parts[parts.length - 1]; // last part is generally year
+      const isYearOnly = parts.length === 1;
+      
+      const day = isYearOnly ? '--' : parts[0];
+      const month = isYearOnly ? '--' : parts[1];
+      
+      if (yr !== currentYear) {
+        html += `<div class="performance-year-divider">${yr}</div>`;
+        currentYear = yr;
+      }
+      
+      html += `
+        <div class="performance-item">
+          <div class="performance-date">
+            <div class="performance-day">${day}</div>
+            <div class="performance-month">${month}</div>
+          </div>
+          <div class="performance-info">
+            <h4>${item.titulo}</h4>
+            <p>${item.descricao}</p>
+            <div class="performance-location">
+              <i data-lucide="map-pin" style="width:14px;height:14px;"></i> ${item.localizacao}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    container.innerHTML = html;
+  }
+
+  renderList('concursoContent', ATUACOES_DATA.festivais_concurso);
+  renderList('conviteContent', ATUACOES_DATA.festivais_convite);
+  renderList('outrasContent', ATUACOES_DATA.outras);
+}
+
+function renderLoja() {
+  const container = document.getElementById('lojaContent');
+  if (!container) return;
+
+  container.innerHTML = LOJA_DATA.map(p => {
+    let sizeSelector = '';
+    if (p.tamanhos && Array.isArray(p.tamanhos) && p.tamanhos.length > 0) {
+      sizeSelector = `
+          <div class="size-selector">
+            <label style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; display: block;">Tamanho:</label>
+            <select class="size-select" style="width:100%; padding: 0.5rem; background: var(--bg-dark); border: 1px solid #333; color: white; border-radius: 4px; margin-bottom: 1rem;">
+              <option value="">Selecionar...</option>
+              ${p.tamanhos.map(s => `<option value="${s}">${s}</option>`).join('')}
+            </select>
+          </div>
+      `;
+    }
+
+    return `
+    <div class="shop-card" data-product-id="${p.id}" data-product-name="${p.nome}" data-product-price="${p.preco}">
+      <div class="shop-card-image" style="background: url('${p.imagem || 'Logo oficial 2.png'}') center/cover; background-size: contain; background-repeat: no-repeat; background-color: var(--card-bg);">
+        <div class="shop-card-badge">Merch</div>
+      </div>
+      <div class="shop-card-body">
+        <h4>${p.nome}</h4>
+        <div class="price">€${p.preco.toFixed(2).replace('.', ',')}</div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.4;">
+          ${p.descricao || 'Produto oficial Augustuna.'}
+        </p>
+        ${sizeSelector}
+        <button class="btn btn-secondary" style="width: 100%; padding: 0.6rem; border-radius: 4px; font-weight: bold; border: 1px solid var(--dourado);" onclick="addToCart(this)">
+          <i data-lucide="shopping-bag" style="width:16px;height:16px;margin-right:0.5rem;"></i> ADICIONAR
+        </button>
+      </div>
+    </div>
+  `;}).join('');
+}
 
 /* ============================================
    SPA ROUTER
@@ -588,80 +819,7 @@ function animateCounter(element) {
 /* ============================================
    MEMBERS DATA & RENDERING
    ============================================ */
-const MEMBERS_DATA = [
-  { name: "Carlos Manuel Fernandes da Silva", alcunha: "Pamelo", instrumento: "Braguesa", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Maria João Barbosa da Silva Martins", alcunha: "General", instrumento: "Estandarte", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Fernando Miguel Brito Faria", alcunha: "Aranha", instrumento: "Bandolim", evento: "Fundação", data: "1996-02-28", curso: "Engenharia de Materiais", geracao: "Fundadores" },
-  { name: "Filipe Alexandre Hipólito Proença Caiado Márcia", alcunha: "Piçalho", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Engenharia de Materiais", geracao: "Fundadores" },
-  { name: "João Manuel Araújo Cruz", alcunha: "Krika", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Sociologia", geracao: "Fundadores" },
-  { name: "José Carlos Ferreira da Silva", alcunha: "Balastro", instrumento: "Voz", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Carlos Alberto Moreira de Araújo", alcunha: "Jumbo", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Maria de Fátima Duarte Ferreira", alcunha: "Pinypon", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Jorge Manuel Campos Pinto", alcunha: "60 Litros", instrumento: "Bandola", evento: "Fundação", data: "1996-02-28", curso: "Economia", geracao: "Fundadores" },
-  { name: "Maria Vitória Sampaio de Carvalho Antunes", alcunha: "Corvo", instrumento: "Contrabaixo", evento: "Fundação", data: "1996-10-01", curso: "Economia", geracao: "Fundadores" },
-  { name: "Regina Isabel da Mota Carneiro", alcunha: "Mémé", instrumento: "Guitarra", evento: "Fundação", data: "1996-02-28", curso: "Ensino Português - Inglês", geracao: "Fundadores" },
-  { name: "Alexandra Maria Costa Duarte", alcunha: "Bocas", instrumento: "Pandeireta", evento: "Récita", data: "1998-12-01", curso: "Ensino Português - Inglês", geracao: "2ª Geração" },
-  { name: "Catarina Adelaide Fernandes Fonseca", alcunha: "Rancha", instrumento: "Acordeão", evento: "Récita", data: "1998-12-01", curso: "Comunicação Social", geracao: "2ª Geração" },
-  { name: "Mara Helena Ferreira da Silva Dória", alcunha: "Chicla", instrumento: "Cavaquinho", evento: "Récita", data: "1998-12-01", curso: "Engenharia de Materiais/Geologia", geracao: "2ª Geração" },
-  { name: "Pedro Henrique Rodrigues Vale", alcunha: "Laurindo", instrumento: "Guitarra", evento: "Récita", data: "1998-12-01", curso: "Direito", geracao: "2ª Geração" },
-  { name: "João Paulo Paupério", alcunha: "Tarrafal", instrumento: "Pandeireta", evento: "Sala da Tuna", data: "1999-01-01", curso: "Relações Internacionais", geracao: "2ª Geração" },
-  { name: "Sónia Raquel da Costa Marques", alcunha: "XIU", instrumento: "Acordeão", evento: "", data: "2000-01-01", curso: "Comunicação Social", geracao: "3ª Geração" },
-  { name: "Ana Maria Fernandes dos Santos Oliveira", alcunha: "Pissup", instrumento: "Braguesa", evento: "Velório da Gata", data: "2000-01-01", curso: "Direito", geracao: "3ª Geração" },
-  { name: "Miguel Ângelo Martins da Silva Rêgo", alcunha: "Cisterna", instrumento: "Voz", evento: "Tuno Convidado", data: "2003-01-01", curso: "Engenharia Agrícola/Biologia Aplicada", geracao: "4ª Geração" },
-  { name: "Rui Nuno Calisto Araujo de Melo", alcunha: "Mijeira", instrumento: "Pandeireta", evento: "Tuno Convidado", data: "2003-01-01", curso: "Engenharia Mecânica", geracao: "4ª Geração" },
-  { name: "Pedro Miguel Azevedo Paredes", alcunha: "Dromedário", instrumento: "Guitarra", evento: "Tuno Convidado", data: "2003-01-01", curso: "Ensino de Biologia e Geologia", geracao: "4ª Geração" },
-  { name: "Hélder Daniel Ribeiro de Carvalho", alcunha: "Jagunço", instrumento: "Estandarte", evento: "VII Festival do ISMAI", data: "2003-11-20", curso: "Gestão", geracao: "4ª Geração" },
-  { name: "António Castro", alcunha: "Falo", instrumento: "Acordeão", evento: "", data: "2004-01-01", curso: "Física", geracao: "5ª Geração" },
-  { name: "André Costa Cardoso", alcunha: "Bexiga", instrumento: "Contrabaixo", evento: "", data: "2004-12-09", curso: "Relações Internacionais", geracao: "5ª Geração" },
-  { name: "Vasco Martins", alcunha: "Sacas", instrumento: "Bandolim", evento: "", data: "2004-12-09", curso: "Relações Internacionais", geracao: "5ª Geração" },
-  { name: "Luís Filipe Pinto Pereira", alcunha: "Múmia", instrumento: "Guitarra", evento: "Récita", data: "2005-12-01", curso: "Arqueologia", geracao: "6ª Geração" },
-  { name: "Afonso João Esteves Pizarro Dias", alcunha: "Rabeca", instrumento: "Violino", evento: "Jantar do Caloiro", data: "2006-10-11", curso: "Relações Internacionais", geracao: "7ª Geração" },
-  { name: "Emanuel de Oliveira", alcunha: "Bush", instrumento: "Percussão", evento: "XI Aniversário da Tuna", data: "2007-03-02", curso: "Gestão", geracao: "8ª Geração" },
-  { name: "Fernando Almeida Martins", alcunha: "Tachas", instrumento: "Trompete", evento: "I CIRTAV", data: "2007-06-10", curso: "Relações Internacionais", geracao: "8ª Geração" },
-  { name: "Ricardo Emanuel Agostinho Coelho", alcunha: "George Michael", instrumento: "Contrabaixo", evento: "Récita", data: "2013-12-01", curso: "Línguas e Culturas Orientais", geracao: "10ª Geração" },
-  { name: "José Rafael Azevedo Teixeira Gonçalves", alcunha: "Profeta", instrumento: "Guitarra", evento: "Récita", data: "2013-12-01", curso: "Ciência Política", geracao: "10ª Geração" },
-  { name: "Carlos Filipe Mesquita Teixeira", alcunha: "Passos Recluso", instrumento: "Guitarra", evento: "Récita", data: "2013-12-01", curso: "Psicologia", geracao: "10ª Geração" },
-  { name: "Diogo Alberto Ferreira Lima", alcunha: "Pito", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Psicologia", geracao: "11ª Geração" },
-  { name: "Nuno Miguel Mota Pereira", alcunha: "Phineas", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Relações Internacionais", geracao: "11ª Geração" },
-  { name: "Vitor Hugo Simões da Silva", alcunha: "Assandes", instrumento: "Guitarra", evento: "Récita", data: "2014-12-01", curso: "Línguas e Culturas Orientais", geracao: "11ª Geração" },
-  { name: "Flávio António Silva Ferreira", alcunha: "Kirk", instrumento: "Braguesa", evento: "Récita", data: "2014-12-01", curso: "Engenharia Civil", geracao: "11ª Geração" },
-  { name: "Eduardo Luís Carvalho Ferreira", alcunha: "Marco Paulo", instrumento: "Cavaquinho", evento: "Receção ao Caloiro", data: "2014-10-04", curso: "Direito", geracao: "11ª Geração" },
-  { name: "Miguel Duarte Gonçalves Fontoura", alcunha: "Centoura", instrumento: "Acordeão", evento: "Récita", data: "2016-12-01", curso: "Administração Pública", geracao: "12ª Geração" },
-  { name: "Paulo Virgílio Gonçalves Fernandes Diz", alcunha: "Silvas", instrumento: "Voz", evento: "Récita", data: "2016-12-01", curso: "Línguas e Culturas Orientais", geracao: "12ª Geração" },
-  { name: "Dário Castro Dias", alcunha: "Borbogoucha", instrumento: "Percussão", evento: "Festa do Semina", data: "2017-02-14", curso: "Administração Pública", geracao: "13ª Geração" },
-  { name: "Pedro Moreira Ferraz", alcunha: "Zé Miguel", instrumento: "Bandolim", evento: "Enterro da Gata", data: "2017-05-16", curso: "Direito", geracao: "13ª Geração" },
-  { name: "Gonçalo Martins de Matos", alcunha: "Badjoraz", instrumento: "Voz/Cavaquinho", evento: "Enterro da Gata", data: "2017-05-16", curso: "Direito", geracao: "13ª Geração" },
-  { name: "Daniel Diaz Costa", alcunha: "Cont'Aquela", instrumento: "Braguesa", evento: "III Magna Augusta", data: "2018-03-17", curso: "Engenharia Mecânica", geracao: "14ª Geração" },
-  { name: "João Filipe da Silva Barros", alcunha: "Envergonhado", instrumento: "Guitarra", evento: "III Magna Augusta", data: "2018-03-17", curso: "Filosofia", geracao: "14ª Geração" },
-  { name: "Afonso Miguel Capela Reis Oliveira Arantes", alcunha: "Esquivas", instrumento: "Bandolim", evento: "III Magna Augusta", data: "2018-03-17", curso: "Engenharia Mecânica", geracao: "14ª Geração" },
-  { name: "António Pedro Carvalho Moreira", alcunha: "Beijo Negro", instrumento: "Guitarra", evento: "Receção ao Caloiro", data: "2018-10-04", curso: "Negócios Internacionais", geracao: "14ª Geração" },
-  { name: "Diogo Miguel Rodrigues de Almeida", alcunha: "Rolhão", instrumento: "Percussão", evento: "Receção ao Caloiro", data: "2018-10-04", curso: "Marketing", geracao: "14ª Geração" },
-  { name: "David Pires Barbosa", alcunha: "Dona Teresa", instrumento: "Estandarte", evento: "Récita", data: "2018-12-01", curso: "Engenharia de Sistemas & Informática", geracao: "14ª Geração" },
-  { name: "Pedro Afonso Dordio Pedras", alcunha: "Mito", instrumento: "Bandolim", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Negócios Internacionais", geracao: "15ª Geração" },
-  { name: "João Francisco Vieira Marques Charréu", alcunha: "Caguei", instrumento: "Pandeireta", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Filosofia", geracao: "15ª Geração" },
-  { name: "João Carlos do Ouro Peixoto Alves Pereira", alcunha: "Paraquedista", instrumento: "Estandarte", evento: "IV Magna Augusta", data: "2019-03-22", curso: "Ciências do Ambiente", geracao: "15ª Geração" },
-  { name: "Daniel Filipe Almeida Couto Correia Dias", alcunha: "Esporras", instrumento: "Bandolim", evento: "XI Collipo", data: "2020-03-06", curso: "Engenharia Biológica", geracao: "16ª Geração" },
-  { name: "António Pedro Gonçalves Pereira", alcunha: "Baby Jesus", instrumento: "Acordeão", evento: "Retiro", data: "2021-07-17", curso: "Engenharia Física", geracao: "17ª Geração" },
-  { name: "Elízio Maria Oliveira Verdial", alcunha: "Finch", instrumento: "Guitarra", evento: "Retiro", data: "2021-07-17", curso: "Direito", geracao: "17ª Geração" },
-  { name: "Igor José Ramalho Rodrigues", alcunha: "Finoco", instrumento: "Pandeireta", evento: "Retiro", data: "2021-07-17", curso: "História", geracao: "17ª Geração" },
-  { name: "Diogo Filipe Braga Baptista", alcunha: "Postas", instrumento: "Contrabaixo", evento: "Retiro", data: "2021-07-17", curso: "Gestão", geracao: "17ª Geração" },
-  { name: "José João Cardoso Simões Araújo", alcunha: "Yoda", instrumento: "Braguesa", evento: "Retiro", data: "2021-07-17", curso: "Ciências do Ambiente", geracao: "17ª Geração" },
-  { name: "Adão Fernandes Rocha", alcunha: "À Porta", instrumento: "Pandeireta", evento: "Receção ao Caloiro", data: "2021-11-04", curso: "Química", geracao: "17ª Geração" },
-  { name: "Afonso Quintas Costeira", alcunha: "Tou", instrumento: "Percussão", evento: "Receção ao Caloiro", data: "2021-11-04", curso: "Física", geracao: "17ª Geração" },
-  { name: "José Pedro Sampaio Cunha", alcunha: "Eco-Escroto", instrumento: "Contrabaixo", evento: "V Magna Augusta", data: "2022-03-25", curso: "Física", geracao: "18ª Geração" },
-  { name: "Dionísio Emanuel Piairo Pereira", alcunha: "Lam'Cona", instrumento: "Bandolim", evento: "Enterro da Gata", data: "2022-05-08", curso: "História", geracao: "18ª Geração" },
-  { name: "Rui Pedro Magalhães Torres", alcunha: "Avenger", instrumento: "Bandolim", evento: "Receção ao Caloiro", data: "2022-10-13", curso: "Ciências da Computação", geracao: "18ª Geração" },
-  { name: "Fábio Martins Branquinho", alcunha: "Erudito", instrumento: "Estandarte", evento: "Récita", data: "2022-11-30", curso: "Arqueologia", geracao: "18ª Geração" },
-  { name: "David Gonçalo Lemos Oliveira", alcunha: "Sheik", instrumento: "Cajón", evento: "Récita", data: "2022-11-30", curso: "História", geracao: "18ª Geração" },
-  { name: "André Lopes Domingues", alcunha: "Timão", instrumento: "Bandolim", evento: "Récita", data: "2022-11-30", curso: "Arqueologia", geracao: "18ª Geração" },
-  { name: "Bruno Francisco Carneiro de Vilhena Dias", alcunha: "Escondidinhas", instrumento: "Pandeireta", evento: "VI Magna Augusta", data: "2023-03-10", curso: "História", geracao: "19ª Geração" },
-  { name: "José Filipe da Costa Ribeiro", alcunha: "Popeye", instrumento: "Guitarra", evento: "VI Magna Augusta", data: "2023-03-10", curso: "Administração Pública", geracao: "19ª Geração" },
-  { name: "António Miguel Ribeiro de Freitas Mendes", alcunha: "SARS", instrumento: "Guitarra", evento: "VI Magna Augusta", data: "2023-03-10", curso: "História", geracao: "19ª Geração" },
-  { name: "Guilherme Oliveira de Lourdes Coutinho", alcunha: "Alijó", instrumento: "Pandeireta", evento: "Enterro da Gata", data: "2023-05-07", curso: "Química", geracao: "19ª Geração" },
-  { name: "Gonçalo Guimarães de Sequeira Braga", alcunha: "Jolinhas", instrumento: "Cavaquinho", evento: "Receção ao Caloiro", data: "2023-09-28", curso: "Engenharia Biológica", geracao: "19ª Geração" },
-  { name: "Pedro Ilídio Lemos Freitas", alcunha: "Grego", instrumento: "Pandeireta", evento: "Receção ao Caloiro", data: "2023-09-28", curso: "História", geracao: "19ª Geração" },
-  { name: "Diogo João Santos Brito", alcunha: "Placona", instrumento: "Estandarte", evento: "Récita", data: "2023-11-30", curso: "Arqueologia", geracao: "20ª Geração" }
-];
+/* MEMBERS_DATA is populated dynamically by fetchWebsiteData */
 
 const GENERATION_ORDER = ['Fundadores', '2ª Geração', '3ª Geração', '4ª Geração', '5ª Geração', '6ª Geração', '7ª Geração', '8ª Geração', '9ª Geração', '10ª Geração', '11ª Geração', '12ª Geração', '13ª Geração', '14ª Geração', '15ª Geração', '16ª Geração', '17ª Geração', '18ª Geração', '19ª Geração', '20ª Geração', '21ª Geração'];
 

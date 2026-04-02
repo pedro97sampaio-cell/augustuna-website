@@ -1,1 +1,72 @@
-{"magna_augusta": [], "festa_semina": []}
+{
+  "magna_augusta": [
+    {
+      "edicao": "IX",
+      "ano": 2026,
+      "descricao": "O Magna Augusta é o festival oficial de Tunas Académicas organizado pela Augustuna, reunindo tunas de todo o mundo numa celebração da música académica. A próxima edição — IX Magna Augusta — promete ser a maior de sempre, com a participação de tunas de Portugal, Espanha, Itália e América Latina.",
+      "imagem": "logo magna.jpeg"
+    },
+    {
+      "edicao": "VIII",
+      "ano": 2024,
+      "descricao": "Uma edição memorável que encheu o Theatro Circo de melodias e vivências académicas inesquecíveis.",
+      "imagem": ""
+    },
+    {
+      "edicao": "VII",
+      "ano": 2022,
+      "descricao": "Mais um grande festival que marcou a cidade de Braga com a presença de tunas de excelência.",
+      "imagem": ""
+    },
+    {
+      "edicao": "VI",
+      "ano": 2020,
+      "descricao": "Uma noite de enorme partilha musical, de prémios renhidos e serenatas encantadoras pelo centro de Braga.",
+      "imagem": ""
+    },
+    {
+      "edicao": "V",
+      "ano": 2018,
+      "descricao": "Quinta edição do nosso festival, já firmado como um dos momentos altos da academia Minhota.",
+      "imagem": ""
+    },
+    {
+      "edicao": "IV",
+      "ano": 2016,
+      "descricao": "Edição que solidificou o formato internacional e a vasta procura de bilhetes por parte dos estudantes e da cidade.",
+      "imagem": ""
+    },
+    {
+      "edicao": "III",
+      "ano": 2014,
+      "descricao": "Terceira edição, repleta de clássicos do cancioneiro português reinventados.",
+      "imagem": ""
+    },
+    {
+      "edicao": "II",
+      "ano": 2012,
+      "descricao": "O festival começa a ganhar o seu espaço de renome no calendário nacional de tunas.",
+      "imagem": ""
+    },
+    {
+      "edicao": "I",
+      "ano": 2010,
+      "descricao": "A primeira e mítica edição do Magna Augusta. O início de uma tradição que dita o rumo da Augustuna e da sua música.",
+      "imagem": ""
+    }
+  ],
+  "festa_semina": [
+    {
+      "edicao": "2025",
+      "ano": 2025,
+      "descricao": "A Festa do Semina é um evento totalmente organizado pelos caloiros da Augustuna. A edição de 2025 celebrou-se a 8 de Outubro no Largo dos Peões. Contou com atuações musicais eletrizantes, excelentes comes e bebes e o genuíno espírito de academia que une as gerações.",
+      "imagem": ""
+    },
+    {
+      "edicao": "Anteriores",
+      "ano": 0,
+      "descricao": "A tradição da Festa do Semina mantém-se viva ano após ano. É o momento onde cada nova geração de caloiros deixa a sua marca irreverente e demonstra a sua união e valor à Tuna.",
+      "imagem": ""
+    }
+  ]
+}

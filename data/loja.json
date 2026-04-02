@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "1",
+    "nome": "T-Shirt 30 Anos",
+    "preco": 19.9,
+    "descricao": "",
+    "imagem": "",
+    "tamanhos": []
+  },
+  {
+    "id": "2",
+    "nome": "Boné Augustuna",
+    "preco": 14.9,
+    "descricao": "",
+    "imagem": "",
+    "tamanhos": []
+  },
+  {
+    "id": "3",
+    "nome": "Hoodie Augustuna",
+    "preco": 34.9,
+    "descricao": "",
+    "imagem": "",
+    "tamanhos": []
+  },
+  {
+    "id": "4",
+    "nome": "Caneca 30 Anos",
+    "preco": 9.9,
+    "descricao": "",
+    "imagem": "",
+    "tamanhos": []
+  }
+]
