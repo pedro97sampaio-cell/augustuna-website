@@ -57,6 +57,7 @@ let ATUACOES_DATA = { festivais_concurso: [], festivais_convite: [], outras: [] 
 let NOTICIAS_DATA = [];
 let EVENTOS_DATA = { magna_augusta: [], festa_semina: [] };
 let LOJA_DATA = [];
+let CONTACTOS_DATA = null;
 
 async function fetchWebsiteData() {
   try {
@@ -65,12 +66,13 @@ async function fetchWebsiteData() {
       'data/atuacoes.json',
       'data/noticias.json',
       'data/eventos.json',
-      'data/loja.json'
+      'data/loja.json',
+      'data/contactos.json'
     ];
     
     // Add cache buster
     const fetches = urls.map(url => fetch(url + '?t=' + new Date().getTime()).then(res => res.json()));
-    const [membros, atuacoes, noticias, eventos, loja] = await Promise.all(fetches);
+    const [membros, atuacoes, noticias, eventos, loja, contactos] = await Promise.all(fetches);
 
     // Flatten members for script.js structure
     MEMBERS_DATA = membros.geracoes.reduce((acc, g) => {
@@ -90,11 +92,13 @@ async function fetchWebsiteData() {
     NOTICIAS_DATA = noticias;
     EVENTOS_DATA = eventos;
     LOJA_DATA = loja;
+    CONTACTOS_DATA = contactos;
 
     renderNoticias();
     renderEventos();
     renderAtuacoes();
     renderLoja();
+    renderContactos();
   } catch(e) {
     console.error('Failed to load website data:', e);
   }
@@ -986,4 +990,113 @@ function initGenericTabs() {
       });
     });
   });
+}
+
+/* ============================================
+   CONTACTOS (DYNAMIC RENDER)
+   ============================================ */
+function renderContactos() {
+  if (!CONTACTOS_DATA) return;
+
+  const socialContainer = document.getElementById('socialLinksContent');
+  if (socialContainer) {
+    const s = CONTACTOS_DATA.redes_sociais;
+    socialContainer.innerHTML = `
+      <a href="${s.youtube || '#'}" target="_blank" class="social-link-card">
+        <div class="social-icon-box youtube">
+          <i data-lucide="youtube" style="width:24px;height:24px;"></i>
+        </div>
+        <span>YouTube</span>
+      </a>
+      <a href="${s.instagram || '#'}" target="_blank" class="social-link-card">
+        <div class="social-icon-box instagram">
+          <i data-lucide="instagram" style="width:24px;height:24px;"></i>
+        </div>
+        <span>Instagram</span>
+      </a>
+      <a href="${s.facebook || '#'}" target="_blank" class="social-link-card">
+        <div class="social-icon-box facebook">
+          <i data-lucide="facebook" style="width:24px;height:24px;"></i>
+        </div>
+        <span>Facebook</span>
+      </a>
+      <a href="${s.linkedin || '#'}" target="_blank" class="social-link-card">
+        <div class="social-icon-box linkedin">
+          <i data-lucide="linkedin" style="width:24px;height:24px;"></i>
+        </div>
+        <span>LinkedIn</span>
+      </a>
+      <a href="${s.spotify || '#'}" target="_blank" class="social-link-card">
+        <div class="social-icon-box spotify" style="background: rgba(30, 215, 96, 0.1); color: #1DB954;">
+          <i data-lucide="music" style="width:32px;height:32px;"></i>
+        </div>
+        <span style="color: #000000;">Spotify</span>
+      </a>
+    `;
+  }
+
+  const dirigentesContainer = document.getElementById('dirigentesContent');
+  if (dirigentesContainer && CONTACTOS_DATA.dirigentes) {
+    dirigentesContainer.innerHTML = `
+      <div class="personal-contact-card">
+        <div class="personal-contact-icon email-icon" style="background: var(--azul-profundo);">
+          <i data-lucide="mail" style="width:24px;height:24px;color:#ffffff;"></i>
+        </div>
+        <h4>Email Geral</h4>
+        <p class="personal-contact-desc">Para questões gerais e informações</p>
+        <a href="mailto:${CONTACTOS_DATA.informacoes_gerais.email || 'augustunataum@gmail.com'}" class="personal-contact-action">${CONTACTOS_DATA.informacoes_gerais.email || 'augustunataum@gmail.com'}</a>
+      </div>
+      ${CONTACTOS_DATA.dirigentes.map(d => `
+        <div class="personal-contact-card">
+          <div class="personal-contact-icon person-icon" style="background: var(--azul-profundo);">
+            <i data-lucide="user" style="width:24px;height:24px;color:#ffffff;"></i>
+          </div>
+          <h4>${d.cargo}</h4>
+          <p class="personal-contact-name">${d.nome}</p>
+          <a href="tel:${d.telefone.replace(/ /g, '')}" class="personal-contact-action">
+            <i data-lucide="phone" style="width:14px;height:14px;"></i>
+            ${d.telefone}
+          </a>
+        </div>
+      `).join('')}
+    `;
+  }
+
+  const infoGeraisContainer = document.getElementById('infogeraisContent');
+  if (infoGeraisContainer) {
+    const info = CONTACTOS_DATA.informacoes_gerais;
+    infoGeraisContainer.innerHTML = `
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <h4>Morada</h4>
+          <p>${info.morada || 'Universidade do Minho<br>Campus de Gualtar, Braga'}</p>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <i data-lucide="mail" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <h4>Email</h4>
+          <p>${info.email || 'augustunataum@gmail.com'}</p>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <i data-lucide="phone" style="width:20px;height:20px;"></i>
+        </div>
+        <div>
+          <h4>Telefone</h4>
+          <p>${info.telefone || '+351 931 311 840'}</p>
+        </div>
+      </div>
+    `;
+  }
+
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 }

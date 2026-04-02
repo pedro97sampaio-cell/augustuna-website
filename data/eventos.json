@@ -1,10 +1,10 @@
 {
   "magna_augusta": [
     {
-      "edicao": "XX",
-      "ano": 2026,
+      "edicao": "X",
+      "ano": 2025,
       "descricao": "TESTE",
-      "imagem": ""
+      "imagem": "assets/img/error 404_0898a9.png"
     },
     {
       "edicao": "IX",
@@ -62,6 +62,12 @@
     }
   ],
   "festa_semina": [
+    {
+      "edicao": "II",
+      "ano": 2025,
+      "descricao": "TESTE",
+      "imagem": "assets/img/error 404_e8fac3.png"
+    },
     {
       "edicao": "2025",
       "ano": 2025,

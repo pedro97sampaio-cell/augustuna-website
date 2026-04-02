@@ -168,6 +168,7 @@ class AdminHub(ctk.CTk):
             ("🎉", "Eventos", "eventos"),
             ("🎵", "Atuações", "atuacoes"),
             ("🛍️", "Loja", "loja"),
+            ("📞", "Contactos", "contactos"),
         ]
         for icon, label, key in modules:
             btn = ctk.CTkButton(
@@ -229,6 +230,8 @@ class AdminHub(ctk.CTk):
             AtuacoesModule(self.content)
         elif key == "loja":
             LojaModule(self.content)
+        elif key == "contactos":
+            ContactosModule(self.content)
 
     # ── Git Push ──────────────────────────────────────────────
     def git_push(self):
@@ -872,10 +875,39 @@ class AtuacaoEditor(ctk.CTkToplevel):
 
     def _build(self):
         pad = {"padx": 20, "pady": (8, 0)}
+
+        # Date Dropdowns
+        ctk.CTkLabel(self, text="Data da Atuação", text_color=FG_MUTED, font=("Courier New", 11)).pack(**pad, anchor="w")
+        date_frame = ctk.CTkFrame(self, fg_color="transparent")
+        date_frame.pack(fill="x", padx=20)
+        
+        self.dia = ctk.CTkComboBox(date_frame, values=[str(i).zfill(2) for i in range(1, 32)], width=70, font=("Courier New", 13), fg_color=BG_CARD, border_color=AZUL_REAL)
+        self.dia.pack(side="left", padx=(0, 10))
+        
+        meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
+        self.mes = ctk.CTkComboBox(date_frame, values=meses, width=80, font=("Courier New", 13), fg_color=BG_CARD, border_color=AZUL_REAL)
+        self.mes.pack(side="left", padx=(0, 10))
+        
+        anos = [str(i) for i in range(1996, datetime.now().year + 5)]
+        self.ano = ctk.CTkComboBox(date_frame, values=anos, width=80, font=("Courier New", 13), fg_color=BG_CARD, border_color=AZUL_REAL)
+        self.ano.pack(side="left")
+
+        # Parse existing date (e.g. "22 MAR 2023")
+        old_data = self.item.get("data", "")
+        parts = old_data.split(" ")
+        if len(parts) == 3:
+            self.dia.set(parts[0])
+            self.mes.set(parts[1][:3].upper())
+            self.ano.set(parts[2])
+        else:
+            self.dia.set(str(datetime.now().day).zfill(2))
+            self.mes.set(meses[datetime.now().month - 1])
+            self.ano.set(str(datetime.now().year))
+
+        # Other fields
         fields = [
-            ("Data", "data", "ex: Mar 2026"),
-            ("Título", "titulo", ""),
-            ("Localização", "localizacao", ""),
+            ("Título", "titulo", "Obrigatório"),
+            ("Localização", "localizacao", "Obrigatório"),
         ]
         self.entries = {}
         for label, key, ph in fields:
@@ -898,6 +930,7 @@ class AtuacaoEditor(ctk.CTkToplevel):
 
     def _save(self):
         result = {k: e.get().strip() for k, e in self.entries.items()}
+        result["data"] = f"{self.dia.get()} {self.mes.get()} {self.ano.get()}"
         result["descricao"] = self.descricao.get("1.0", "end-1c").strip()
         result["id"] = self.item.get("id", gen_id())
         self.callback(result)
@@ -1076,6 +1109,169 @@ class LojaEditor(ctk.CTkToplevel):
         self.callback(result)
         self.destroy()
 
+
+# ═══════════════════════════════════════════════════════════════
+#  MODULE: CONTACTOS
+# ═══════════════════════════════════════════════════════════════
+class ContactosModule(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color="transparent")
+        self.pack(fill="both", expand=True, padx=20, pady=20)
+        self.data = load_json("contactos.json")
+        if not isinstance(self.data, dict) or "redes_sociais" not in self.data:
+            self.data = {
+                "redes_sociais": {},
+                "informacoes_gerais": {},
+                "dirigentes": []
+            }
+        self._build()
+
+    def _build(self):
+        header = ctk.CTkFrame(self, fg_color="transparent")
+        header.pack(fill="x", pady=(0, 15))
+        ctk.CTkLabel(header, text="📞  Contactos", font=("Courier New", 20, "bold"),
+                     text_color=DOURADO).pack(side="left")
+
+        self.scroll = ctk.CTkScrollableFrame(self, fg_color=BG_DARK, corner_radius=8)
+        self.scroll.pack(fill="both", expand=True)
+        self._render()
+
+    def _render(self):
+        for w in self.scroll.winfo_children():
+            w.destroy()
+
+        pad = {"padx": 15, "pady": 10}
+
+        # 1. Informações Gerais (Morada, Email, Telefone)
+        geral_frame = ctk.CTkFrame(self.scroll, fg_color=BG_CARD, corner_radius=8)
+        geral_frame.pack(fill="x", pady=10)
+        geral_header = ctk.CTkFrame(geral_frame, fg_color="transparent")
+        geral_header.pack(fill="x", **pad)
+        ctk.CTkLabel(geral_header, text="Informações Gerais", font=("Courier New", 16, "bold"), text_color=FG_TEXT).pack(side="left")
+        ctk.CTkButton(geral_header, text="✏️ Editar", width=80, height=28, fg_color=AZUL_REAL,
+                      command=self._edit_geral).pack(side="right")
+        
+        info = self.data.get("informacoes_gerais", {})
+        info_lines = [
+            f"Morada: {info.get('morada', '')}",
+            f"Email: {info.get('email', '')}",
+            f"Telefone: {info.get('telefone', '')}",
+        ]
+        ctk.CTkLabel(geral_frame, text="\\n".join(info_lines), font=("Courier New", 12), text_color=FG_MUTED, justify="left", anchor="w").pack(fill="x", padx=15, pady=(0, 10))
+
+        # 2. Redes Sociais
+        social_frame = ctk.CTkFrame(self.scroll, fg_color=BG_CARD, corner_radius=8)
+        social_frame.pack(fill="x", pady=10)
+        social_header = ctk.CTkFrame(social_frame, fg_color="transparent")
+        social_header.pack(fill="x", **pad)
+        ctk.CTkLabel(social_header, text="Redes Sociais Gerais", font=("Courier New", 16, "bold"), text_color=FG_TEXT).pack(side="left")
+        ctk.CTkButton(social_header, text="✏️ Editar", width=80, height=28, fg_color=AZUL_REAL,
+                      command=self._edit_sociais).pack(side="right")
+        
+        redes = self.data.get("redes_sociais", {})
+        redes_lines = [
+            f"YouTube: {redes.get('youtube', '')}",
+            f"Instagram: {redes.get('instagram', '')}",
+            f"Facebook: {redes.get('facebook', '')}",
+            f"LinkedIn: {redes.get('linkedin', '')}",
+            f"Spotify: {redes.get('spotify', '')}",
+        ]
+        ctk.CTkLabel(social_frame, text="\\n".join(redes_lines), font=("Courier New", 12), text_color=FG_MUTED, justify="left", anchor="w").pack(fill="x", padx=15, pady=(0, 10))
+
+        # 3. Dirigentes (Contacte-nos Pessoalmente)
+        dir_frame = ctk.CTkFrame(self.scroll, fg_color=BG_CARD, corner_radius=8)
+        dir_frame.pack(fill="x", pady=10)
+        dir_header = ctk.CTkFrame(dir_frame, fg_color="transparent")
+        dir_header.pack(fill="x", **pad)
+        ctk.CTkLabel(dir_header, text="Dirigentes (Contacte-nos Pessoalmente)", font=("Courier New", 16, "bold"), text_color=FG_TEXT).pack(side="left")
+        ctk.CTkButton(dir_header, text="+ Adicionar Dirigente", width=140, height=28, fg_color=DOURADO, text_color=BG_DARK,
+                      command=self._add_dirigente).pack(side="right")
+        
+        dirigentes = self.data.get("dirigentes", [])
+        if not dirigentes:
+            ctk.CTkLabel(dir_frame, text="Sem dirigentes associados.", text_color=FG_MUTED).pack(pady=10)
+        for i, d in enumerate(dirigentes):
+            df = ctk.CTkFrame(dir_frame, fg_color="#222222", corner_radius=6)
+            df.pack(fill="x", padx=15, pady=4)
+            d_text = f"{d.get('cargo', '')}: {d.get('nome', '')} ({d.get('telefone', '')})"
+            ctk.CTkLabel(df, text=d_text, font=("Courier New", 12), text_color=FG_TEXT, anchor="w").pack(side="left", padx=10, pady=8)
+            btns = ctk.CTkFrame(df, fg_color="transparent")
+            btns.pack(side="right", padx=5)
+            ctk.CTkButton(btns, text="✏️", width=28, height=28, fg_color=AZUL_REAL,
+                          command=lambda idx=i: self._edit_dirigente(idx)).pack(side="left", padx=1)
+            ctk.CTkButton(btns, text="🗑️", width=28, height=28, fg_color=DANGER,
+                          command=lambda idx=i: self._del_dirigente(idx)).pack(side="left", padx=1)
+        ctk.CTkFrame(dir_frame, fg_color="transparent", height=10).pack()
+
+    def _edit_geral(self):
+        obj = self.data.get("informacoes_gerais", {})
+        ContactDictEditor(self, "Informações Gerais", ["morada", "email", "telefone"], obj, self._on_save_geral)
+
+    def _on_save_geral(self, new_obj):
+        self.data["informacoes_gerais"] = new_obj
+        save_json("contactos.json", self.data)
+        self._render()
+
+    def _edit_sociais(self):
+        obj = self.data.get("redes_sociais", {})
+        ContactDictEditor(self, "Redes Sociais", ["youtube", "instagram", "facebook", "linkedin", "spotify"], obj, self._on_save_sociais)
+
+    def _on_save_sociais(self, new_obj):
+        self.data["redes_sociais"] = new_obj
+        save_json("contactos.json", self.data)
+        self._render()
+
+    def _add_dirigente(self):
+        ContactDictEditor(self, "Novo Dirigente", ["cargo", "nome", "telefone"], {}, lambda x: self._on_save_dir(x))
+
+    def _edit_dirigente(self, idx):
+        ContactDictEditor(self, "Editar Dirigente", ["cargo", "nome", "telefone"], self.data["dirigentes"][idx], lambda x: self._on_save_dir(x, idx))
+
+    def _del_dirigente(self, idx):
+        if messagebox.askyesno("Apagar", "Apagar este dirigente?"):
+            self.data["dirigentes"].pop(idx)
+            save_json("contactos.json", self.data)
+            self._render()
+            
+    def _on_save_dir(self, new_obj, idx=None):
+        if idx is not None:
+            self.data["dirigentes"][idx] = new_obj
+        else:
+            self.data["dirigentes"].append(new_obj)
+        save_json("contactos.json", self.data)
+        self._render()
+
+
+class ContactDictEditor(ctk.CTkToplevel):
+    def __init__(self, parent, title_str, fields, item, callback):
+        super().__init__(parent)
+        self.title(title_str)
+        self.geometry("450x450")
+        self.configure(fg_color=BG_DARK)
+        self.callback = callback
+        self.item = item or {}
+        self.fields = fields
+        self.grab_set()
+        self._build()
+
+    def _build(self):
+        pad = {"padx": 20, "pady": (8, 0)}
+        self.entries = {}
+        for key in self.fields:
+            ctk.CTkLabel(self, text=key.capitalize(), text_color=FG_MUTED, font=("Courier New", 11)).pack(**pad, anchor="w")
+            e = ctk.CTkEntry(self, font=("Courier New", 13), fg_color=BG_CARD, border_color=AZUL_REAL)
+            e.pack(fill="x", padx=20)
+            e.insert(0, self.item.get(key, ""))
+            self.entries[key] = e
+
+        ctk.CTkButton(self, text="GUARDAR", font=("Courier New", 13, "bold"), height=40,
+                      fg_color=DOURADO, text_color=BG_DARK, hover_color=GOLD_HOVER,
+                      command=self._save).pack(pady=20)
+
+    def _save(self):
+        result = {k: e.get().strip() for k, e in self.entries.items()}
+        self.callback(result)
+        self.destroy()
 
 # ═══════════════════════════════════════════════════════════════
 #  MAIN

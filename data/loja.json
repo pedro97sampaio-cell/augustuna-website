@@ -1,16 +1,11 @@
 [
   {
-    "id": "6bcf488e",
+    "id": "19c7c9a5",
     "nome": "TESTE",
-    "preco": 22.0,
+    "preco": 2.0,
     "descricao": "TESTE",
-    "imagem": "assets/img/image 2 (1)_bfdd52.png",
-    "tamanhos": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ]
+    "imagem": "assets/img/error 404_e9506c.png",
+    "tamanhos": []
   },
   {
     "id": "1",

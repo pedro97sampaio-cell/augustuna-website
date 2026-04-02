@@ -1,0 +1,41 @@
+{
+  "redes_sociais": {
+    "youtube": "https://www.youtube.com/@AugustunaTAUM",
+    "instagram": "https://www.instagram.com/augustuna/",
+    "facebook": "https://www.facebook.com/Augustuna96",
+    "linkedin": "https://www.linkedin.com/company/augustunataum",
+    "spotify": "https://open.spotify.com/artist/7339QO1cXY7kYpTfB4lq2p"
+  },
+  "informacoes_gerais": {
+    "morada": "Universidade do Minho<br>Campus de Gualtar, Braga",
+    "email": "augustunataum@gmail.com",
+    "telefone": "+351 931 311 840"
+  },
+  "dirigentes": [
+    {
+      "cargo": "Magister",
+      "nome": "Luís “Engenheiro PnB P90” Barros",
+      "telefone": "+351 931 311 840"
+    },
+    {
+      "cargo": "Vice-Magister",
+      "nome": "Afonso “Carpete Cabeludo” Castro",
+      "telefone": "+351 934 023 134"
+    },
+    {
+      "cargo": "Tesoureiro",
+      "nome": "Pedro “Squidward” Ferreira",
+      "telefone": "+351 911 580 083"
+    },
+    {
+      "cargo": "Vice-Tesoureiro",
+      "nome": "Eduardo “Pido” Lima",
+      "telefone": "+351 969 694 365"
+    },
+    {
+      "cargo": "Vogal",
+      "nome": "Pedro “Grego” Freitas",
+      "telefone": "+351 919 299 587"
+    }
+  ]
+}
