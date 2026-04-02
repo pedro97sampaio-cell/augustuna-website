@@ -32,12 +32,55 @@ FG_MUTED = "#888888"
 SUCCESS = "#2E8B57"
 DANGER = "#B22222"
 
-# ─── PATHS ────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-REPO_DIR = os.path.dirname(SCRIPT_DIR)  # AG folder
+# ─── PATHS (Standalone — pede o caminho ao utilizador) ──────────
+APP_NAME = "AugustunaAdminHub"
+CONFIG_DIR = os.path.join(os.environ.get("APPDATA", os.path.expanduser("~")), APP_NAME)
+os.makedirs(CONFIG_DIR, exist_ok=True)
+CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
+
+def _load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def _save_config(cfg):
+    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+
+def _ask_repo_path():
+    """Prompt user to select the website repo folder."""
+    import tkinter as tk
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo(
+        "Augustuna Admin Hub",
+        "Bem-vindo ao Admin Hub!\n\n"
+        "Seleciona a pasta do repositório do website\n"
+        "(a pasta que contém o index.html, data/, etc.)"
+    )
+    path = filedialog.askdirectory(title="Seleciona a pasta do repositório")
+    root.destroy()
+    if not path:
+        messagebox.showerror("Erro", "Nenhuma pasta selecionada. A aplicação vai fechar.")
+        raise SystemExit(1)
+    return path
+
+def _get_repo_dir():
+    cfg = _load_config()
+    repo = cfg.get("repo_dir", "")
+    # Validate the stored path still exists and contains data/
+    if repo and os.path.isdir(repo) and os.path.isdir(os.path.join(repo, "data")):
+        return repo
+    # Ask the user
+    repo = _ask_repo_path()
+    cfg["repo_dir"] = repo
+    _save_config(cfg)
+    return repo
+
+REPO_DIR = _get_repo_dir()
 DATA_DIR = os.path.join(REPO_DIR, "data")
 ASSETS_IMG = os.path.join(REPO_DIR, "assets", "img")
-CONFIG_FILE = os.path.join(SCRIPT_DIR, "admin_hub_config.json")
 
 # Ensure directories exist
 os.makedirs(DATA_DIR, exist_ok=True)
