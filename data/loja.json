@@ -2,10 +2,15 @@
   {
     "id": "6bcf488e",
     "nome": "TESTE",
-    "preco": 0.0,
+    "preco": 22.0,
     "descricao": "TESTE",
     "imagem": "assets/img/image 2 (1)_bfdd52.png",
-    "tamanhos": []
+    "tamanhos": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ]
   },
   {
     "id": "1",
