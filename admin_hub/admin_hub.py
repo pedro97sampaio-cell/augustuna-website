@@ -14,6 +14,7 @@ import subprocess
 import uuid
 from datetime import datetime
 from PIL import Image
+import sys
 
 # ─── THEME ────────────────────────────────────────────────────
 ctk.set_appearance_mode("dark")
@@ -129,10 +130,15 @@ class AdminHub(ctk.CTk):
         self.configure(fg_color=BG_DARK)
 
         # Try to set icon
-        icon_path = os.path.join(REPO_DIR, "Logo oficial 2.png")
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+            
+        icon_path = os.path.join(base_path, "icon.ico")
         if os.path.exists(icon_path):
             try:
-                self.iconbitmap(default="")
+                self.iconbitmap(icon_path)
             except:
                 pass
 
