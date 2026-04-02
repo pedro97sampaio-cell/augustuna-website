@@ -151,47 +151,50 @@ function renderNoticias() {
 }
 
 function renderEventos() {
-  const magnaContainer = document.getElementById('magnaAugustaContent');
-  if (magnaContainer) {
-    magnaContainer.innerHTML = EVENTOS_DATA.magna_augusta.map((m, i) => `
-      <div class="event-card-v2">
-        <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover;">
-          <div class="event-card-v2-overlay"></div>
-          <div class="event-badge">${m.edicao} ${m.ano ? '— ' + m.ano : ''}</div>
-        </div>
-        <div class="event-card-v2-body">
-          <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
-            Magna Augusta
+  function renderTabs(containerId, dataArray, prefixLabel) {
+    const container = document.getElementById(containerId);
+    if (!container || !dataArray.length) return;
+
+    let tabsHtml = '<div class="tabs-header" style="justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">';
+    dataArray.forEach((m, i) => {
+      const activeClass = i === 0 ? 'active' : '';
+      const label = m.edicao + (m.ano && m.ano !== 0 ? ` (${m.ano})` : '');
+      tabsHtml += `<button class="generic-tab ${activeClass}" data-target="${containerId}-tab-${i}">${label}</button>`;
+    });
+    tabsHtml += '</div>';
+
+    let contentHtml = '';
+    dataArray.forEach((m, i) => {
+      const hiddenClass = i === 0 ? '' : 'hidden';
+      const opacityStyle = i === 0 ? 'style="opacity: 1;"' : 'style="opacity: 0;"';
+      contentHtml += `
+      <div class="generic-tab-content ${hiddenClass}" id="${containerId}-tab-${i}" ${opacityStyle}>
+        <div class="event-card-v2">
+          <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover;">
+            <div class="event-card-v2-overlay"></div>
+            <div class="event-badge">${m.edicao} ${m.ano && m.ano !== 0 ? '— ' + m.ano : ''}</div>
           </div>
-          <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
-            ${m.edicao} Magna Augusta
-          </h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${m.descricao}</p>
+          <div class="event-card-v2-body">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
+              ${prefixLabel}
+            </div>
+            <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
+              Edição ${m.edicao} ${m.ano && m.ano !== 0 ? `(${m.ano})` : ''}
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap;">${m.descricao}</p>
+          </div>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+    });
+
+    container.innerHTML = tabsHtml + contentHtml;
   }
 
-  const seminaContainer = document.getElementById('festaSeminaContent');
-  if (seminaContainer) {
-    seminaContainer.innerHTML = EVENTOS_DATA.festa_semina.map((m) => `
-      <div class="event-card-v2">
-        <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover; background-size: contain;">
-          <div class="event-card-v2-overlay"></div>
-          <div class="event-badge">${m.edicao} ${m.ano && m.ano !== 0 ? '— ' + m.ano : ''}</div>
-        </div>
-        <div class="event-card-v2-body">
-          <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
-            Festa do Semina
-          </div>
-          <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
-            Edição ${m.edicao}
-          </h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${m.descricao}</p>
-        </div>
-      </div>
-    `).join('');
-  }
+  renderTabs('magnaAugustaContent', EVENTOS_DATA.magna_augusta, 'Magna Augusta');
+  renderTabs('festaSeminaContent', EVENTOS_DATA.festa_semina, 'Festa do Semina');
+  
+  // Re-init generic tabs to bind click events for the new innerHTML
+  initGenericTabs();
 }
 
 function renderAtuacoes() {
@@ -199,17 +202,35 @@ function renderAtuacoes() {
     const container = document.getElementById(containerId);
     if (!container) return;
     
+    // Sort array by date descending
+    const monthMap = {"JAN":1,"FEV":2,"MAR":3,"ABR":4,"MAI":5,"JUN":6,"JUL":7,"AGO":8,"SET":9,"OUT":10,"NOV":11,"DEZ":12};
+    let sortedData = [...dataArray].sort((a, b) => {
+      const p1 = a.data.split(' ');
+      const p2 = b.data.split(' ');
+      
+      const y1 = parseInt(p1[p1.length - 1] || '0', 10);
+      const y2 = parseInt(p2[p2.length - 1] || '0', 10);
+      if (y1 !== y2) return y2 - y1; // descending year
+      
+      const m1 = p1.length > 1 ? (monthMap[p1[p1.length - 2].toUpperCase()] || 0) : 0;
+      const m2 = p2.length > 1 ? (monthMap[p2[p2.length - 2].toUpperCase()] || 0) : 0;
+      if (m1 !== m2) return m2 - m1; // descending month
+      
+      const d1 = p1.length > 2 ? parseInt(p1[0], 10) : 0;
+      const d2 = p2.length > 2 ? parseInt(p2[0], 10) : 0;
+      return d2 - d1; // descending day
+    });
+
     let currentYear = '';
     let html = '';
     
-    dataArray.forEach(item => {
-      // Determine year from data string. e.g "15 Mar 2026"
+    sortedData.forEach(item => {
       const parts = item.data.split(' ');
-      const yr = parts[parts.length - 1]; // last part is generally year
+      const yr = parts[parts.length - 1]; 
       const isYearOnly = parts.length === 1;
       
       const day = isYearOnly ? '--' : parts[0];
-      const month = isYearOnly ? '--' : parts[1];
+      const month = isYearOnly ? '--' : parts.length > 1 ? parts[1] : '';
       
       if (yr !== currentYear) {
         html += `<div class="performance-year-divider">${yr}</div>`;
@@ -224,7 +245,7 @@ function renderAtuacoes() {
           </div>
           <div class="performance-info">
             <h4>${item.titulo}</h4>
-            <p>${item.descricao}</p>
+            <p>${item.descricao || ''}</p>
             <div class="performance-location">
               <i data-lucide="map-pin" style="width:14px;height:14px;"></i> ${item.localizacao}
             </div>
@@ -260,18 +281,18 @@ function renderLoja() {
     }
 
     return `
-    <div class="shop-card" data-product-id="${p.id}" data-product-name="${p.nome}" data-product-price="${p.preco}">
+    <div class="shop-card" data-product-id="${p.id}" data-product-name="${p.nome}" data-product-price="${p.preco}" style="display: flex; flex-direction: column; height: 100%;">
       <div class="shop-card-image" style="background: url('${p.imagem || 'Logo oficial 2.png'}') center/cover; background-size: contain; background-repeat: no-repeat; background-color: var(--card-bg);">
         <div class="shop-card-badge">Merch</div>
       </div>
-      <div class="shop-card-body">
+      <div class="shop-card-body" style="display: flex; flex-direction: column; flex-grow: 1;">
         <h4>${p.nome}</h4>
         <div class="price">€${p.preco.toFixed(2).replace('.', ',')}</div>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.4;">
           ${p.descricao || 'Produto oficial Augustuna.'}
         </p>
         ${sizeSelector}
-        <button class="btn btn-secondary" style="width: 100%; padding: 0.6rem; border-radius: 4px; font-weight: bold; border: 1px solid var(--dourado);" onclick="addToCart(this)">
+        <button class="btn btn-secondary" style="width: 100%; padding: 0.6rem; border-radius: 4px; font-weight: bold; border: 1px solid var(--dourado); margin-top: auto;" onclick="addToCart(this)">
           <i data-lucide="shopping-bag" style="width:16px;height:16px;margin-right:0.5rem;"></i> ADICIONAR
         </button>
       </div>

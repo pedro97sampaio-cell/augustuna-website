@@ -2,9 +2,9 @@
   "magna_augusta": [
     {
       "edicao": "X",
-      "ano": 2025,
+      "ano": 2026,
       "descricao": "TESTE",
-      "imagem": "assets/img/error 404_0898a9.png"
+      "imagem": ""
     },
     {
       "edicao": "IX",
@@ -63,21 +63,9 @@
   ],
   "festa_semina": [
     {
-      "edicao": "II",
-      "ano": 2025,
-      "descricao": "TESTE",
-      "imagem": "assets/img/error 404_e8fac3.png"
-    },
-    {
       "edicao": "2025",
       "ano": 2025,
       "descricao": "A Festa do Semina é um evento totalmente organizado pelos caloiros da Augustuna. A edição de 2025 celebrou-se a 8 de Outubro no Largo dos Peões. Contou com atuações musicais eletrizantes, excelentes comes e bebes e o genuíno espírito de academia que une as gerações.",
-      "imagem": ""
-    },
-    {
-      "edicao": "Anteriores",
-      "ano": 0,
-      "descricao": "A tradição da Festa do Semina mantém-se viva ano após ano. É o momento onde cada nova geração de caloiros deixa a sua marca irreverente e demonstra a sua união e valor à Tuna.",
       "imagem": ""
     }
   ]
