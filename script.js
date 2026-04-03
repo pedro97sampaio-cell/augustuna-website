@@ -27,14 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 400); 
   }
 
-  // Initialize Lucide icons
-  if (typeof lucide !== 'undefined') {
-    try {
-      lucide.createIcons();
-    } catch(err) {
-      console.warn('Alguns ícones Lucide não foram carregados:', err);
-    }
-  }
+  // Initialize icons - Huge Icons are font-based, no initialization needed for <i> classes
+  // But we'll keep a placeholder if needed for other systems
+
 
   initRouter();
   initNavigation();
@@ -67,22 +62,29 @@ async function fetchWebsiteData() {
       'data/noticias.json',
       'data/eventos.json',
       'data/loja.json',
-      'data/contactos.json'
+      'data/contactos.json',
+      'data/layout.json'
     ];
     
     // Add cache buster
-    const fetches = urls.map(url => fetch(url + '?t=' + new Date().getTime()).then(res => res.json()));
-    const [membros, atuacoes, noticias, eventos, loja, contactos] = await Promise.all(fetches);
+    const fetches = urls.map(url => fetch(url + '?t=' + new Date().getTime()).then(res => res.json()).catch(() => ({})));
+    const [membros, atuacoes, noticias, eventos, loja, contactos, layout] = await Promise.all(fetches);
+
+    // Reorder sections based on layout data
+    if (layout && layout.order) {
+      applyLayoutOrder(layout.order);
+    }
 
     // Flatten members for script.js structure
-    MEMBERS_DATA = membros.geracoes.reduce((acc, g) => {
-      const gMembers = g.elementos.map(m => ({
+    MEMBERS_DATA = (membros.geracoes || []).reduce((acc, g) => {
+      const gMembers = (g.elementos || []).map(m => ({
         name: m.nome,
         alcunha: m.alcunha,
         instrumento: m.instrumento,
-        curso: m.curso,
+        curso: m.curso || '',
         data: m.data_passagem || '',
         evento: m.evento || '',
+        foto: m.foto || '',
         geracao: g.nome
       }));
       return acc.concat(gMembers);
@@ -113,7 +115,7 @@ function renderNoticias() {
   
   container.innerHTML = NOTICIAS_DATA.map(n => {
     let tagClass = 'tag-blue';
-    let icon = '<i data-lucide="award" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+    let icon = '<i class="hugeicons-stroke-rounded-award-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
     let bgColors = '#3A5A2A, #1A3A1A';
     
     if (n.categoria === 'destaque') {
@@ -122,11 +124,11 @@ function renderNoticias() {
       bgColors = '#1B3A5C, #0A1628';
     } else if (n.categoria === 'recrutamento') {
       tagClass = 'tag-green';
-      icon = '<i data-lucide="users" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      icon = '<i class="hugeicons-stroke-rounded-user-group" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
       bgColors = '#8B1A1A, #5a1010';
     } else if (n.categoria === 'cultura') {
       tagClass = 'tag-blue';
-      icon = '<i data-lucide="calendar" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      icon = '<i class="hugeicons-stroke-rounded-calendar-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
       bgColors = '#1B3A5C, #0A1628';
     }
     
@@ -151,50 +153,112 @@ function renderNoticias() {
 }
 
 function renderEventos() {
-  function renderTabs(containerId, dataArray, prefixLabel) {
+  function renderDropdownLayout(containerId, dataArray, prefixLabel) {
     const container = document.getElementById(containerId);
-    if (!container || !dataArray.length) return;
+    if (!container || !dataArray || !dataArray.length) return;
 
-    let tabsHtml = '<div class="tabs-header" style="justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">';
-    dataArray.forEach((m, i) => {
-      const activeClass = i === 0 ? 'active' : '';
-      const label = m.edicao + (m.ano && m.ano !== 0 ? ` (${m.ano})` : '');
-      tabsHtml += `<button class="generic-tab ${activeClass}" data-target="${containerId}-tab-${i}">${label}</button>`;
-    });
-    tabsHtml += '</div>';
+    // Sort dataArray by edition or year (optional, but good for dropdown)
+    // We assume dataArray is already ordered from newest to oldest or vice versa
 
-    let contentHtml = '';
-    dataArray.forEach((m, i) => {
-      const hiddenClass = i === 0 ? '' : 'hidden';
-      const opacityStyle = i === 0 ? 'style="opacity: 1;"' : 'style="opacity: 0;"';
-      contentHtml += `
-      <div class="generic-tab-content ${hiddenClass}" id="${containerId}-tab-${i}" ${opacityStyle}>
-        <div class="event-card-v2">
-          <div class="event-card-v2-image" style="background: url('${m.imagem || 'Logo oficial 2.png'}') center/cover;">
-            <div class="event-card-v2-overlay"></div>
-            <div class="event-badge">${m.edicao} ${m.ano && m.ano !== 0 ? '— ' + m.ano : ''}</div>
-          </div>
-          <div class="event-card-v2-body">
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--dourado); letter-spacing: 2px; margin-bottom: 0.5rem; text-transform: uppercase;">
-              ${prefixLabel}
-            </div>
-            <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 1rem;">
-              Edição ${m.edicao} ${m.ano && m.ano !== 0 ? `(${m.ano})` : ''}
-            </h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap;">${m.descricao}</p>
-          </div>
-        </div>
-      </div>`;
-    });
+    let html = `
+      <div class="event-dropdown-wrapper" style="text-align: center; margin-bottom: 3rem;">
+        <label style="display: block; color: var(--dourado); margin-bottom: 0.5rem; font-weight: 600;">Escolha a Edição:</label>
+        <select class="event-select-dropdown" onchange="switchEventContent('${containerId}', this.value)" style="background: var(--bg-dark); color: white; border: 1px solid var(--dourado); padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Helvetica', sans-serif; min-width: 250px;">
+          ${dataArray.map((m, i) => {
+            const label = m.edicao + (m.ano && m.ano !== 0 ? ` (${m.ano})` : '');
+            return `<option value="${i}">${label}</option>`;
+          }).join('')}
+        </select>
+      </div>
 
-    container.innerHTML = tabsHtml + contentHtml;
+      <div class="event-display-area" id="${containerId}-display">
+        ${renderSingleEventContent(dataArray[0], prefixLabel)}
+      </div>
+    `;
+
+    container.innerHTML = html;
+    
+    // Store data in a window variable for the switch function
+    window[`${containerId}_DATA`] = dataArray;
+    window[`${containerId}_PREFIX`] = prefixLabel;
   }
 
-  renderTabs('magnaAugustaContent', EVENTOS_DATA.magna_augusta, 'Magna Augusta');
-  renderTabs('festaSeminaContent', EVENTOS_DATA.festa_semina, 'Festa do Semina');
+  renderDropdownLayout('magnaAugustaContent', EVENTOS_DATA.magna_augusta, 'Magna Augusta');
+  renderDropdownLayout('festaSeminaContent', EVENTOS_DATA.festa_semina, 'Festa do Semina');
+}
+
+function renderSingleEventContent(m, prefixLabel) {
+  if (!m) return '';
+  return `
+    <div class="event-detail-view reveal shadow-hover">
+      <div class="event-detail-poster">
+        <img src="${m.imagem || 'Logo oficial 2.png'}" alt="${prefixLabel} ${m.edicao}">
+      </div>
+      <div class="event-detail-info">
+        <div class="event-detail-prefix">${prefixLabel}</div>
+        <h3 class="event-detail-title">Edição ${m.edicao} ${m.ano && m.ano !== 0 ? `(${m.ano})` : ''}</h3>
+        <div class="event-detail-description">${m.descricao}</div>
+      </div>
+    </div>
+  `;
+}
+
+window.switchEventContent = function(containerId, index) {
+  const display = document.getElementById(`${containerId}-display`);
+  const data = window[`${containerId}_DATA`][index];
+  const prefix = window[`${containerId}_PREFIX`];
   
-  // Re-init generic tabs to bind click events for the new innerHTML
-  initGenericTabs();
+  if (display && data) {
+    display.style.opacity = '0';
+    setTimeout(() => {
+      display.innerHTML = renderSingleEventContent(data, prefix);
+      display.style.opacity = '1';
+    }, 300);
+  }
+};
+
+/* ============================================
+   LAYOUT ORDERING
+   ============================================ */
+function applyLayoutOrder(order) {
+  const sectionMap = {
+    'Hero': 'page-home',
+    'Notícias': 'page-noticias',
+    'História': 'page-formacao',
+    'Traje': 'page-traje',
+    'Augustunos': 'page-membros',
+    'Reportório': 'page-musica',
+    'Magna Augusta': 'page-magna-augusta',
+    'Festa do Semina': 'page-festa-semina',
+    'Atuações': ['page-festivais-concurso', 'page-festivais-convite', 'page-outras-atuacoes'],
+    'Loja': 'page-marketplace',
+    'Contactos': 'page-contactos'
+  };
+
+  const body = document.body;
+  const sections = order.flatMap(name => sectionMap[name] || []);
+  
+  // Reorder Sections in DOM
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) body.appendChild(el); 
+  });
+
+  // Reorder Navigation Menu
+  const navMenu = document.querySelector('.nav-links');
+  if (navMenu) {
+    const navLinks = Array.from(navMenu.children);
+    order.forEach(name => {
+      const targetIds = Array.isArray(sectionMap[name]) ? sectionMap[name] : [sectionMap[name]];
+      const link = navLinks.find(l => {
+        const dp = l.getAttribute('data-page');
+        if (dp && targetIds.some(id => id.replace('page-','') === dp)) return true;
+        const subPages = Array.from(l.querySelectorAll('[data-page]')).map(a => a.getAttribute('data-page'));
+        return targetIds.some(id => subPages.includes(id.replace('page-','')));
+      });
+      if (link) navMenu.appendChild(link);
+    });
+  }
 }
 
 function renderAtuacoes() {
@@ -247,7 +311,7 @@ function renderAtuacoes() {
             <h4>${item.titulo}</h4>
             <p>${item.descricao || ''}</p>
             <div class="performance-location">
-              <i data-lucide="map-pin" style="width:14px;height:14px;"></i> ${item.localizacao}
+              <i class="hugeicons-stroke-rounded-location-01" style="width:14px;height:14px;"></i> ${item.localizacao}
             </div>
           </div>
         </div>
@@ -287,13 +351,13 @@ function renderLoja() {
       </div>
       <div class="shop-card-body" style="display: flex; flex-direction: column; flex-grow: 1;">
         <h4>${p.nome}</h4>
-        <div class="price">€${p.preco.toFixed(2).replace('.', ',')}</div>
+        <div class="price" style="font-size: 1.3rem; font-weight: 700; color: #000000; margin-bottom: 0.75rem;">€${p.preco.toFixed(2).replace('.', ',')}</div>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.4;">
           ${p.descricao || 'Produto oficial Augustuna.'}
         </p>
         ${sizeSelector}
         <button class="btn btn-secondary" style="width: 100%; padding: 0.6rem; border-radius: 4px; font-weight: bold; border: 1px solid var(--dourado); margin-top: auto;" onclick="addToCart(this)">
-          <i data-lucide="shopping-bag" style="width:16px;height:16px;margin-right:0.5rem;"></i> ADICIONAR
+          Adicionar
         </button>
       </div>
     </div>
@@ -377,9 +441,7 @@ function showPage(page, pushState = true) {
   setTimeout(() => {
     initScrollAnimations();
     initCounters();
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
+    // Huge Icons are font-based, no initialization needed
   }, 100);
 
   // Show/hide footer (always visible except on home)
@@ -538,7 +600,7 @@ function initDropdowns() {
       if (menu) {
         menu.classList.toggle('open');
         // Rotate chevron
-        const chevron = trigger.querySelector('[data-lucide]');
+        const chevron = trigger.querySelector('i');
         if (chevron) {
           chevron.style.transform = menu.classList.contains('open') ? 'rotate(180deg)' : '';
         }
@@ -563,40 +625,6 @@ function initCart() {
         return;
       }
       
-      const submitBtn = document.getElementById('submitOrderBtn');
-      submitBtn.innerHTML = '<i data-lucide="loader" class="spin"></i> A Processar...';
-      submitBtn.disabled = true;
-
-      const nomeCliente = document.getElementById('checkoutName').value;
-      const email = document.getElementById('checkoutEmail').value;
-      const phone = document.getElementById('checkoutPhone').value;
-      const notes = document.getElementById('checkoutNotes').value;
-      
-      const detalhesCarrinho = cart.map(item => {
-        const sizeStr = item.size ? ` - Tam: ${item.size}` : '';
-        return `${item.qty}x ${item.name}${sizeStr} (€${(item.price * item.qty).toFixed(2).replace('.', ',')})`;
-      }).join('\n');
-      
-      const valorTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2).replace('.', ',') + '€';
-
-      // Mapping variables according to task requirements
-      const emailParams = {
-        nome_cliente: nomeCliente,
-        name: nomeCliente, // fallback for safety
-        email: email,
-        telefone: phone,
-        detalhes_carrinho: detalhesCarrinho,
-        valor_total: valorTotal,
-        message: notes || 'Sem notas adicionais'
-      };
-
-      if (typeof emailjs === 'undefined') {
-        alert('Serviço de email indisponível. Por favor, tenta mais tarde.');
-        submitBtn.innerHTML = 'Confirmar Encomenda';
-        submitBtn.disabled = false;
-        return;
-      }
-
       // Initialize EmailJS with the Public Key
       emailjs.init("4GmdocNDaZch7KCVE");
 
@@ -652,7 +680,7 @@ function addToCart(buttonElement) {
 
   // Button feedback
   const originalText = buttonElement.innerHTML;
-  buttonElement.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> Adicionado!';
+  buttonElement.innerHTML = 'Adicionado!';
   buttonElement.style.background = '#27AE60';
   buttonElement.style.color = 'white';
   buttonElement.disabled = true;
@@ -662,7 +690,7 @@ function addToCart(buttonElement) {
     buttonElement.style.background = '';
     buttonElement.style.color = '';
     buttonElement.disabled = false;
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    // Huge Icons are font-based, no re-initialization needed
   }, 1500);
 }
 
@@ -706,12 +734,12 @@ function updateCartUI() {
           <p>€${item.price.toFixed(2).replace('.', ',')} × ${item.qty}</p>
         </div>
         <button class="cart-item-remove" onclick="removeFromCart('${item.id}', ${item.size ? `'${item.size}'` : null})">
-          <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
+          <i class="hugeicons-stroke-rounded-delete-02" style="width:18px;height:18px;"></i>
         </button>
       </div>
     `).join('');
 
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    // Icons handled by font CSS
   }
 }
 
@@ -936,25 +964,30 @@ function renderMembers() {
     if (!filtered.length) container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:3rem;">Nenhum membro encontrado com os filtros selecionados.</p>';
   }
 
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  // Icons handled by font CSS
 }
 
 function renderMemberCard(m) {
   const initials = m.alcunha ? m.alcunha.charAt(0).toUpperCase() : m.name.charAt(0).toUpperCase();
   const instruments = m.instrumento.split('/').map(i => `<span class="instrument-badge">${i.trim()}</span>`).join('');
   const dateStr = m.data ? new Date(m.data).getFullYear() : '';
+  
+  const avatarHTML = m.foto ? 
+    `<img src="${m.foto}" alt="${m.name}" class="member-card-v2-img">` :
+    `<div class="member-card-v2-avatar">${initials}</div>`;
+
   return `
     <div class="member-card-v2">
       <div class="member-card-v2-header">
-        <div class="member-card-v2-avatar">${initials}</div>
+        ${avatarHTML}
         <div class="member-card-v2-name">
           <h4>${m.name}</h4>
           ${m.alcunha ? `<span class="alcunha">"${m.alcunha}"</span>` : ''}
         </div>
       </div>
       <div class="member-card-v2-meta">
-        ${m.curso ? `<span><i data-lucide="graduation-cap" style="width:12px;height:12px;"></i> ${m.curso}</span>` : ''}
-        ${m.evento ? `<span><i data-lucide="calendar" style="width:12px;height:12px;"></i> ${m.evento}${dateStr ? ' (' + dateStr + ')' : ''}</span>` : ''}
+        ${m.curso ? `<span><i class="hugeicons-stroke-rounded-graduation-cap" style="width:12px;height:12px;"></i> ${m.curso}</span>` : ''}
+        ${m.evento ? `<span><i class="hugeicons-stroke-rounded-calendar-01" style="width:12px;height:12px;"></i> ${m.evento}${dateStr ? ' (' + dateStr + ')' : ''}</span>` : ''}
       </div>
       <div class="member-card-v2-badges">${instruments}</div>
     </div>
@@ -1025,33 +1058,33 @@ function renderContactos() {
     socialContainer.innerHTML = `
       <a href="${s.youtube || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box youtube">
-          <i data-lucide="youtube" style="width:24px;height:24px;"></i>
+          <i class="hugeicons-stroke-rounded-youtube" style="width:24px;height:24px;"></i>
         </div>
         <span>YouTube</span>
       </a>
       <a href="${s.instagram || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box instagram">
-          <i data-lucide="instagram" style="width:24px;height:24px;"></i>
+          <i class="hugeicons-stroke-rounded-instagram" style="width:24px;height:24px;"></i>
         </div>
         <span>Instagram</span>
       </a>
       <a href="${s.facebook || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box facebook">
-          <i data-lucide="facebook" style="width:24px;height:24px;"></i>
+          <i class="hugeicons-stroke-rounded-facebook-01" style="width:24px;height:24px;"></i>
         </div>
         <span>Facebook</span>
       </a>
       <a href="${s.linkedin || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box linkedin">
-          <i data-lucide="linkedin" style="width:24px;height:24px;"></i>
+          <i class="hugeicons-stroke-rounded-linkedin-01" style="width:24px;height:24px;"></i>
         </div>
         <span>LinkedIn</span>
       </a>
       <a href="${s.spotify || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box spotify" style="background: rgba(30, 215, 96, 0.1); color: #1DB954;">
-          <i data-lucide="music" style="width:32px;height:32px;"></i>
+          <i class="hugeicons-stroke-rounded-music-01" style="width:32px;height:32px;"></i>
         </div>
-        <span style="color: #000000;">Spotify</span>
+        <span>Spotify</span>
       </a>
     `;
   }
@@ -1061,7 +1094,7 @@ function renderContactos() {
     dirigentesContainer.innerHTML = `
       <div class="personal-contact-card">
         <div class="personal-contact-icon email-icon" style="background: var(--azul-profundo);">
-          <i data-lucide="mail" style="width:24px;height:24px;color:#ffffff;"></i>
+          <i class="hugeicons-stroke-rounded-mail-01" style="width:24px;height:24px;color:#ffffff;"></i>
         </div>
         <h4>Email Geral</h4>
         <p class="personal-contact-desc">Para questões gerais e informações</p>
@@ -1070,12 +1103,11 @@ function renderContactos() {
       ${CONTACTOS_DATA.dirigentes.map(d => `
         <div class="personal-contact-card">
           <div class="personal-contact-icon person-icon" style="background: var(--azul-profundo);">
-            <i data-lucide="user" style="width:24px;height:24px;color:#ffffff;"></i>
+            <i class="hugeicons-stroke-rounded-user" style="width:24px;height:24px;color:#ffffff;"></i>
           </div>
           <h4>${d.cargo}</h4>
           <p class="personal-contact-name">${d.nome}</p>
           <a href="tel:${d.telefone.replace(/ /g, '')}" class="personal-contact-action">
-            <i data-lucide="phone" style="width:14px;height:14px;"></i>
             ${d.telefone}
           </a>
         </div>
@@ -1089,7 +1121,7 @@ function renderContactos() {
     infoGeraisContainer.innerHTML = `
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i data-lucide="map-pin" style="width:20px;height:20px;"></i>
+          <i class="hugeicons-stroke-rounded-location-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Morada</h4>
@@ -1098,7 +1130,7 @@ function renderContactos() {
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i data-lucide="mail" style="width:20px;height:20px;"></i>
+          <i class="hugeicons-stroke-rounded-mail-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Email</h4>
@@ -1107,7 +1139,7 @@ function renderContactos() {
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i data-lucide="phone" style="width:20px;height:20px;"></i>
+          <i class="hugeicons-stroke-rounded-phone-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Telefone</h4>
@@ -1117,7 +1149,5 @@ function renderContactos() {
     `;
   }
 
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
+  // Icons handled by font CSS
 }
