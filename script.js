@@ -212,8 +212,10 @@ window.switchEventContent = function(containerId, index) {
     display.style.opacity = '0';
     setTimeout(() => {
       display.innerHTML = renderSingleEventContent(data, prefix);
+      // Force repaint to ensure the transition fires properly
+      void display.offsetWidth;
       display.style.opacity = '1';
-    }, 300);
+    }, 150);
   }
 };
 
@@ -256,9 +258,22 @@ function applyLayoutOrder(order) {
         const subPages = Array.from(l.querySelectorAll('[data-page]')).map(a => a.getAttribute('data-page'));
         return targetIds.some(id => subPages.includes(id.replace('page-','')));
       });
-      if (link) navMenu.appendChild(link);
+      if (link) {
+        // Ensure "Contrata-nos" and "Loja" icons aren't incorrectly moved
+        navMenu.appendChild(link);
+      }
     });
+
+    // Make sure cart and contrata-nos stay at the very end
+    const cartIcon = document.getElementById('cartIcon');
+    const btnContrataNos = document.querySelector('.nav-links .btn-primary');
+    if (cartIcon && cartIcon.parentElement) navMenu.appendChild(cartIcon.parentElement);
+    if (btnContrataNos) navMenu.appendChild(btnContrataNos);
   }
+
+  // Ensure footer is completely at the bottom
+  const footer = document.querySelector('footer');
+  if (footer) body.appendChild(footer);
 }
 
 function renderAtuacoes() {
@@ -356,7 +371,7 @@ function renderLoja() {
           ${p.descricao || 'Produto oficial Augustuna.'}
         </p>
         ${sizeSelector}
-        <button class="btn btn-secondary" style="width: 100%; padding: 0.6rem; border-radius: 4px; font-weight: bold; border: 1px solid var(--dourado); margin-top: auto;" onclick="addToCart(this)">
+        <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="addToCart(this)">
           Adicionar
         </button>
       </div>

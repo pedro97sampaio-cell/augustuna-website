@@ -791,24 +791,23 @@
           <div class="contact-form-section reveal" style="grid-column: 1 / -1;">
             <h3 style="color: var(--branco-perola);">Envia-nos uma <span style="color: var(--dourado);">mensagem</span>
             </h3>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');">
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso!');" style="max-width: 600px; margin: 0 auto;">
               <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
-                  <label for="name">Nome</label>
                   <input type="text" id="name" placeholder="O teu nome" required>
                 </div>
                 <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" placeholder="augustunataum@gmail.com" required>
+                  <input type="email" id="email" placeholder="O teu email (ex: augustunataum@gmail.com)" required>
                 </div>
               </div>
               <div class="form-group">
-                <label for="message">Mensagem</label>
-                <textarea id="message" rows="5" placeholder="Escreve a tua mensagem..." required></textarea>
+                <textarea id="message" rows="4" placeholder="Escreve a tua mensagem..." required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary" style="width:100%; justify-content: center;">
-                Enviar Mensagem
-              </button>
+              <div style="text-align: center; margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2.5rem;">
+                  Enviar Mensagem
+                </button>
+              </div>
             </form>
           </div>
         </div>
