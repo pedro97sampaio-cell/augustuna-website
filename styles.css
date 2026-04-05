@@ -1,7 +1,7 @@
 /* ============================================
    AUGUSTUNA — Design System
    ============================================ */
-@import url('https://cdn.hugeicons.com/font/css/hugeicons-stroke-rounded.css');
+@import url('https://cdn.hugeicons.com/font/hgi-stroke-rounded.css');
 
 /* ---------- Pre-Loader Animation ---------- */
 #loader-wrapper {
@@ -229,7 +229,7 @@ select {
   gap: 0.5rem;
   padding: 0.875rem 2rem;
   border-radius: 3rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.1em;

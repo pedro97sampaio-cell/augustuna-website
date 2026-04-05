@@ -115,7 +115,7 @@ function renderNoticias() {
   
   container.innerHTML = NOTICIAS_DATA.map(n => {
     let tagClass = 'tag-blue';
-    let icon = '<i class="hugeicons-stroke-rounded-award-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+    let icon = '<i class="hgi-stroke hgi-award-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
     let bgColors = '#3A5A2A, #1A3A1A';
     
     if (n.categoria === 'destaque') {
@@ -124,11 +124,11 @@ function renderNoticias() {
       bgColors = '#1B3A5C, #0A1628';
     } else if (n.categoria === 'recrutamento') {
       tagClass = 'tag-green';
-      icon = '<i class="hugeicons-stroke-rounded-user-group" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      icon = '<i class="hgi-stroke hgi-user-group" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
       bgColors = '#8B1A1A, #5a1010';
     } else if (n.categoria === 'cultura') {
       tagClass = 'tag-blue';
-      icon = '<i class="hugeicons-stroke-rounded-calendar-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
+      icon = '<i class="hgi-stroke hgi-calendar-01" style="width:64px;height:64px;color:var(--dourado);opacity:0.5;"></i>';
       bgColors = '#1B3A5C, #0A1628';
     }
     
@@ -157,13 +157,10 @@ function renderEventos() {
     const container = document.getElementById(containerId);
     if (!container || !dataArray || !dataArray.length) return;
 
-    // Sort dataArray by edition or year (optional, but good for dropdown)
-    // We assume dataArray is already ordered from newest to oldest or vice versa
-
     let html = `
-      <div class="event-dropdown-wrapper" style="text-align: center; margin-bottom: 3rem;">
+      <div class="event-dropdown-wrapper" style="text-align: left; margin-bottom: 3rem;">
         <label style="display: block; color: var(--dourado); margin-bottom: 0.5rem; font-weight: 600;">Escolha a Edição:</label>
-        <select class="event-select-dropdown" onchange="switchEventContent('${containerId}', this.value)" style="background: var(--bg-dark); color: white; border: 1px solid var(--dourado); padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Helvetica', sans-serif; min-width: 250px;">
+        <select class="event-select-dropdown" id="${containerId}-select" style="background: var(--bg-dark); color: white; border: 1px solid var(--dourado); padding: 0.8rem 1.5rem; border-radius: 8px; font-family: 'Inter', sans-serif; min-width: 250px;">
           ${dataArray.map((m, i) => {
             const label = m.edicao + (m.ano && m.ano !== 0 ? ` (${m.ano})` : '');
             return `<option value="${i}">${label}</option>`;
@@ -181,6 +178,14 @@ function renderEventos() {
     // Store data in a window variable for the switch function
     window[`${containerId}_DATA`] = dataArray;
     window[`${containerId}_PREFIX`] = prefixLabel;
+
+    // Attach event listener directly (more reliable than inline onchange)
+    const selectEl = document.getElementById(`${containerId}-select`);
+    if (selectEl) {
+      selectEl.addEventListener('change', function() {
+        switchEventContent(containerId, parseInt(this.value));
+      });
+    }
   }
 
   renderDropdownLayout('magnaAugustaContent', EVENTOS_DATA.magna_augusta, 'Magna Augusta');
@@ -190,7 +195,7 @@ function renderEventos() {
 function renderSingleEventContent(m, prefixLabel) {
   if (!m) return '';
   return `
-    <div class="event-detail-view reveal shadow-hover">
+    <div class="event-detail-view shadow-hover">
       <div class="event-detail-poster">
         <img src="${m.imagem || 'Logo oficial 2.png'}" alt="${prefixLabel} ${m.edicao}">
       </div>
@@ -203,21 +208,18 @@ function renderSingleEventContent(m, prefixLabel) {
   `;
 }
 
-window.switchEventContent = function(containerId, index) {
+function switchEventContent(containerId, index) {
   const display = document.getElementById(`${containerId}-display`);
-  const data = window[`${containerId}_DATA`][index];
+  const dataArr = window[`${containerId}_DATA`];
   const prefix = window[`${containerId}_PREFIX`];
   
-  if (display && data) {
-    display.style.opacity = '0';
-    setTimeout(() => {
-      display.innerHTML = renderSingleEventContent(data, prefix);
-      // Force repaint to ensure the transition fires properly
-      void display.offsetWidth;
-      display.style.opacity = '1';
-    }, 150);
-  }
-};
+  if (!display || !dataArr || index < 0 || index >= dataArr.length) return;
+  const data = dataArr[index];
+  
+  // Direct content swap — no fade animation that could leave display invisible
+  display.innerHTML = renderSingleEventContent(data, prefix);
+}
+window.switchEventContent = switchEventContent;
 
 /* ============================================
    LAYOUT ORDERING
@@ -326,7 +328,7 @@ function renderAtuacoes() {
             <h4>${item.titulo}</h4>
             <p>${item.descricao || ''}</p>
             <div class="performance-location">
-              <i class="hugeicons-stroke-rounded-location-01" style="width:14px;height:14px;"></i> ${item.localizacao}
+              <i class="hgi-stroke hgi-location-01" style="width:14px;height:14px;"></i> ${item.localizacao}
             </div>
           </div>
         </div>
@@ -749,7 +751,7 @@ function updateCartUI() {
           <p>€${item.price.toFixed(2).replace('.', ',')} × ${item.qty}</p>
         </div>
         <button class="cart-item-remove" onclick="removeFromCart('${item.id}', ${item.size ? `'${item.size}'` : null})">
-          <i class="hugeicons-stroke-rounded-delete-02" style="width:18px;height:18px;"></i>
+          <i class="hgi-stroke hgi-delete-02" style="width:18px;height:18px;"></i>
         </button>
       </div>
     `).join('');
@@ -1001,8 +1003,8 @@ function renderMemberCard(m) {
         </div>
       </div>
       <div class="member-card-v2-meta">
-        ${m.curso ? `<span><i class="hugeicons-stroke-rounded-graduation-cap" style="width:12px;height:12px;"></i> ${m.curso}</span>` : ''}
-        ${m.evento ? `<span><i class="hugeicons-stroke-rounded-calendar-01" style="width:12px;height:12px;"></i> ${m.evento}${dateStr ? ' (' + dateStr + ')' : ''}</span>` : ''}
+        ${m.curso ? `<span><i class="hgi-stroke hgi-graduation-cap" style="width:12px;height:12px;"></i> ${m.curso}</span>` : ''}
+        ${m.evento ? `<span><i class="hgi-stroke hgi-calendar-01" style="width:12px;height:12px;"></i> ${m.evento}${dateStr ? ' (' + dateStr + ')' : ''}</span>` : ''}
       </div>
       <div class="member-card-v2-badges">${instruments}</div>
     </div>
@@ -1073,31 +1075,31 @@ function renderContactos() {
     socialContainer.innerHTML = `
       <a href="${s.youtube || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box youtube">
-          <i class="hugeicons-stroke-rounded-youtube" style="width:24px;height:24px;"></i>
+          <i class="hgi-stroke hgi-youtube" style="width:24px;height:24px;"></i>
         </div>
         <span>YouTube</span>
       </a>
       <a href="${s.instagram || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box instagram">
-          <i class="hugeicons-stroke-rounded-instagram" style="width:24px;height:24px;"></i>
+          <i class="hgi-stroke hgi-instagram" style="width:24px;height:24px;"></i>
         </div>
         <span>Instagram</span>
       </a>
       <a href="${s.facebook || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box facebook">
-          <i class="hugeicons-stroke-rounded-facebook-01" style="width:24px;height:24px;"></i>
+          <i class="hgi-stroke hgi-facebook-01" style="width:24px;height:24px;"></i>
         </div>
         <span>Facebook</span>
       </a>
       <a href="${s.linkedin || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box linkedin">
-          <i class="hugeicons-stroke-rounded-linkedin-01" style="width:24px;height:24px;"></i>
+          <i class="hgi-stroke hgi-linkedin-01" style="width:24px;height:24px;"></i>
         </div>
         <span>LinkedIn</span>
       </a>
       <a href="${s.spotify || '#'}" target="_blank" class="social-link-card">
         <div class="social-icon-box spotify" style="background: rgba(30, 215, 96, 0.1); color: #1DB954;">
-          <i class="hugeicons-stroke-rounded-music-01" style="width:32px;height:32px;"></i>
+          <i class="hgi-stroke hgi-music-01" style="width:32px;height:32px;"></i>
         </div>
         <span>Spotify</span>
       </a>
@@ -1109,7 +1111,7 @@ function renderContactos() {
     dirigentesContainer.innerHTML = `
       <div class="personal-contact-card">
         <div class="personal-contact-icon email-icon" style="background: var(--azul-profundo);">
-          <i class="hugeicons-stroke-rounded-mail-01" style="width:24px;height:24px;color:#ffffff;"></i>
+          <i class="hgi-stroke hgi-mail-01" style="width:24px;height:24px;color:#ffffff;"></i>
         </div>
         <h4>Email Geral</h4>
         <p class="personal-contact-desc">Para questões gerais e informações</p>
@@ -1118,7 +1120,7 @@ function renderContactos() {
       ${CONTACTOS_DATA.dirigentes.map(d => `
         <div class="personal-contact-card">
           <div class="personal-contact-icon person-icon" style="background: var(--azul-profundo);">
-            <i class="hugeicons-stroke-rounded-user" style="width:24px;height:24px;color:#ffffff;"></i>
+            <i class="hgi-stroke hgi-user" style="width:24px;height:24px;color:#ffffff;"></i>
           </div>
           <h4>${d.cargo}</h4>
           <p class="personal-contact-name">${d.nome}</p>
@@ -1136,7 +1138,7 @@ function renderContactos() {
     infoGeraisContainer.innerHTML = `
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i class="hugeicons-stroke-rounded-location-01" style="width:20px;height:20px;"></i>
+          <i class="hgi-stroke hgi-location-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Morada</h4>
@@ -1145,7 +1147,7 @@ function renderContactos() {
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i class="hugeicons-stroke-rounded-mail-01" style="width:20px;height:20px;"></i>
+          <i class="hgi-stroke hgi-mail-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Email</h4>
@@ -1154,7 +1156,7 @@ function renderContactos() {
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">
-          <i class="hugeicons-stroke-rounded-phone-01" style="width:20px;height:20px;"></i>
+          <i class="hgi-stroke hgi-phone-01" style="width:20px;height:20px;"></i>
         </div>
         <div>
           <h4>Telefone</h4>

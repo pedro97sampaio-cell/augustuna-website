@@ -260,12 +260,15 @@ class MembrosModule(ctk.CTkFrame):
 class MemberEditor(ctk.CTkToplevel):
     def __init__(self, parent, item, callback):
         super().__init__(parent); self.item = item or {}; self.callback = callback; self.img_path = self.item.get("foto", "")
-        self.geometry("450x500"); self.configure(fg_color=BG_DARK); self.grab_set(); self._build()
+        self.geometry("450x650"); self.configure(fg_color=BG_DARK); self.grab_set(); self._build()
     def _build(self):
         pad = {"padx":20, "pady":5}
         self.nome = self._field("Nome", "nome")
         self.alcunha = self._field("Alcunha", "alcunha")
         self.inst = self._field("Instrumento", "instrumento")
+        self.curso = self._field("Curso", "curso")
+        self.evento = self._field("Evento de Passagem", "evento")
+        self.data_pass = self._field("Data de Passagem (YYYY-MM-DD)", "data_passagem")
         self.img_label = ctk.CTkLabel(self, text=os.path.basename(self.img_path) or "Sem foto"); self.img_label.pack(**pad)
         ctk.CTkButton(self, text="Escolher Foto", command=self._pick).pack(**pad)
         ctk.CTkButton(self, text="GUARDAR", fg_color=DOURADO, text_color=BG_DARK, command=self._save).pack(pady=20)
@@ -277,7 +280,7 @@ class MemberEditor(ctk.CTkToplevel):
         if p: self.img_path = p; self.img_label.configure(text=os.path.basename(p))
     def _save(self):
         img = self.img_path if self.img_path.startswith("assets") else copy_image(self.img_path)
-        self.callback({"nome":self.nome.get(), "alcunha":self.alcunha.get(), "instrumento":self.inst.get(), "foto":img})
+        self.callback({"nome":self.nome.get(), "alcunha":self.alcunha.get(), "instrumento":self.inst.get(), "curso":self.curso.get(), "evento":self.evento.get(), "data_passagem":self.data_pass.get(), "foto":img})
         self.destroy()
 
 # ─── EVENTOS (Magna/Semina) ──────────
